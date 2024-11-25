@@ -65,7 +65,7 @@ public class RegisterController {
             return;
         }
     
-        UserVo newUser = new UserVo(username, password);
+        UserVo newUser = new UserVo(username, fullname, email, password);
     
         if (userDAO.insertUser(newUser)) {
             AlertUtil.showAlert("Éxito", "Usuario registrado correctamente", actualWindow);

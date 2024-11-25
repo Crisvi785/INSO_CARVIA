@@ -3,8 +3,8 @@ USE CARVIA;
 
 CREATE TABLE IF NOT EXISTS Users (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    user VARCHAR(100) NOT NULL,
-    name_surname VARCHAR(255) NULL,
+    username VARCHAR(100) NOT NULL,
+    full_name VARCHAR(255) NULL,
     email VARCHAR(100) NULL,
     password VARCHAR(255) NULL
 );

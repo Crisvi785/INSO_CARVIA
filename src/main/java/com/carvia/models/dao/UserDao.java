@@ -23,13 +23,15 @@ import java.sql.Connection;
      }
  
      public boolean insertUser(UserVo user) {
-         String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+         String query = "INSERT INTO users (username, full_name, email, password) VALUES (?, ?, ?, ?)";
          try (PreparedStatement statement = connection.prepareStatement(query)) {
  
              String hashedPass = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
              user.setPassword(hashedPass);
              statement.setString(1, user.getUsername());
-             statement.setString(2, hashedPass);
+             statement.setString(2, user.getFullName()); 
+             statement.setString(3, user.getEmail());   
+             statement.setString(4, hashedPass);        
              logger.info("User " + user.getUsername() + " registered");
              return statement.executeUpdate() > 0;
          } catch (SQLException e) {
