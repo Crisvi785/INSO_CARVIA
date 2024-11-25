@@ -46,7 +46,7 @@ public class LoginController {
 
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
             logger.info("Inicio de sesión exitoso para el usuario: " + username);
-            App.setRoot("planificador");
+            App.setRoot("mainpage");
         } else {
             logger.warn("Inicio de sesión fallido: Usuario o contraseña incorrectos");
             AlertUtil.showAlert("Error", "Usuario o contraseña incorrectos", usernameField.getScene().getWindow());
