@@ -35,7 +35,7 @@
             </VBox>
             
             <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20 50 0 50;">
-                <Button text="REGISTRARSE" fx:id="registerButton"/>
+                <Button text="REGISTRARSE" fx:id="registerButton" onAction="#register"/>
                 <Button text="INICIAR SESIÓN" fx:id="backToLoginButton" onMouseClicked="#backToLogin"/>
             </HBox>
         </VBox>

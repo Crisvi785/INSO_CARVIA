@@ -16,17 +16,19 @@ import com.carvia.models.vo.UserVo;
 import com.carvia.utils.AlertUtil;
 import com.carvia.utils.PasswordValidator;
 
-
-
 public class RegisterController {
 
     @FXML
-    private TextField usernameTextInput;
-    @FXML
-    private PasswordField passwordInput;
+    private TextField usernameField; 
 
     @FXML
-    private PasswordField confirmPasswordInput;
+    private PasswordField passwordField; 
+
+    @FXML
+    private TextField fullnameField; 
+
+    @FXML
+    private TextField emailField; 
 
     private UserDao userDAO = new UserDao();
 
@@ -39,38 +41,40 @@ public class RegisterController {
 
     @FXML
     private void register() throws IOException {
-        String username = usernameTextInput.getText();
-        String password = passwordInput.getText();
-        String confirmPassword = confirmPasswordInput.getText();
-        Window actualWIndow = usernameTextInput.getScene().getWindow();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        String fullname = fullnameField.getText();
+        String email = emailField.getText();
+    
+        Window actualWindow = usernameField.getScene().getWindow();
         logger.info("Username: " + username + " trying to register");
-        if (!password.equals(confirmPassword)) {
-            AlertUtil.showAlert("Error", "Las contraseñas no coinciden", actualWIndow);
-            logger.warn("Passwords do not match");
+    
+        if (username.isEmpty() || password.isEmpty() || fullname.isEmpty() || email.isEmpty()) {
+            AlertUtil.showAlert("Error", "Por favor, complete todos los campos", actualWindow);
+            logger.warn("Some fields are empty");
             return;
         }
-
+    
         if (!PasswordValidator.isValid(password)) {
-            AlertUtil.showAlert("Error",
-                    "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
-                    actualWIndow);
-            logger.warn(
-                    "Invalid password, must have at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character");
+            AlertUtil.showAlert(
+                "Error",
+                "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
+                actualWindow
+            );
+            logger.warn("Invalid password format");
             return;
         }
-
+    
         UserVo newUser = new UserVo(username, password);
-
-        if (newUser != null && userDAO.insertUser(newUser)) {
-            AlertUtil.showAlert("Éxito", "Usuario registrado correctamente", actualWIndow);
+    
+        if (userDAO.insertUser(newUser)) {
+            AlertUtil.showAlert("Éxito", "Usuario registrado correctamente", actualWindow);
             logger.info(newUser.toString() + " registered");
             App.setRoot("login");
         } else {
-            AlertUtil.showAlert("Error", "No se pudo registrar el usuario", actualWIndow);
+            AlertUtil.showAlert("Error", "No se pudo registrar el usuario", actualWindow);
             logger.error("Error registering user " + username);
         }
-
     }
     
-
 }
