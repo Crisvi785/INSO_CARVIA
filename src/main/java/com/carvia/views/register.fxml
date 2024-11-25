@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.RegisterController"
+            stylesheets="@CSS/register.css">
+    <left>
+        <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER" prefWidth="400.0">
+            <!-- Título -->
+            <Label text="REGISTRARSE" id="title-label"/>
+            
+            <!-- Campos de entrada -->
+            <VBox spacing="10.0" style="-fx-padding: 0 50 0 50;">
+                <Label text="USUARIO:"/>
+                <TextField fx:id="usernameField" promptText="Ingrese su usuario"/>
+
+                <Label text="NOMBRE Y APELLIDOS:"/>
+                <TextField fx:id="fullnameField" promptText="Ingrese su nombre completo"/>
+
+                <Label text="CORREO ELECTRÓNICO:"/>
+                <TextField fx:id="emailField" promptText="Ingrese su correo electrónico"/>
+
+                <Label text="CONTRASEÑA:"/>
+                <PasswordField fx:id="passwordField" promptText="Ingrese su contraseña"/>
+            </VBox>
+            
+            <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20 50 0 50;">
+                <Button text="REGISTRARSE" fx:id="registerButton"/>
+                <Button text="INICIAR SESIÓN" fx:id="backToLoginButton" onMouseClicked="#backToLogin"/>
+            </HBox>
+        </VBox>
+    </left>
+
+    <right>
+        <StackPane prefWidth="200.0" styleClass="side-pane">
+            <VBox alignment="CENTER" spacing="10.0">
+                <ImageView fitHeight="100.0" fitWidth="200.0" preserveRatio="true">
+                    <Image url="@../resources/images/CARVIA_1.png"/>
+                </ImageView>
+                <Label text="Encuentra o vende tu coche"/>
+                <Label text="en tu buscador líder"/>
+            </VBox>
+        </StackPane>
+    </right>
+</BorderPane>

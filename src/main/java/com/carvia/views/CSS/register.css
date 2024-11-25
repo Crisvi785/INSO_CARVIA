@@ -1,0 +1,64 @@
+.root {
+    -fx-background-color: #ffffff; 
+    -fx-font-family: "Arial";
+}
+
+
+#title-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4e4e4e; 
+    -fx-padding: 10px 0;
+    -fx-alignment: center;
+}
+
+
+
+
+/* botones */
+HBox {
+    -fx-padding: 10px 0; 
+    -fx-alignment: center; 
+}
+
+Button {
+    -fx-pref-width: 180px;
+    -fx-pref-height: 35px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-color: #4e4e4e; 
+    -fx-text-fill: #ffffff; 
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: transparent;
+
+}
+
+
+Button:hover {
+    -fx-background-color: #7b7b7b; 
+    -fx-cursor: hand;
+}
+
+
+/* panel derecho */
+.side-pane {
+    -fx-background-color: #adabac; 
+    -fx-padding: 20px;
+}
+
+.side-pane Label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #4e4e4e; 
+    -fx-alignment: center;
+    -fx-padding: 5px 0;
+}
+
+
+ImageView {
+    -fx-padding: 20px 0;
+}
+
+.left {
+    -fx-background-color: #ffffff; 
+}
