@@ -12,18 +12,43 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.LoginController"
-            stylesheets="@CSS/login.css">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.MainPageController"
+            stylesheets="@CSS/mainpage.css">
  
-    <right>
-        <StackPane prefWidth="200.0" styleClass="side-pane">
-            <VBox alignment="CENTER" spacing="10.0">
-                <ImageView fitHeight="100.0" fitWidth="200.0" preserveRatio="true">
-                    <Image url="@../resources/images/CARVIA_1.png"/>
-                </ImageView>
-                <Label text="Encuentra o vende tu coche"/>
-                <Label text="en tu buscador líder"/>
-            </VBox>
-        </StackPane>
-    </right>
+    <top>
+        <HBox spacing="10" style="-fx-background-color: #2E86C1; -fx-padding: 10;">
+            <Label text="Carvia - Venta de Coches" style="-fx-font-size: 18px; -fx-text-fill: white;" />
+        </HBox>
+    </top>
+
+    <!-- Barra lateral -->
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <Button text="Agregar Anuncio" onAction="#handleAddAnuncio" />
+            <Button text="Ver Mis Anuncios" onAction="#handleViewMyAds" />
+            <Button text="Configuración" onAction="#handleSettings" />
+        </VBox>
+    </left>
+
+    <!-- Contenido principal -->
+     <center>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <TableView fx:id="carAdsTable">
+                <columns>
+                    <TableColumn fx:id="marcaColumn" text="Marca" />
+                    <TableColumn fx:id="modeloColumn" text="Modelo" />
+                    <TableColumn fx:id="anoColumn" text="Año" />
+                    <TableColumn fx:id="kilometrajeColumn" text="Kilometraje" />
+                    <TableColumn fx:id="precioColumn" text="Precio" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Pie de página -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #D5D8DC; -fx-padding: 10;">
+            <Label text="© 2024 Carvia. Todos los derechos reservados." />
+        </HBox>
+    </bottom>
 </BorderPane>
