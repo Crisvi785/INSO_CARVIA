@@ -34,4 +34,24 @@ public class VehicleVo {
     public double getPrecio() {
         return precio;
     }
+
+    public void setMarca(String marca){
+        this.marca = marca;
+    }
+
+    public void setModelo(String modelo){
+        this.modelo = modelo;
+    }
+
+    public void setAno(int ano){
+        this.ano = ano;
+    }
+
+    public void setKilometraje(int km){
+        this.kilometraje = km;
+    }
+
+    public void setPrecio(double precio){
+        this.precio = precio;
+    }
 }
