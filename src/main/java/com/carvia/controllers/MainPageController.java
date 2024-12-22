@@ -1,85 +1,78 @@
 package com.carvia.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import com.carvia.models.vo.VehicleVo;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 public class MainPageController {
 
     @FXML
-    private TextField searchField;
+    private Button btnComprar;
 
     @FXML
-    private TableView<VehicleVo> carAdsTable;
+    private Button btnVender;
 
     @FXML
-    private TableColumn<VehicleVo, String> marcaColumn;
+    private Button btnVerMisAnuncios;
 
     @FXML
-    private TableColumn<VehicleVo, String> modeloColumn;
+    private Button btnMensajes;
 
     @FXML
-    private TableColumn<VehicleVo, Integer> anoColumn;
+    private Button btnConfiguracion;
 
     @FXML
-    private TableColumn<VehicleVo, Integer> kilometrajeColumn;
+    private Label lblHeader;
 
     @FXML
-    private TableColumn<VehicleVo, Double> precioColumn;
+    private ImageView imgCentral;
 
-    private ObservableList<VehicleVo> carAdsList = FXCollections.observableArrayList();
+    @FXML
+    private Label lblTitle;
+
+    @FXML
+    private Label lblDescription;
+
+    @FXML
+    private Label lblFooter;
 
     @FXML
     public void initialize() {
-        marcaColumn.setCellValueFactory(new PropertyValueFactory<>("marca"));
-        modeloColumn.setCellValueFactory(new PropertyValueFactory<>("modelo"));
-        anoColumn.setCellValueFactory(new PropertyValueFactory<>("ano"));
-        kilometrajeColumn.setCellValueFactory(new PropertyValueFactory<>("kilometraje"));
-        precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
-
-        loadCarAds();
-
-        carAdsTable.setItems(carAdsList);
-    }
-
-    
-    @FXML
-    private void handleAddAnuncio() {
-        System.out.println("Abrir formulario para agregar un anuncio");
+        // Inicialización si es necesario
+        lblHeader.setText("Carvia - Venta de Coches");
+       // lblTitle.setText("Bienvenido a Carvia");
+        //lblDescription.setText("Tu lugar ideal para comprar y vender coches de manera segura y confiable.");
+        lblFooter.setText("© 2024 Carvia. Todos los derechos reservados.");
     }
 
     @FXML
-    private void handleViewMyAds() {
-        System.out.println("Mostrar anuncios del usuario actual");
+    private void onComprarClick() {
+        System.out.println("Botón Comprar presionado");
+        // Lógica adicional para el botón Comprar
     }
 
     @FXML
-    private void handleSettings() {
-        System.out.println("Abrir configuración de la aplicación");
+    private void onVenderClick() {
+        System.out.println("Botón Vender presionado");
+        // Lógica adicional para el botón Vender
     }
 
     @FXML
-    private void handleSearch() {
-        String query = searchField.getText().toLowerCase();
-
-        ObservableList<VehicleVo> filteredList = FXCollections.observableArrayList();
-        for (VehicleVo ad : carAdsList) {
-            if (ad.getMarca().toLowerCase().contains(query) ||
-                ad.getModelo().toLowerCase().contains(query) ||
-                String.valueOf(ad.getAno()).contains(query)) {
-                filteredList.add(ad);
-            }
-        }
-
-        carAdsTable.setItems(filteredList);
+    private void onVerMisAnunciosClick() {
+        System.out.println("Botón Ver Mis Anuncios presionado");
+        // Lógica adicional para el botón Ver Mis Anuncios
     }
 
-    private void loadCarAds() {
-        carAdsList.add(new VehicleVo("Toyota", "Corolla", 2018, 45000, 15000));
-        carAdsList.add(new VehicleVo("Honda", "Civic", 2020, 30000, 18000));
-        carAdsList.add(new VehicleVo("Ford", "Focus", 2016, 60000, 12000));
+    @FXML
+    private void onMensajesClick() {
+        System.out.println("Botón Mensajes presionado");
+        // Lógica adicional para el botón Mensajes
+    }
+
+    @FXML
+    private void onConfiguracionClick() {
+        System.out.println("Botón Configuración presionado");
+        // Lógica adicional para el botón Configuración
     }
 }
