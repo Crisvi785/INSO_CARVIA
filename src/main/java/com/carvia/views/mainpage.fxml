@@ -15,7 +15,7 @@
             fx:controller="com.carvia.controllers.MainPageController"
             stylesheets="@CSS/mainpage.css">
 
-    <!-- Encabezado -->
+
     <top>
         <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header">
             <Label  fx:id="lblHeader" text="Carvia - Venta de Coches" styleClass="logo-label" />
@@ -45,7 +45,7 @@
         </VBox>
     </center>
 
-    <!-- Categorías destacadas -->
+    <!-- Categorías -->
     <bottom>
         <VBox spacing="20" alignment="CENTER" styleClass="categories">
             <Label text="Categorías destacadas" styleClass="category-title" />
@@ -88,6 +88,8 @@
                 </VBox>
             </HBox>
         </VBox>
+
+        <!-- footer -->
         <HBox alignment="CENTER" styleClass="footer">
             <Label fx:id="lblFooter" text="© 2024 Carvia. Todos los derechos reservados."
                    styleClass="footer-label" />

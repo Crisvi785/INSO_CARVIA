@@ -39,7 +39,7 @@ public class MainPageController {
 
     @FXML
     public void initialize() {
-        // Inicialización si es necesario
+        // Inicialización ???
         lblHeader.setText("Carvia - Venta de Coches");
        // lblTitle.setText("Bienvenido a Carvia");
         //lblDescription.setText("Tu lugar ideal para comprar y vender coches de manera segura y confiable.");
@@ -49,30 +49,30 @@ public class MainPageController {
     @FXML
     private void onComprarClick() {
         System.out.println("Botón Comprar presionado");
-        // Lógica adicional para el botón Comprar
+        // Aqui hacer hander on press button
     }
 
     @FXML
     private void onVenderClick() {
         System.out.println("Botón Vender presionado");
-        // Lógica adicional para el botón Vender
+        // Aqui hacer hander on press button
     }
 
     @FXML
     private void onVerMisAnunciosClick() {
         System.out.println("Botón Ver Mis Anuncios presionado");
-        // Lógica adicional para el botón Ver Mis Anuncios
+        // Aqui hacer hander on press button
     }
 
     @FXML
     private void onMensajesClick() {
         System.out.println("Botón Mensajes presionado");
-        // Lógica adicional para el botón Mensajes
+        // Aqui hacer hander on press button
     }
 
     @FXML
     private void onConfiguracionClick() {
         System.out.println("Botón Configuración presionado");
-        // Lógica adicional para el botón Configuración
+        // Aqui hacer hander on press button
     }
 }
