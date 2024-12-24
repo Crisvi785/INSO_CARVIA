@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.DisclaimerController"
+      alignment="CENTER" spacing="20" styleClass="disclaimer-container" stylesheets="@CSS/disclaimer.css">
+
+    <!-- Título de la página -->
+    <Label text="Pruebas de Coches entre Particulares" styleClass="title-label" />
+
+    <!-- Mensaje de descargo de responsabilidad -->
+    <Label text="Nota Importante:"
+           styleClass="important-label"
+           wrapText="true" />
+
+    <Label text="Carvia solo actúa como intermediario entre compradores y vendedores. "
+           wrapText="true"
+           styleClass="message-label" />
+    <Label text="La empresa no se hace responsable por el estado de los coches vendidos ni por problemas relacionados con las transacciones entre particulares."
+           wrapText="true"
+           styleClass="message-label" />
+
+    <!-- Botón para volver -->
+    <Button text="Volver a la Página Principal" styleClass="back-button" onMouseClicked="#handleBackToMain" />
+</VBox>

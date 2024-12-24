@@ -1,0 +1,54 @@
+/* Contenedor principal */
+.services-container {
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-alignment: center;
+    -fx-background-color: #f5f5f5; /* Fondo gris claro */
+}
+
+/* Estilo para el título */
+.title-label {
+    -fx-font-size: 24px;         /* Tamaño de fuente grande */
+    -fx-font-weight: bold;      /* Negrita */
+    -fx-text-fill: #34495e;     /* Azul oscuro */
+    -fx-padding: 10 0 10 0;     /* Espaciado vertical */
+}
+
+/* Estilo para las etiquetas importantes */
+.important-label {
+    -fx-font-size: 16px;         /* Tamaño de fuente mediano */
+    -fx-font-weight: bold;      /* Negrita */
+    -fx-text-fill: #e67e22;     /* Naranja */
+    -fx-underline: true;        /* Subrayado */
+}
+
+/* Estilo para los mensajes */
+.message-label {
+    -fx-font-size: 14px;        /* Tamaño de fuente estándar */
+    -fx-text-fill: #2c3e50;     /* Gris azulado */
+    -fx-wrap-text: true;        /* Permitir que el texto se ajuste */
+    -fx-padding: 5 10 5 10;     /* Espaciado interno */
+}
+
+/* Estilo para el botón */
+.back-button {
+    -fx-font-size: 16px;         /* Tamaño de fuente */
+    -fx-padding: 10 20 10 20;    /* Espaciado interno */
+    -fx-background-color: #27ae60; /* Verde brillante */
+    -fx-text-fill: #ffffff;      /* Texto blanco */
+    -fx-border-radius: 5;        /* Bordes redondeados */
+    -fx-background-radius: 5;    /* Fondo redondeado */
+    -fx-cursor: hand;            /* Cambiar cursor al pasar */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4); /* Sombra */
+}
+
+/* Estilo al pasar el cursor por encima del botón */
+.back-button:hover {
+    -fx-background-color: #229954; /* Verde más oscuro */
+}
+
+/* Estilo al presionar el botón */
+.back-button:pressed {
+    -fx-background-color: #1e8449; /* Verde aún más oscuro */
+    -fx-effect: none;             /* Quitar sombra */
+}

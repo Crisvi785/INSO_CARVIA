@@ -1,98 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="com.carvia.controllers.MainPageController"
-            stylesheets="@CSS/mainpage.css">
-
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.MainPageController" stylesheets="@CSS/mainpage.css">
 
     <top>
-        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header">
-            <Label  fx:id="lblHeader" text="Carvia - Venta de Coches" styleClass="logo-label" />
-            <Button text="Buscar" styleClass="header-button" />
-            <Button text="Pruebas e información" styleClass="header-button" />
-            <Button text="Trámites y Servicios" styleClass="header-button" />
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <Label fx:id="lblHeader" text="Carvia - Venta de Coches" />
+            <Button text="Pruebas e información" onMouseClicked="#handlePruebas" />
+            <Button text="Trámites y Servicios" onMouseClicked="#handleTramites" />
             <HBox spacing="10" alignment="CENTER_RIGHT">
-                <Button text="Mi Cuenta" styleClass="header-button" />
-                <Button text="Acceder" styleClass="header-button" />
-                <Button text="Vender" styleClass="highlight-button" />
+                <Button text="Mi Cuenta" onMouseClicked="#handleAccountEvent" />
+                <Button text="Acceder" onMouseClicked="#handleAccountEvent" />
+                <Button text="Vender" onMouseClicked="#handleVenderClick" />
             </HBox>
         </HBox>
     </top>
 
-    <!-- Centro - Sección principal -->
     <center>
-        <VBox spacing="20" alignment="CENTER" styleClass="center-content">
+        <VBox spacing="20" alignment="CENTER">
             <HBox alignment="CENTER" spacing="15">
-                <Label text="¿Cuál es tu siguiente movimiento?" styleClass="main-title" />
+                <Label text="¿Cuál es tu siguiente movimiento?" />
             </HBox>
-            <HBox alignment="CENTER" spacing="10" styleClass="search-box">
-                <ComboBox promptText="Marca y modelo" styleClass="search-field" />
-                <ComboBox promptText="Provincias" styleClass="search-field" />
-                <ComboBox promptText="Precio" styleClass="search-field" />
-                <Button text="Mostrar Resultados" styleClass="search-button" />
+            <HBox alignment="CENTER" spacing="10">
+                <ComboBox promptText="Marca y modelo" />
+                <ComboBox promptText="Provincias" />
+                <ComboBox promptText="Precio" />
+                <Button text="Mostrar Resultados" />
             </HBox>
+
+            <VBox spacing="20" alignment="CENTER">
+                <Label text="Categorías destacadas" />
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox alignment="CENTER" fx:id="segundaManoBox" onMouseClicked="#handleCategoriaClick">
+                        <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
+                            <Image url="@../resources/images/segunda_mano.png" />
+                        </ImageView>
+                        <Label text="Segunda Mano" />
+                    </VBox>
+                    <VBox alignment="CENTER" fx:id="nuevosBox" onMouseClicked="#handleCategoriaClick">
+                        <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
+                            <Image url="@../resources/images/nuevos.png" />
+                        </ImageView>
+                        <Label text="Nuevos" />
+                    </VBox>
+                    <VBox alignment="CENTER" fx:id="km0Box" onMouseClicked="#handleCategoriaClick">
+                        <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
+                            <Image url="@../resources/images/km0.png" />
+                        </ImageView>
+                        <Label text="Km 0" />
+                    </VBox>
+                    <VBox alignment="CENTER" fx:id="rentingBox" onMouseClicked="#handleCategoriaClick">
+                        <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
+                            <Image url="@../resources/images/renting.png" />
+                        </ImageView>
+                        <Label text="Renting" />
+                    </VBox>
+                </HBox>
+            </VBox>
         </VBox>
     </center>
 
-    <!-- Categorías -->
     <bottom>
-        <VBox spacing="20" alignment="CENTER" styleClass="categories">
-            <Label text="Categorías destacadas" styleClass="category-title" />
-            <HBox spacing="20" alignment="CENTER">
-                <VBox alignment="CENTER">
-                    <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
-                        <Image url="@../resources/images/segunda_mano.png" />
-                    </ImageView>
-                    <Label text="Segunda Mano" styleClass="category-label" />
-                </VBox>
-                <VBox alignment="CENTER">
-                    <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
-                        <Image url="@../resources/images/nuevos.png" />
-                    </ImageView>
-                    <Label text="Nuevos" styleClass="category-label" />
-                </VBox>
-                <VBox alignment="CENTER">
-                    <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
-                        <Image url="@../resources/images/km0.png" />
-                    </ImageView>
-                    <Label text="Km 0" styleClass="category-label" />
-                </VBox>
-                <VBox alignment="CENTER">
-                    <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
-                        <Image url="@../resources/images/renting.png" />
-                    </ImageView>
-                    <Label text="Renting" styleClass="category-label" />
-                </VBox>
-                <VBox alignment="CENTER">
-                    <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
-                        <Image url="@../resources/images/certificados.png" />
-                    </ImageView>
-                    <Label text="Certificados" styleClass="category-label" />
-                </VBox>
-                <VBox alignment="CENTER">
-                    <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
-                        <Image url="@../resources/images/campers_caravanas.png" />
-                    </ImageView>
-                    <Label text="Caravanas" styleClass="category-label" />
-                </VBox>
-            </HBox>
-        </VBox>
-
-        <!-- footer -->
-        <HBox alignment="CENTER" styleClass="footer">
-            <Label fx:id="lblFooter" text="© 2024 Carvia. Todos los derechos reservados."
-                   styleClass="footer-label" />
+        <HBox alignment="CENTER">
+            <Label fx:id="lblFooter" text="© 2024 Carvia. Todos los derechos reservados." />
         </HBox>
     </bottom>
 

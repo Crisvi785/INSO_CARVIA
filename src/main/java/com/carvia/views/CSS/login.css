@@ -64,3 +64,15 @@ ImageView {
 .left {
     -fx-background-color: #ffffff; 
 }
+
+
+/* Footer  */
+.footer {
+    -fx-background-color: #D5D8DC;
+    -fx-padding: 10;
+}
+
+.footer-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #5D6D7E;
+}

@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.carvia.App;
 import com.carvia.utils.AlertUtil;
+import com.carvia.models.UserSession;
 import com.carvia.models.dao.UserDao;
 import com.carvia.models.vo.UserVo;
 
@@ -45,6 +46,7 @@ public class LoginController {
         UserVo user = userDao.getUserByUsername(username);
 
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+            UserSession.login(username);
             logger.info("Inicio de sesión exitoso para el usuario: " + username);
             App.setRoot("mainpage");
         } else {
@@ -57,4 +59,7 @@ public class LoginController {
         String suspiciousPattern = ".*[;''\"<>|].*";
         return input.matches(suspiciousPattern);
     }
+
+    
+
 }

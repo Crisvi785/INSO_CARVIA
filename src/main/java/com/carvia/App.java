@@ -16,13 +16,13 @@ public class App extends Application {
     private static final Logger logger = LogManager.getLogger(App.class);
 
     private static Stage primaryStage;
-    private static final double SMALL_WIDTH = 840;
-    private static final double SMALL_HEIGHT = 570;
+    private static final double SMALL_WIDTH = 1050;
+    private static final double SMALL_HEIGHT = 750;
 
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        setRoot("login");
+        setRoot("mainpage");
         primaryStage.setTitle("Carvia");
 
         primaryStage.setResizable(false);
