@@ -13,7 +13,7 @@ import com.carvia.models.UserSession;
 import com.carvia.models.dao.VehicleDao;
 import com.carvia.models.vo.VehicleVo;
 
-
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Button;
@@ -70,18 +70,23 @@ public class MainPageController {
 
     @FXML
     public void initialize() {
-        //cargarOpcionesMarcaModelo();
-        //cargarOpcionesProvincias();
-        //cargarOpcionesPrecios();
+        // cargarOpcionesMarcaModelo();
+        // cargarOpcionesProvincias();
+        // cargarOpcionesPrecios();
         lblHeader.setText("Carvia - Venta de Coches");
         // lblTitle.setText("Bienvenido a Carvia");
         // lblDescription.setText("Tu lugar ideal para comprar y vender coches de manera
         // segura y confiable.");
+        marcaModeloComboBox.setItems(FXCollections.observableArrayList("Ford", "Volkswagen", "BMW", "Mercedes-Benz", "Audi", "Toyota", "Honda", "Nissan", "Hyundai", "Kia", "Peugeot", "Renault", "Fiat", "Chevrolet", "Subaru", "Mazda", "Land Rover", "Jaguar", "Lexus", "Volvo", "Porsche", "Dodge", "Chrysler", "Mitsubishi", "Citroën", "Opel", "Seat", "Skoda", "Tesla", "Infiniti", "Acura", "Lincoln", "Buick", "GMC", "Alfa Romeo", "Aston Martin", "Bentley", "Bugatti", "Ferrari", "Lamborghini", "Maserati", "Rolls-Royce"));
+        provinciasComboBox.setItems(FXCollections.observableArrayList("Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "La Coruña", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
+        precioComboBox.setItems(FXCollections.observableArrayList("Menos de 1.000 €", "1.000 € - 2.000 €", "2.000 € - 3.000 €", "3.000 € - 4.000 €", "4.000 € - 5.000 €", "5.000 € - 6.000 €", "6.000 € - 7.000 €", "7.000 € - 8.000 €", "8.000 € - 9.000 €", "9.000 € - 10.000 €", "10.000 € - 11.000 €", "11.000 € - 12.000 €", "12.000 € - 13.000 €", "13.000 € - 14.000 €", "14.000 € - 15.000 €", "15.000 € - 16.000 €", "16.000 € - 17.000 €", "17.000 € - 18.000 €", "18.000 € - 19.000 €", "19.000 € - 20.000 €", "20.000 € - 21.000 €", "21.000 € - 22.000 €", "22.000 € - 23.000 €", "23.000 € - 24.000 €", "24.000 € - 25.000 €", "25.000 € - 30.000 €", "30.000 € - 35.000 €", "35.000 € - 40.000 €", "40.000 € - 45.000 €", "45.000 € - 50.000 €", "50.000 € - 55.000 €", "55.000 € - 60.000 €", "60.000 € - 65.000 €", "65.000 € - 70.000 €", "Más de 70.000 €"));
+
         lblFooter.setText("© 2024 Carvia. Todos los derechos reservados.");
+
     }
 
     @FXML
-    private void handleVenderClick() throws IOException{
+    private void handleVenderClick() throws IOException {
         App.setRoot("vender");
     }
 
@@ -97,7 +102,7 @@ public class MainPageController {
             throw e;
         }
     }
-    
+
     private boolean checkUserRegistration() {
         return UserSession.isLoggedIn();
     }
@@ -105,180 +110,14 @@ public class MainPageController {
     @FXML
     private void handleTramites() throws IOException {
         App.setRoot("tramites");
-        }
-    
+    }
+
     @FXML
-    private void handlePruebas() throws IOException{
+    private void handlePruebas() throws IOException {
         App.setRoot("pruebas");
 
     }
-/*
- * 
- 
-    private void cargarOpcionesMarcaModelo() {
-        // Cargar marcas y modelos desde el backend o base de datos
-        marcaModeloComboBox.getItems().addAll(
-                "Ford",
-                "Volkswagen",
-                "BMW",
-                "Mercedes-Benz",
-                "Audi",
-                "Toyota",
-                "Honda",
-                "Nissan",
-                "Hyundai",
-                "Kia",
-                "Peugeot",
-                "Renault",
-                "Fiat",
-                "Chevrolet",
-                "Subaru",
-                "Mazda",
-                "Land Rover",
-                "Jaguar",
-                "Lexus",
-                "Volvo",
-                "Porsche",
-                "Dodge",
-                "Chrysler",
-                "Mitsubishi",
-                "Citroën",
-                "Opel",
-                "Seat",
-                "Skoda",
-                "Tesla",
-                "Infiniti",
-                "Acura",
-                "Lincoln",
-                "Buick",
-                "GMC",
-                "Alfa Romeo",
-                "Aston Martin",
-                "Bentley",
-                "Bugatti",
-                "Ferrari",
-                "Lamborghini",
-                "Maserati",
-                "Rolls-Royce");
-    }
 
-    private void cargarOpcionesProvincias() {
-        // Cargar provincias desde el backend o base de datos
-        provinciasComboBox.getItems().addAll(
-                "Ávila",
-                "Badajoz",
-                "Barcelona",
-                "Burgos",
-                "Cáceres",
-                "Cádiz",
-                "Castellón",
-                "Ciudad Real",
-                "Córdoba",
-                "La Coruña",
-                "Cuenca",
-                "Gerona",
-                "Granada",
-                "Guadalajara",
-                "Huelva",
-                "Huesca",
-                "Jaén",
-                "La Rioja",
-                "Las Palmas",
-                "León",
-                "Lérida",
-                "Lugo",
-                "Madrid",
-                "Málaga",
-                "Murcia",
-                "Navarra",
-                "Orense",
-                "Palencia",
-                "Pontevedra",
-                "Salamanca",
-                "Santa Cruz de Tenerife",
-                "Segovia",
-                "Sevilla",
-                "Soria",
-                "Tarragona",
-                "Teruel",
-                "Toledo",
-                "Valencia",
-                "Valladolid",
-                "Vizcaya",
-                "Zamora",
-                "Zaragoza");
-    }
-
-    private void cargarOpcionesPrecios() {
-        // Cargar rangos de precios
-        precioComboBox.getItems().addAll(
-                "Menos de 1.000 €",
-                "1.000 € - 2.000 €",
-                "2.000 € - 3.000 €",
-                "3.000 € - 4.000 €",
-                "4.000 € - 5.000 €",
-                "5.000 € - 6.000 €",
-                "6.000 € - 7.000 €",
-                "7.000 € - 8.000 €",
-                "8.000 € - 9.000 €",
-                "9.000 € - 10.000 €",
-                "10.000 € - 11.000 €",
-                "11.000 € - 12.000 €",
-                "12.000 € - 13.000 €",
-                "13.000 € - 14.000 €",
-                "14.000 € - 15.000 €",
-                "15.000 € - 16.000 €",
-                "16.000 € - 17.000 €",
-                "17.000 € - 18.000 €",
-                "18.000 € - 19.000 €",
-                "19.000 € - 20.000 €",
-                "20.000 € - 21.000 €",
-                "21.000 € - 22.000 €",
-                "22.000 € - 23.000 €",
-                "23.000 € - 24.000 €",
-                "24.000 € - 25.000 €",
-                "25.000 € - 30.000 €",
-                "30.000 € - 35.000 €",
-                "35.000 € - 40.000 €",
-                "40.000 € - 45.000 €",
-                "45.000 € - 50.000 €",
-                "50.000 € - 55.000 €",
-                "55.000 € - 60.000 €",
-                "60.000 € - 65.000 €",
-                "65.000 € - 70.000 €",
-                "Más de 70.000 €");
-    }
-                */
-
-    @FXML
-    private void onComprarClick() {
-        System.out.println("Botón Comprar presionado");
-        // Aqui hacer hander on press button
-    }
-
-    @FXML
-    private void onVenderClick() {
-        System.out.println("Botón Vender presionado");
-        // Aqui hacer hander on press button
-    }
-
-    @FXML
-    private void onVerMisAnunciosClick() {
-        System.out.println("Botón Ver Mis Anuncios presionado");
-        // Aqui hacer hander on press button
-    }
-
-    @FXML
-    private void onMensajesClick() {
-        System.out.println("Botón Mensajes presionado");
-        // Aqui hacer hander on press button
-    }
-
-    @FXML
-    private void onConfiguracionClick() {
-        System.out.println("Botón Configuración presionado");
-        // Aqui hacer hander on press button
-    }
 
 
 
@@ -350,7 +189,5 @@ public class MainPageController {
      * }
      * }
      */
-
-
 
 }

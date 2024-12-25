@@ -23,7 +23,7 @@ import java.sql.Connection;
      }
  
      public boolean insertUser(UserVo user) {
-         String query = "INSERT INTO users (username, full_name, email, password) VALUES (?, ?, ?, ?)";
+         String query = "INSERT INTO Users (username, full_name, email, password) VALUES (?, ?, ?, ?)";
          try (PreparedStatement statement = connection.prepareStatement(query)) {
  
              String hashedPass = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
@@ -42,7 +42,7 @@ import java.sql.Connection;
      }
  
      public UserVo getUserByUsername(String username) {
-         String query = "SELECT * FROM users WHERE username = ?";
+         String query = "SELECT * FROM Users WHERE username = ?";
          try (PreparedStatement statement = connection.prepareStatement(query)) {
              statement.setString(1, username);
              ResultSet resultSet = statement.executeQuery();

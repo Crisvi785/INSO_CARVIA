@@ -1,3 +1,5 @@
+-- Active: 1732127790281@@mysql-1fcc4b03-cristian-4d9d.l.aivencloud.com@18115@CARVIA
+-- Active: 1732127790281@@mysql-1fcc4b03-cristian-4d9d.l.aivencloud.com@18115@information_schema
 CREATE DATABASE IF NOT EXISTS CARVIA;
 USE CARVIA;
 
@@ -15,17 +17,22 @@ CREATE TABLE IF NOT EXISTS Vehicles (
     make VARCHAR(100) NOT NULL,
     model VARCHAR(100) NOT NULL,
     year INT NOT NULL,
-    color VARCHAR(100) NOT NULL,
     mileage INT,
     fuel_type VARCHAR(50),
-    transmission VARCHAR(50),
-    price DECIMAL(10, 2),
-    description TEXT,
-    image_url VARCHAR(255),
-    status VARCHAR(50),
-    date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
-    location VARCHAR(100),
+    transmission VARCHAR(50)
+
+);
+
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
+
+Usuario, cuenta, mensajes, anuncios, vehiculos, compras y pagos
+
+CREATE TABLE Anuncios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fecha DATE NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    precio DOUBLE NOT NULL,
+    urlFoto VARCHAR(2083) NOT NULL
 );
 

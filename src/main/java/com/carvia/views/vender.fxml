@@ -1,41 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="contenedorPBP" xmlns:fx="http://javafx.com/fxml">
-    <center>
-        <GridPane hgap="10" vgap="10" alignment="CENTER">
-            <children>
-                <Label text="Marca:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                <TextField fx:id="marcaText" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.VentaController" alignment="CENTER" spacing="20" styleClass="sell-car-form" stylesheets="@CSS/vender.css">
 
-                <Label text="Modelo:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                <TextField fx:id="modeloText" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    <!-- Título -->
+    <Label text="Vender un Coche" styleClass="title-label" />
 
-                <Label text="Precio (€):" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                <TextField fx:id="precioText" GridPane.rowIndex="2" GridPane.columnIndex="1" />
-
-                <Label text="Descripción:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                <TextField fx:id="descripcionText" GridPane.rowIndex="3" GridPane.columnIndex="1" />
-            </children>
-        </GridPane>
-    </center>
-    <bottom>
-        <HBox alignment="CENTER" spacing="10">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10" />
-            </padding>
-            <children>
-                <Button fx:id="publicarButton" text="Publicar" />
-                <Button fx:id="cancelarButton" text="Cancelar" />
-            </children>
+    <!-- Datos del Coche -->
+    <VBox spacing="10" alignment="CENTER_LEFT" styleClass="car-details-section">
+        <Label text="Datos del Coche" styleClass="section-label" />
+        <HBox spacing="10">
+            <Label text="Marca:" styleClass="field-label" />
+            <TextField fx:id="txtMarca" promptText="Ej: Toyota" styleClass="input-field" />
         </HBox>
-    </bottom>
-    <top>
-        <Label fx:id="notificacionLabel" text="" alignment="CENTER" wrapText="true" />
-    </top>
-</BorderPane>
+        <HBox spacing="10">
+            <Label text="Modelo:" styleClass="field-label" />
+            <TextField fx:id="txtModelo" promptText="Ej: Auris" styleClass="input-field" />
+        </HBox>
+        <HBox spacing="10">
+            <Label text="Año:" styleClass="field-label" />
+            <TextField fx:id="txtAnio" promptText="Ej: 2020" styleClass="input-field" />
+        </HBox>
+        <HBox spacing="10">
+            <Label text="Kilómetros:" styleClass="field-label" />
+            <TextField fx:id="txtKms" promptText="Ej: 50000" styleClass="input-field" />
+        </HBox>
+        <HBox spacing="10">
+            <Label text="Tipo de Gasolina:" styleClass="field-label" />
+            <ComboBox fx:id="cmbGasolina" promptText="Selecciona tipo de gasolina" styleClass="input-field" />
+
+        </HBox>
+        <HBox spacing="10">
+            <Label text="Transmisión:" styleClass="field-label" />
+            <ComboBox fx:id="cmbTransmision" promptText="Selecciona tipo de transmisión" styleClass="input-field" />
+
+        </HBox>
+    </VBox>
+
+    <!-- Datos del Anuncio -->
+    <VBox spacing="10" alignment="CENTER_LEFT" styleClass="ad-details-section">
+        <Label text="Datos del Anuncio" styleClass="section-label" />
+        <HBox spacing="10">
+            <Label text="Precio (€):" styleClass="field-label" />
+            <TextField fx:id="txtPrecio" promptText="Ej: 15000" styleClass="input-field" />
+        </HBox>
+        <HBox spacing="10">
+            <Label text="Descripción del Vehículo:" styleClass="field-label" />
+            <TextArea fx:id="txtDescripcion" promptText="Escribe una descripción del vehículo (características, estado, etc.)" />
+        </HBox>
+        <HBox spacing="10">
+            <Label text="Imágenes del Coche:" styleClass="field-label" />
+            <Button text="Subir Imágenes" styleClass="upload-button" onMouseClicked="#handleUploadImages" />
+        </HBox>
+    </VBox>
+
+
+    <!-- Botones -->
+    <HBox spacing="20" alignment="CENTER">
+        <Button text="Publicar Anuncio" styleClass="publish-button" onMouseClicked="#handlePublishAd" />
+        <Button text="Cancelar" styleClass="cancel-button" onMouseClicked="#handleCancel" />
+    </HBox>
+</VBox>

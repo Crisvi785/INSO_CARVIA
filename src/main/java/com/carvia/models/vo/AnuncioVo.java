@@ -9,12 +9,7 @@ public class AnuncioVo {
     public double precio;
     public String urlFoto;
 
-    public AnuncioVo(int id, LocalDate fecha, String descripcion, double precio, String url){
-        this.id = id;
-        this.fecha = fecha;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.urlFoto = url;
+    public AnuncioVo(){
     }
 
     //Getters
