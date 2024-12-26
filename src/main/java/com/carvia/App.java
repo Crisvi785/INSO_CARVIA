@@ -22,7 +22,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        setRoot("mainpage");
+        setRoot("payment");
         primaryStage.setTitle("Carvia");
 
         primaryStage.setResizable(false);

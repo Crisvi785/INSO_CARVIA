@@ -2,7 +2,11 @@ package com.carvia.models.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,5 +59,37 @@ public class VehicleDao {
             return false;
         }
     }
-    
+
+
+    public List<VehicleVo> filtrarVehiculos(String marca, String provincia, String precio) {
+        List<VehicleVo> vehiculos = new ArrayList<>();
+
+        // Ajusta la consulta SQL según tu esquema de base de datos
+        String query = "SELECT * FROM Vehicles WHERE make = ? AND provincia = ? AND precio = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, marca);
+            statement.setString(2, provincia);
+            statement.setString(3, precio);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                // Crea un nuevo objeto VehicleVo con los datos obtenidos
+                VehicleVo vehiculo = new VehicleVo();
+                AnuncioVo anuncio = new AnuncioVo();
+                vehiculo.setMarca(rs.getString("make"));
+                vehiculo.setModelo(rs.getString("model"));
+                //anuncio.setProvincia(rs.getString("provincia"));
+                anuncio.getPrecioBusq(rs.getString("precio"));
+                // Añade el objeto a la lista
+                vehiculos.add(vehiculo);
+            }
+        } catch (SQLException e) {
+            logger.error("Error al filtrar los vehículos: ", e);
+            e.printStackTrace();
+        }
+
+        return vehiculos;
+    }
 }
+
+    

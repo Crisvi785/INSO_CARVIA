@@ -118,6 +118,26 @@ public class MainPageController {
 
     }
 
+    @FXML
+    private void handleFiltrarCategoria() throws IOException{
+
+    String marcaSeleccionada = marcaModeloComboBox.getValue();
+    String provinciaSeleccionada = provinciasComboBox.getValue();
+    String precioSeleccionado = precioComboBox.getValue();
+
+    VehicleDao vehicleDao = new VehicleDao();
+
+    // Filtrar los vehículos según las selecciones
+    List<VehicleVo> vehiculosFiltrados = vehicleDao.filtrarVehiculos(marcaSeleccionada, provinciaSeleccionada, precioSeleccionado);
+
+    // Procesar los resultados filtrados
+    for (VehicleVo vehiculo : vehiculosFiltrados) {
+        System.out.println("Vehículo encontrado: " + vehiculo.getMarca() + ", " + vehiculo.getModelo() + ", " + vehiculo.getProvincia() + ", " + vehiculo.getPrecio());
+    }
+}
+
+    
+
 
 
 

@@ -50,6 +50,10 @@ public class AnuncioVo {
         this.precio = precio;
     }
 
+    public void getPrecioBusq (String precio){
+        this.precio = Double.parseDouble(precio);
+    }
+
     public void setUrl(String url){
         this.urlFoto = url;
     }

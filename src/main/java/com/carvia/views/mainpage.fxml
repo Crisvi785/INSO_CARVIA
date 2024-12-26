@@ -31,7 +31,7 @@
                 <ComboBox fx:id="marcaModeloComboBox" promptText="Selecciona tipo de modelo" styleClass="input-field" />
                 <ComboBox fx:id="provinciasComboBox" promptText="Selecciona la provincia" styleClass="input-field" />
                 <ComboBox fx:id="precioComboBox" promptText="Selecciona el precio" styleClass="input-field" />
-                <Button text="Mostrar Resultados" />
+                <Button text="Mostrar Resultados" onMouseClicked='#handleFiltrarCategoria'/>
             </HBox>
 
             <VBox spacing="20" alignment="CENTER">
