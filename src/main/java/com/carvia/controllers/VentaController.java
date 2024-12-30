@@ -22,9 +22,10 @@ import java.io.IOException;
 import java.util.Date;
 
 import com.carvia.App;
+import com.carvia.models.dao.AdvertisementDao;
 import com.carvia.models.dao.AnuncioDao;
 import com.carvia.models.dao.VehicleDao;
-import com.carvia.models.vo.AnuncioVo;
+import com.carvia.models.vo.AdvertisementVo;
 import com.carvia.models.vo.VehicleVo;
 
 import javafx.scene.control.ComboBox;
@@ -120,16 +121,16 @@ public class VentaController {
 
             // Crear un objeto VehicleVo con los datos del formulario
             VehicleVo vehiculo = new VehicleVo();
-            vehiculo.setMarca(txtMarca.getText());
-            vehiculo.setModelo(txtModelo.getText());
-            vehiculo.setAnio(Integer.parseInt(txtAnio.getText()));
-            vehiculo.setKilometraje(Integer.parseInt(txtKms.getText()));
-            vehiculo.setTipoCombustible(cmbGasolina.getValue());
-            vehiculo.setTransmision(cmbTransmision.getValue());
+            vehiculo.setMake(txtMarca.getText());
+            vehiculo.setModel(txtModelo.getText());
+            vehiculo.setYear(Integer.parseInt(txtAnio.getText()));
+            vehiculo.setKilometers(Integer.parseInt(txtKms.getText()));
+            vehiculo.setCombustion(cmbGasolina.getValue());
+            vehiculo.setShifter(cmbTransmision.getValue());
 
             // Crear un objeto AnuncioVo con los datos del formulario
-            AnuncioVo anuncio = new AnuncioVo();
-            anuncio.setDescripcion(txtDescripcion.getText());
+            AdvertisementVo anuncio = new AdvertisementVo();
+            anuncio.setDescription(txtDescripcion.getText());
             anuncio.setPrecio(Double.parseDouble(txtPrecio.getText()));
 
             // Obtener la URL de la primera imagen como ejemplo (puedes modificarlo según
@@ -137,10 +138,10 @@ public class VentaController {
 
             // Instanciar los DAOs y guardar los datos en la base de datos
             VehicleDao vehiculoDAO = new VehicleDao();
-            AnuncioDao anuncioDAO = new AnuncioDao();
+            AdvertisementDao anuncioDAO = new AdvertisementDao();
 
             // Guardar vehículo primero y luego el anuncio
-            if (vehiculoDAO.insertVehiculo(vehiculo) && vehiculoDAO.insertAnuncio(anuncio)) {
+            if (vehiculoDAO.insertVehicle(vehiculo) && vehiculoDAO.insertAnuncio(anuncio)) {
                 System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
             } else {
                 System.out.println("Hubo un error al publicar el anuncio o el vehículo.");

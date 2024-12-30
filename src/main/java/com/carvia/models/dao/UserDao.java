@@ -1,5 +1,4 @@
-
- package com.carvia.models.dao;
+package com.carvia.models.dao;
  
  import com.carvia.controllers.*;
  import com.carvia.models.vo.UserVo;

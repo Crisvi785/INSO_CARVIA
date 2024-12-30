@@ -1,23 +1,24 @@
 package com.carvia.models.vo;
 
 public class UserVo {
-    private int id;
+    private int idUs;
     private String username;
     private String fullName;
     private String email;
     private String password;
+    private String address;
 
     public UserVo() {}
 
     public UserVo(int id, String username, String password) {
-        this.id = id;
+        this.idUs = id;
         this.username = username;
         this.password = password;
     }
 
 
     public UserVo(int id, String username, String fullName, String email, String password) {
-        this.id = id;
+        this.idUs = id;
         this.username = username;
         this.fullName = fullName;
         this.email = email;
@@ -37,11 +38,11 @@ public class UserVo {
     }
 
     public int getId() {
-        return id;
+        return idUs;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idUs = id;
     }
 
     public String getUsername() {
@@ -78,6 +79,6 @@ public class UserVo {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + ", fullName=" + fullName + ", email=" + email + ", password=" + password + "]";
+        return "User [id=" + idUs + ", username=" + username + ", fullName=" + fullName + ", email=" + email + ", password=" + password + "]";
     }
 }
