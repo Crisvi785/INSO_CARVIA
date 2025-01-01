@@ -22,10 +22,9 @@ import java.io.IOException;
 import java.util.Date;
 
 import com.carvia.App;
-import com.carvia.models.dao.AdvertisementDao;
 import com.carvia.models.dao.AnuncioDao;
 import com.carvia.models.dao.VehicleDao;
-import com.carvia.models.vo.AdvertisementVo;
+import com.carvia.models.vo.AnuncioVo;
 import com.carvia.models.vo.VehicleVo;
 
 import javafx.scene.control.ComboBox;
@@ -107,52 +106,60 @@ public class VentaController {
         System.out.println("Imágenes subidas exitosamente.");
     }
 
-    @FXML
-    private void handlePublishAd() {
-        try {
-            // Validar los datos del formulario
-            if (txtMarca.getText().isEmpty() || txtModelo.getText().isEmpty() || txtAnio.getText().isEmpty() ||
-                    txtKms.getText().isEmpty() || cmbGasolina.getValue() == null || cmbTransmision.getValue() == null ||
-                    txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty() ||
-                    selectedImages == null || selectedImages.isEmpty()) {
-                System.out.println("Por favor, completa todos los campos y sube al menos una imagen.");
-                return;
-            }
-
-            // Crear un objeto VehicleVo con los datos del formulario
-            VehicleVo vehiculo = new VehicleVo();
-            vehiculo.setMake(txtMarca.getText());
-            vehiculo.setModel(txtModelo.getText());
-            vehiculo.setYear(Integer.parseInt(txtAnio.getText()));
-            vehiculo.setKilometers(Integer.parseInt(txtKms.getText()));
-            vehiculo.setCombustion(cmbGasolina.getValue());
-            vehiculo.setShifter(cmbTransmision.getValue());
-
-            // Crear un objeto AnuncioVo con los datos del formulario
-            AdvertisementVo anuncio = new AdvertisementVo();
-            anuncio.setDescription(txtDescripcion.getText());
-            anuncio.setPrecio(Double.parseDouble(txtPrecio.getText()));
-
-            // Obtener la URL de la primera imagen como ejemplo (puedes modificarlo según
-            // tus requisitos)
-
-            // Instanciar los DAOs y guardar los datos en la base de datos
-            VehicleDao vehiculoDAO = new VehicleDao();
-            AdvertisementDao anuncioDAO = new AdvertisementDao();
-
-            // Guardar vehículo primero y luego el anuncio
-            if (vehiculoDAO.insertVehicle(vehiculo) && vehiculoDAO.insertAnuncio(anuncio)) {
-                System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
-            } else {
-                System.out.println("Hubo un error al publicar el anuncio o el vehículo.");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).");
-        } catch (Exception e) {
-            System.out.println("Error al publicar el anuncio: " + e.getMessage());
-            e.printStackTrace();
+@FXML
+private void handlePublishAd() {
+    try {
+        // Validar los datos del formulario
+        if (txtMarca.getText().isEmpty() || txtModelo.getText().isEmpty() || txtAnio.getText().isEmpty() ||
+                txtKms.getText().isEmpty() || cmbGasolina.getValue() == null || cmbTransmision.getValue() == null ||
+                txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty() ||
+                selectedImages == null || selectedImages.isEmpty()) {
+            System.out.println("Por favor, completa todos los campos y sube al menos una imagen.");
+            return;
         }
+
+        // Crear un objeto VehicleVo con los datos del formulario
+        VehicleVo vehiculo = new VehicleVo();
+        vehiculo.setMarca(txtMarca.getText());
+        vehiculo.setModelo(txtModelo.getText());
+        vehiculo.setAnio(Integer.parseInt(txtAnio.getText()));
+        vehiculo.setKilometraje(Integer.parseInt(txtKms.getText()));
+        vehiculo.setTipoCombustible(cmbGasolina.getValue());
+        vehiculo.setTransmision(cmbTransmision.getValue());
+
+        // Instanciar el DAO para vehículos
+        VehicleDao vehiculoDAO = new VehicleDao();
+
+        // Insertar el vehículo y obtener el ID generado
+        int vehiculoId = vehiculoDAO.insertVehiculo(vehiculo);
+        if (vehiculoId <= 0) {
+            System.out.println("Hubo un error al guardar el vehículo en la base de datos.");
+            return;
+        }
+
+        // Crear un objeto AnuncioVo con los datos del formulario
+        AnuncioVo anuncio = new AnuncioVo();
+        anuncio.setDescripcion(txtDescripcion.getText());
+        anuncio.setPrecio(Double.parseDouble(txtPrecio.getText()));
+        anuncio.setIdVehiculo(vehiculoId); // Asignar el ID del vehículo al anuncio
+
+        // Instanciar el DAO para anuncios
+        AnuncioDao anuncioDAO = new AnuncioDao();
+
+        // Insertar el anuncio en la base de datos
+        if (VehicleDao.insertAnuncio(anuncio)) {
+            System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
+        } else {
+            System.out.println("Hubo un error al guardar el anuncio en la base de datos.");
+        }
+    } catch (NumberFormatException e) {
+        System.out.println("Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).");
+    } catch (Exception e) {
+        System.out.println("Error al publicar el anuncio: " + e.getMessage());
+        e.printStackTrace();
     }
+}
+
 
     @FXML
     private void handleCancel() throws IOException {

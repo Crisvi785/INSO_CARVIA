@@ -2,8 +2,8 @@ package com.carvia.models.vo;
 import java.time.LocalDate;
 
 public class CompraVo {
-    private int id;
-    private LocalDate fecha;
+    int id;
+    LocalDate fecha;
     
     public CompraVo(int id, LocalDate fecha){
         this.id = id;

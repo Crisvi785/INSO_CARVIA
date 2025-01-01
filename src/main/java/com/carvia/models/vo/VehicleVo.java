@@ -3,13 +3,12 @@ package com.carvia.models.vo;
 import java.util.List;
 
 public class VehicleVo {
-    private int idVe;
-    private String make;
-    private String model;
-    private int year;
-    private int kilometers;
-    private String combustion;
-    private String shifter;
+    private String marca;
+    private String modelo;
+    private int anio;
+    private int kilometraje;
+    private String tipoCombustible;
+    private String transmision;
     private String color;
 
     // Constructor vacío
@@ -17,64 +16,56 @@ public class VehicleVo {
     }
 
     // Getters y Setters
-    public int getIdVe(){
-        return this.idVe;
+    public String getMarca() {
+        return marca;
     }
 
-    public void setIdVe(int idVe){
-        this.idVe = idVe;
-    }
-    
-    public String getMake() {
-        return this.make;
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
-    public void setMake(String make) {
-        this.make = make;
+    public String getModelo() {
+        return modelo;
     }
 
-    public String getModel() {
-        return this.model;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public int getAnio() {
+        return anio;
     }
 
-    public int getYear() {
-        return this.year;
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public int getKilometraje() {
+        return kilometraje;
     }
 
-    public int getKilometers() {
-        return this.kilometers;
+    public void setKilometraje(int kilometraje) {
+        this.kilometraje = kilometraje;
     }
 
-    public void setKilometers(int kilometers) {
-        this.kilometers = kilometers;
+    public String getTipoCombustible() {
+        return tipoCombustible;
     }
 
-    public String getCombustion() {
-        return this.combustion;
+    public void setTipoCombustible(String tipoCombustible) {
+        this.tipoCombustible = tipoCombustible;
     }
 
-    public void setCombustion(String combustion) {
-        this.combustion = combustion;
+    public String getTransmision() {
+        return transmision;
     }
 
-    public String getShifter() {
-        return this.shifter;
-    }
-
-    public void setShifter(String shifter) {
-        this.shifter = shifter;
+    public void setTransmision(String transmision) {
+        this.transmision = transmision;
     }
 
     public String getColor() {
-        return this.color;
+        return color;
     }
 
     public void setColor(String color) {

@@ -3,6 +3,7 @@ package com.carvia.models.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.carvia.controllers.BBDDController;
-import com.carvia.models.vo.AdvertisementVo;
+import com.carvia.models.vo.AnuncioVo;
 import com.carvia.models.vo.UserVo;
 import com.carvia.models.vo.VehicleVo;
 
@@ -24,35 +25,41 @@ public class VehicleDao {
         this.connection = BBDDController.getInstance().getConnection();
     }
 
-    public boolean insertVehicle(VehicleVo vehiculo) {
-
-        String query = "INSERT INTO Vehicles (make, model, year, mileage, fuel_type, transmission) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setString(1, vehiculo.getMake()); // make
-            statement.setString(2, vehiculo.getModel()); // model
-            statement.setInt(3, vehiculo.getYear()); // year
-            statement.setInt(4, vehiculo.getKilometers()); // mileage
-            statement.setString(5, vehiculo.getCombustion()); // fuel_type
-            statement.setString(6, vehiculo.getShifter()); // transmission
-
-            logger.info("Insertando vehículo: " + vehiculo.getMake() + " " + vehiculo.getModel());
-            return statement.executeUpdate() > 0; // Retorna true si se insertó al menos un registro
+    public int insertVehiculo(VehicleVo vehiculo) {
+        String query = "INSERT INTO Vehicles (marca, modelo, anio, kilometraje, tipo_combustible, transmision) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, vehiculo.getMarca());
+            statement.setString(2, vehiculo.getModelo());
+            statement.setInt(3, vehiculo.getAnio());
+            statement.setInt(4, vehiculo.getKilometraje());
+            statement.setString(5, vehiculo.getTipoCombustible());
+            statement.setString(6, vehiculo.getTransmision());
+    
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1); // Retorna el ID del vehículo recién creado
+                }
+            }
         } catch (SQLException e) {
-            logger.error("Error al insertar el vehículo: " + vehiculo.getMake() + " " + vehiculo.getModel());
             e.printStackTrace();
-            return false;
         }
+        return -1; // Indica un error si no se pudo insertar
     }
 
-    /* 
-    public boolean insertAnuncio(AdvertisementVo anuncio) {
+    public boolean insertAnuncio(AnuncioVo anuncio) {
+        UserVo user = new UserVo();
+        VehicleVo vehiculo = new VehicleVo();
         // Modificamos la consulta para que 'fecha' tome el valor de CURRENT_DATE
-        String query = "INSERT INTO Anuncios (fecha, descripcion, precio, urlFoto) VALUES (CURRENT_DATE, ?, ?, ?)";
+        String query = "INSERT INTO Advertisements (idVe, date, description, price, images) VALUES (?, CURRENT_DATE, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, anuncio.getDescripcion());
-            statement.setDouble(2, anuncio.getPrecio());
-            statement.setString(3, anuncio.getUrlFoto());
+            statement.setString(2, anuncio.getDescripcion());
+            statement.setDouble(3, anuncio.getPrecio());
+            statement.setString(4, anuncio.getUrlFoto());
+            statement.setInt(1, anuncio.getIdVehiculo()); // Asignar el ID del vehículo (clave foránea)
+
+            
     
             return statement.executeUpdate() > 0; // Retorna true si se insertó al menos un registro
         } catch (SQLException e) {
@@ -60,7 +67,6 @@ public class VehicleDao {
             return false;
         }
     }
-    */
 
 
     public List<VehicleVo> filtrarVehiculos(String marca, String provincia, String precio) {
@@ -77,11 +83,11 @@ public class VehicleDao {
             while (rs.next()) {
                 // Crea un nuevo objeto VehicleVo con los datos obtenidos
                 VehicleVo vehiculo = new VehicleVo();
-                AdvertisementVo anuncio = new AdvertisementVo();
-                vehiculo.setMake(rs.getString("make"));
-                vehiculo.setModel(rs.getString("model"));
+                AnuncioVo anuncio = new AnuncioVo();
+                vehiculo.setMarca(rs.getString("make"));
+                vehiculo.setModelo(rs.getString("model"));
                 //anuncio.setProvincia(rs.getString("provincia"));
-                anuncio.getPriceBusq(rs.getString("precio"));
+                anuncio.getPrecioBusq(rs.getString("precio"));
                 // Añade el objeto a la lista
                 vehiculos.add(vehiculo);
             }

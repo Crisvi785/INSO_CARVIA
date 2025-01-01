@@ -1,6 +1,6 @@
 package com.carvia.controllers;
 
-//import java.io.IO;
+import java.io.IO;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -132,7 +132,7 @@ public class MainPageController {
 
     // Procesar los resultados filtrados
     for (VehicleVo vehiculo : vehiculosFiltrados) {
-        System.out.println("Vehículo encontrado: " + vehiculo.getMake() + ", " + vehiculo.getModel() + ", " + vehiculo.getProvincia() + ", " + vehiculo.getPrecio());
+        System.out.println("Vehículo encontrado: " + vehiculo.getMarca() + ", " + vehiculo.getModelo() + ", " + vehiculo.getProvincia() + ", " + vehiculo.getPrecio());
     }
 }
 

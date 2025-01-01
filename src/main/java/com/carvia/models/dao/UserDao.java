@@ -1,4 +1,5 @@
-package com.carvia.models.dao;
+
+ package com.carvia.models.dao;
  
  import com.carvia.controllers.*;
  import com.carvia.models.vo.UserVo;
@@ -46,7 +47,7 @@ import java.sql.Connection;
              statement.setString(1, username);
              ResultSet resultSet = statement.executeQuery();
              if (resultSet.next()) {
-                 int id = resultSet.getInt("id");
+                 int id = resultSet.getInt("idUs");
                  String password = resultSet.getString("password");
                  logger.info("User " + username + " found");
                  return new UserVo(id, username, password);
