@@ -26,7 +26,7 @@ public class VehicleDao {
     }
 
     public int insertVehiculo(VehicleVo vehiculo) {
-        String query = "INSERT INTO Vehicles (marca, modelo, anio, kilometraje, tipo_combustible, transmision) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Vehicles (make, model, year, kilometers, fuel_type, transmission) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, vehiculo.getMarca());
             statement.setString(2, vehiculo.getModelo());

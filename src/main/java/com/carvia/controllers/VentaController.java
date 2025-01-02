@@ -147,7 +147,7 @@ private void handlePublishAd() {
         AnuncioDao anuncioDAO = new AnuncioDao();
 
         // Insertar el anuncio en la base de datos
-        if (VehicleDao.insertAnuncio(anuncio)) {
+        if (vehiculoDAO.insertAnuncio(anuncio)) {
             System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
         } else {
             System.out.println("Hubo un error al guardar el anuncio en la base de datos.");
