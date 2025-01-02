@@ -1,4 +1,4 @@
--- Active: 1732127790281@@mysql-1fcc4b03-cristian-4d9d.l.aivencloud.com@18115@CARVIA
+-- Active: 1735319124226@@mysql-1fcc4b03-cristian-4d9d.l.aivencloud.com@18115@CARVIA
 -- Active: 1732127790281@@mysql-1fcc4b03-cristian-4d9d.l.aivencloud.com@18115@information_schema
 CREATE DATABASE IF NOT EXISTS CARVIA;
 USE CARVIA;
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS Vehicles (
 CREATE TABLE IF NOT EXISTS Advertisements (
     idAd INT PRIMARY KEY AUTO_INCREMENT,
     idVe INT NOT NULL REFERENCES Vehicles(idVe) ON DELETE CASCADE,
+    idUs INT NOT NULL REFERENCES Users(idUs) ON DELETE CASCADE,
     date DATE NOT NULL,
     description TEXT,
     price DOUBLE NOT NULL,

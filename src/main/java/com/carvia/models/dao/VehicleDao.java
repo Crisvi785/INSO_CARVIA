@@ -52,15 +52,13 @@ public class VehicleDao {
         UserVo user = new UserVo();
         VehicleVo vehiculo = new VehicleVo();
         // Modificamos la consulta para que 'fecha' tome el valor de CURRENT_DATE
-        String query = "INSERT INTO Advertisements (idVe, date, description, price, images) VALUES (?, CURRENT_DATE, ?, ?, ?)";
+        String query = "INSERT INTO Advertisements (idVe, idUs, date, description, price, images) VALUES (?, ?, CURRENT_DATE, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(2, anuncio.getDescripcion());
-            statement.setDouble(3, anuncio.getPrecio());
-            statement.setString(4, anuncio.getUrlFoto());
+            statement.setString(3, anuncio.getDescripcion());
+            statement.setDouble(4, anuncio.getPrecio());
+            statement.setString(5, anuncio.getUrlFoto());
             statement.setInt(1, anuncio.getIdVehiculo()); // Asignar el ID del vehículo (clave foránea)
-
-            
-    
+            statement.setInt(2, anuncio.getIdUsuario());
             return statement.executeUpdate() > 0; // Retorna true si se insertó al menos un registro
         } catch (SQLException e) {
             e.printStackTrace();

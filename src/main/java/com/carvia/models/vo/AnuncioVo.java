@@ -9,7 +9,7 @@ public class AnuncioVo {
     public double precio;
     public String urlFoto;
     private int idVehiculo; // ID del vehículo (clave foránea)
-
+    private int idUsuario;
 
     public AnuncioVo(){
     }
@@ -66,5 +66,13 @@ public class AnuncioVo {
 
     public void setIdVehiculo(int idVehiculo) {
         this.idVehiculo = idVehiculo; // Setter para idVehiculo
+    }
+
+    public int getIdUsuario(){
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario){
+        this.idUsuario = idUsuario;
     }
 }

@@ -22,9 +22,12 @@ import java.io.IOException;
 import java.util.Date;
 
 import com.carvia.App;
+import com.carvia.models.UserSession;
 import com.carvia.models.dao.AnuncioDao;
+import com.carvia.models.dao.UserDao;
 import com.carvia.models.dao.VehicleDao;
 import com.carvia.models.vo.AnuncioVo;
+import com.carvia.models.vo.UserVo;
 import com.carvia.models.vo.VehicleVo;
 
 import javafx.scene.control.ComboBox;
@@ -146,6 +149,10 @@ private void handlePublishAd() {
         // Instanciar el DAO para anuncios
         AnuncioDao anuncioDAO = new AnuncioDao();
 
+         // Asignar el ID del usuario autenticado al anuncio
+         int idUsuario = getAuthenticatedUserId(); 
+         anuncio.setIdUsuario(idUsuario);
+
         // Insertar el anuncio en la base de datos
         if (vehiculoDAO.insertAnuncio(anuncio)) {
             System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
@@ -165,5 +172,28 @@ private void handlePublishAd() {
     private void handleCancel() throws IOException {
         App.setRoot("mainpage");
     }
+
+    private int getAuthenticatedUserId() {
+    if (!UserSession.isLoggedIn()) {
+        System.out.println("No hay un usuario autenticado.");
+        return -1; // Maneja el caso donde no hay usuario autenticado
+    }
+
+    // Obtén el nombre de usuario logueado
+    String username = UserSession.getLoggedInUser().orElseThrow(() -> 
+        new IllegalStateException("Usuario no encontrado en la sesión"));
+
+    // Usa UserDao para buscar el ID del usuario
+    UserDao userDao = new UserDao();
+    UserVo user = userDao.getUserByUsername(username);
+
+    if (user == null) {
+        System.out.println("Usuario no encontrado en la base de datos.");
+        return -1; // Maneja el caso donde el usuario no existe
+    }
+
+    return user.getId(); // Devuelve el ID del usuario autenticado
+}
+
 
 }
