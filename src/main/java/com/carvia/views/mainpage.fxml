@@ -28,7 +28,7 @@
                 <Label text="¿Cuál es tu siguiente movimiento?" />
             </HBox>
             <HBox alignment="CENTER" spacing="10">
-                <ComboBox fx:id="marcaModeloComboBox" promptText="Selecciona tipo de modelo" styleClass="input-field" />
+                <ComboBox fx:id="marcaModeloComboBox" promptText="Selecciona la marca vehiculo" styleClass="input-field" />
                 <ComboBox fx:id="provinciasComboBox" promptText="Selecciona la provincia" styleClass="input-field" />
                 <ComboBox fx:id="precioComboBox" promptText="Selecciona el precio" styleClass="input-field" />
                 <Button text="Mostrar Resultados" onMouseClicked='#handleFiltrarCategoria'/>
