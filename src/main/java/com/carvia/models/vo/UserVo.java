@@ -15,6 +15,12 @@ public class UserVo {
         this.password = password;
     }
 
+    public UserVo(int id, String username, String password, String email) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     public UserVo(int id, String username, String fullName, String email, String password) {
         this.id = id;

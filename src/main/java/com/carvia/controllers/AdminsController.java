@@ -57,9 +57,13 @@ public class AdminsController {
         UserVo selectedUser = userTable.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
             try {
-                userDao.eliminarUsuario(selectedUser);
-                userTable.getItems().remove(selectedUser);
-                showAlert("Success", "User deleted successfully", Alert.AlertType.INFORMATION);
+                if (selectedUser.getUsername().equals("admin")) {
+                    showAlert("Error", "Cannot delete admin user", Alert.AlertType.ERROR);
+                } else {
+                    userDao.eliminarUsuario(selectedUser);
+                    userTable.getItems().remove(selectedUser);
+                    showAlert("Success", "User deleted successfully", Alert.AlertType.INFORMATION);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 showAlert("Error", "Error deleting user", Alert.AlertType.ERROR);

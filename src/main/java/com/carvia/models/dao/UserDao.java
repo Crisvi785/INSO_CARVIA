@@ -88,9 +88,11 @@ import org.apache.logging.log4j.LogManager;
                 int id = resultSet.getInt("idUs");
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
-                usuarios.add(new UserVo(id, username, password));
-                System.out.println("Usuarios listados correctamente.");
+                String email = resultSet.getString("email");
+                usuarios.add(new UserVo(id, username, password, email));                
             }
+            System.out.println("Usuarios listados correctamente.");
+
         } catch (SQLException e) {
             logger.error("Error listing users");
             System.out.println("Error listando los usuarios.");
