@@ -44,15 +44,24 @@ public class LoginController {
         }
 
         UserVo user = userDao.getUserByUsername(username);
-
+        
+        
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
             UserSession.login(username);
-            logger.info("Inicio de sesión exitoso para el usuario: " + username);
-            App.setRoot("mainpage");
+            if(user.getId() == 6){
+                App.setRoot("admins");
+            }
+            else{
+                logger.info("Inicio de sesión exitoso para el usuario: " + username);
+                App.setRoot("mainpage");
+            }
+            
         } else {
             logger.warn("Inicio de sesión fallido: Usuario o contraseña incorrectos");
             AlertUtil.showAlert("Error", "Usuario o contraseña incorrectos", usernameField.getScene().getWindow());
         }
+
+        
     }
 
     private boolean isInputSuspicious(String input) {

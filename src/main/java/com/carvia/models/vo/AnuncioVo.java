@@ -1,6 +1,8 @@
 package com.carvia.models.vo;
 import java.time.LocalDate;
 
+import javafx.scene.image.Image;
+
 public class AnuncioVo {
     //Fecha, desc, precio, fotos
     public int id;
@@ -12,6 +14,11 @@ public class AnuncioVo {
     private int idUsuario;
 
     public AnuncioVo(){
+
+    }
+    
+    public AnuncioVo(double precio){
+        this.precio = precio; //ESTO ES UN VTO
     }
 
     //Getters

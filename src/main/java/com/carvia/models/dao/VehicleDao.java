@@ -66,7 +66,7 @@ public class VehicleDao {
         }
     }
 
-
+    /* 
     public List<VehicleVo> filtrarVehiculos(String marca, String provincia, String precio) {
         List<VehicleVo> vehiculos = new ArrayList<>();
 
@@ -96,6 +96,34 @@ public class VehicleDao {
 
         return vehiculos;
     }
+    */
+
+    //Filtra vehñiculos SOLO POR MARCA
+    public List<VehicleVo> filtrarVehiculos(String marca, String provincia, String precio) {
+        List<VehicleVo> vehiculos = new ArrayList<>();
+        String query = "SELECT * FROM Vehicles WHERE make = ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, marca);
+    
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                VehicleVo vehiculo = new VehicleVo();
+                vehiculo.setMarca(rs.getString("make"));
+                vehiculo.setModelo(rs.getString("model"));
+                vehiculo.setAnio(rs.getInt("year"));
+                vehiculo.setKilometraje(rs.getInt("kilometers"));
+                vehiculo.setTipoCombustible(rs.getString("fuel_type"));
+                vehiculo.setTransmision(rs.getString("transmission"));
+                vehiculos.add(vehiculo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return vehiculos;
+    }
+    
 }
 
     

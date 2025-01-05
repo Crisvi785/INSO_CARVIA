@@ -58,6 +58,24 @@ import java.sql.Connection;
          }
          return null;
      }
+
+     public UserVo getSuperUserbyUsername(String username){
+        String query = "SELECT * FROM Users WHERE idUs = 6";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            ResultSet resultset = statement.executeQuery();
+            if (resultset.next()) {
+                int id = resultset.getInt("idUs");
+                String password = resultset.getString("password");
+                logger.info("Admin " + username + " found");
+                return new UserVo(id, username, password);
+            }
+        } catch (SQLException e) {
+            logger.error("Error getting Admin " + username);
+            e.printStackTrace();
+        }
+        return null;
+     }
  }
 
 

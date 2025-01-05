@@ -12,10 +12,14 @@ import com.carvia.App;
 import com.carvia.models.UserSession;
 import com.carvia.models.dao.VehicleDao;
 import com.carvia.models.vo.VehicleVo;
+import com.carvia.utils.AlertUtil;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -23,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class MainPageController {
 
@@ -132,7 +137,7 @@ public class MainPageController {
 
     // Procesar los resultados filtrados
     for (VehicleVo vehiculo : vehiculosFiltrados) {
-        System.out.println("Vehículo encontrado: " + vehiculo.getMarca() + ", " + vehiculo.getModelo() + ", " + vehiculo.getProvincia() + ", " + vehiculo.getPrecio());
+        System.out.println("Vehículo encontrado: " + vehiculo.getMarca() + ", " + vehiculo.getModelo() + ", " + vehiculo.getColor() + ", " + vehiculo.getKilometraje());
     }
 }
 
@@ -168,46 +173,66 @@ public class MainPageController {
         } else {
             return; // No se reconoce la categoría
         }
-
         // Filtra los coches según la categoría seleccionada
         // filtrarVehiculosPorCategoria(categoria);
     }
+
+    @FXML
+    private void handleMostrarResultados(){
+        String marcaSeleccionada = marcaModeloComboBox.getValue(); 
+        if(marcaSeleccionada == null || marcaSeleccionada.isEmpty()){
+            System.out.println("Por favor, selecciona una marca.");
+            return;
+        }
+
+        VehicleDao vehicleDao = new VehicleDao();
+        List<VehicleVo> vehiculosFiltrados = vehicleDao.filtrarVehiculos(marcaSeleccionada, null, null);
+
+        if (vehiculosFiltrados.isEmpty()) {
+            System.out.println("No se encontraron vehículos para la marca seleccionada: " + marcaSeleccionada);
+            //AlertUtil.showAlert("Error", "Usuario o contraseña incorrectos", VehicleVo.getmodel().getWindow());
+
+            return;
+        }
+
+        try {
+           
+            App.setRoot("results");
+
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    
+      
     /*
-     * 
-     * 
-     * private void filtrarVehiculosPorCategoria(String categoria) {
-     * List<VehicleVo> vehiculos = DataSource.getVehicleById();
-     * 
-     * if (vehiculos == null || vehiculos.isEmpty()) {
-     * System.out.println("No hay vehículos disponibles en el DataSource.");
-     * return;
-     * }
-     * 
-     * List<VehicleVo> vehiculosFiltrados = vehiculos.stream()
-     * .filter(vehiculo -> vehiculo.getVehiclesByCategory() != null &&
-     * vehiculo.getVehiclesByCategory().equalsIgnoreCase(categoria))
-     * .collect(Collectors.toList());
-     * 
-     * if (vehiculosFiltrados.isEmpty()) {
-     * System.out.println("No se encontraron vehículos para la categoría: " +
-     * categoria);
-     * } else {
-     * mostrarVehiculos(vehiculosFiltrados);
-     * }
-     * }
-     * 
-     * 
-     * private void mostrarVehiculos(List<VehicleVo> vehiculos) {
-     * resultPane.getChildren().clear(); // Limpia los resultados anteriores
-     * 
-     * for (VehicleVo vehiculo : vehiculos) {
-     * // Cambia el texto del Label para mostrar la información relevante del
-     * vehículo
-     * Label vehiculoLabel = new Label(vehiculo.getMarca() + " " +
-     * vehiculo.getModelo() + " - " + vehiculo.getAnio());
-     * resultPane.getChildren().add(vehiculoLabel);
-     * }
-     * }
-     */
+    
+    private void filtrarVehiculosPorCategoria(String categoria) {
+        List<VehicleVo> vehiculos = DataSource.getVehicleById();
+    
+        if (vehiculos == null || vehiculos.isEmpty()) {
+            System.out.println("No hay vehículos disponibles en el DataSource.");
+            return;
+        }
+    
+        List<VehicleVo> vehiculosFiltrados = vehiculos.stream()
+            .filter(vehiculo -> vehiculo.getVehiclesByCategory() != null &&
+                    vehiculo.getVehiclesByCategory().equalsIgnoreCase(categoria))
+            .collect(Collectors.toList());
+    
+        if (vehiculosFiltrados.isEmpty()) {
+            System.out.println("No se encontraron vehículos para la categoría: " + categoria);
+        } else {
+            mostrarVehiculos(vehiculosFiltrados);
+        }
+    }
+    
+    */ 
+    
+ 
+    
 
 }

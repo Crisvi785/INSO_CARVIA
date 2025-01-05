@@ -2,6 +2,8 @@ package com.carvia.models.vo;
 
 import java.util.List;
 
+import javafx.scene.image.Image;
+
 public class VehicleVo {
     private String marca;
     private String modelo;
@@ -13,6 +15,14 @@ public class VehicleVo {
 
     // Constructor vacío
     public VehicleVo() {
+    }
+
+    public VehicleVo(String marca, String modelo, int anio) {
+        //TODO Auto-generated constructor stub ESTO SERIA UN VTO
+        this.marca = marca;
+        this.modelo = modelo;
+        this.anio = anio;
+      
     }
 
     // Getters y Setters
