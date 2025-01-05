@@ -57,7 +57,7 @@ public class AdminsController {
         UserVo selectedUser = userTable.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
             try {
-                if (selectedUser.getUsername().equals("admin")) {
+                if (selectedUser.getId() == 1) {
                     showAlert("Error", "Cannot delete admin user", Alert.AlertType.ERROR);
                 } else {
                     userDao.eliminarUsuario(selectedUser);

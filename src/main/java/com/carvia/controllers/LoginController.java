@@ -48,7 +48,7 @@ public class LoginController {
         
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
             UserSession.login(username);
-            if(user.getId() == 6){
+            if(user.getId() == 1){
                 App.setRoot("admins");
             }
             else{
