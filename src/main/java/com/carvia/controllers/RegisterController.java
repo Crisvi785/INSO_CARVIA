@@ -58,7 +58,7 @@ public class RegisterController {
         if (!PasswordValidator.isValid(password)) {
             AlertUtil.showAlert(
                 "Error",
-                "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
+                "Contraseña (mínimo): 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
                 actualWindow
             );
             logger.warn("Invalid password format");
