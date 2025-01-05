@@ -1,37 +1,80 @@
 package com.carvia.controllers;
 
+import com.carvia.models.dao.UserDao;
+import com.carvia.models.vo.UserVo;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.List;
 
 public class AdminsController {
 
     @FXML
-    private TableView<?> userTable;
+    private TableView<UserVo> userTable;
 
     @FXML
-    private TableColumn<?, ?> colId;
+    private TableColumn<UserVo, Integer> colId;
 
     @FXML
-    private TableColumn<?, ?> colUsername;
+    private TableColumn<UserVo, String> colUsername;
 
     @FXML
-    private TableColumn<?, ?> colEmail;
+    private TableColumn<UserVo, String> colEmail;
+
+    private UserDao userDao;
+
+    public AdminsController() {
+        userDao = new UserDao();
+    }
+
+    @FXML
+    private void initialize() {
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        loadUserData();
+    }
+
+    private void loadUserData() {
+        try {
+            List<UserVo> userList = userDao.listarUsuarios();
+            ObservableList<UserVo> userObservableList = FXCollections.observableArrayList(userList);
+            userTable.setItems(userObservableList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Error loading user data", Alert.AlertType.ERROR);
+        }
+    }
 
     @FXML
     private void handleDeleteUser() {
-        // Lógica para eliminar un usuario
-        if (userTable.getSelectionModel().getSelectedItem() != null) {
-            System.out.println("Usuario eliminado correctamente.");
+        UserVo selectedUser = userTable.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            try {
+                userDao.eliminarUsuario(selectedUser);
+                userTable.getItems().remove(selectedUser);
+                showAlert("Success", "User deleted successfully", Alert.AlertType.INFORMATION);
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("Error", "Error deleting user", Alert.AlertType.ERROR);
+            }
         } else {
-            // Mostrar un mensaje si no hay un usuario seleccionado
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Advertencia");
-            alert.setHeaderText(null);
-            alert.setContentText("Por favor, selecciona un usuario para eliminar.");
-            alert.showAndWait();
+            showAlert("Warning", "Please select a user to delete", Alert.AlertType.WARNING);
         }
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 
