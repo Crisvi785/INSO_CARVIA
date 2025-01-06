@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
 
-<BorderPane fx:id="resultPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.carvia.controllers.ResultsController" style="-fx-padding: 20px;">
+<BorderPane fx:id="resultPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.ResultsController" style="-fx-padding: 20px;">
     <top>
         <Label text="Catálogo de Vehículos" style="-fx-font-size: 24px; -fx-padding: 10px;" />
     </top>
     <center>
-        <TableView fx:id="tablaVehiculos" prefWidth="800" prefHeight="400">
+        <TableView fx:id="resultadosTable" prefHeight="400.0" prefWidth="600.0">
             <columns>
-                <TableColumn fx:id="columnaMarca" text="Marca" prefWidth="150" />
-                <TableColumn fx:id="columnaModelo" text="Modelo" prefWidth="150" />
-                <TableColumn fx:id="columnaAño" text="Año" prefWidth="100" />
-                <TableColumn fx:id="columnaPrecio" text="Precio" prefWidth="100" />
-                <TableColumn fx:id="columnaComprar" text="Comprar" prefWidth="100" />
+                <TableColumn text="Marca" fx:id="colMarca" />
+                <TableColumn text="Modelo" fx:id="colModelo" />
+                <TableColumn text="Año" fx:id="colAno" />
+                <TableColumn text="Provincia" fx:id="colProvincia" />
+                <TableColumn text="Descripción" fx:id="colDescripcion" />
+                <TableColumn text="Precio" fx:id="colPrecio" />
+                <TableColumn text="Acción" fx:id="colAccion" />
             </columns>
         </TableView>
     </center>
     <bottom>
         <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10px;">
-            <Button text="Actualizar"  />
-            <Button text="Cerrar"  />
+            <Button text="Actualizar" onAction="#handleActualizar" />
+            <Button text="Cerrar" onAction="#handleBackToMain" />
         </HBox>
     </bottom>
 </BorderPane>

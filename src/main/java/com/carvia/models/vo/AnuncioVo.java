@@ -1,6 +1,7 @@
 package com.carvia.models.vo;
 import java.time.LocalDate;
 
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
 public class AnuncioVo {
@@ -9,7 +10,9 @@ public class AnuncioVo {
     public LocalDate fecha;
     public String descripcion;
     public double precio;
+    public String provincia;
     public String urlFoto;
+    // public Button comprarButton;
     private int idVehiculo; // ID del vehículo (clave foránea)
     private int idUsuario;
 
@@ -19,6 +22,13 @@ public class AnuncioVo {
     
     public AnuncioVo(double precio){
         this.precio = precio; //ESTO ES UN VTO
+    }
+
+    public AnuncioVo(String resultProvincia, String descripcion, double resultPrecio) {
+        this.provincia = resultProvincia;
+        this.descripcion = descripcion;
+        this.precio = resultPrecio;
+        // this.comprarButton = comprarButton;
     }
 
     //Getters
@@ -36,6 +46,10 @@ public class AnuncioVo {
 
     public double getPrecio(){
         return precio;
+    }
+
+    public String getProvincia() {
+        return provincia;
     }
 
     public String getUrlFoto(){
@@ -57,6 +71,10 @@ public class AnuncioVo {
 
     public void setPrecio(double precio){
         this.precio = precio;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 
     public void getPrecioBusq (String precio){

@@ -56,6 +56,9 @@ public class VentaController {
     private TextField txtPrecio;
 
     @FXML
+    private TextField txtProvincia;
+
+    @FXML
     private TextArea txtDescripcion;
 
     @FXML
@@ -144,6 +147,7 @@ private void handlePublishAd() {
         AnuncioVo anuncio = new AnuncioVo();
         anuncio.setDescripcion(txtDescripcion.getText());
         anuncio.setPrecio(Double.parseDouble(txtPrecio.getText()));
+        anuncio.setProvincia(txtProvincia.getText());
         anuncio.setIdVehiculo(vehiculoId); // Asignar el ID del vehículo al anuncio
 
         // Instanciar el DAO para anuncios

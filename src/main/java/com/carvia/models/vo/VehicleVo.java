@@ -18,11 +18,9 @@ public class VehicleVo {
     }
 
     public VehicleVo(String marca, String modelo, int anio) {
-        //TODO Auto-generated constructor stub ESTO SERIA UN VTO
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
-      
     }
 
     // Getters y Setters

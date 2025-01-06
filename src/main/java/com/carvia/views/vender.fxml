@@ -54,6 +54,10 @@
             <TextField fx:id="txtPrecio" promptText="Ej: 15000" styleClass="input-field" />
         </HBox>
         <HBox spacing="10">
+            <Label text="Provincia:" styleClass="field-label" />
+            <TextField fx:id="txtProvincia" promptText="Ej: León" styleClass="input-field" />
+        </HBox>
+        <HBox spacing="10">
             <Label text="Descripción del Vehículo:" styleClass="field-label" />
             <TextArea fx:id="txtDescripcion" promptText="Escribe una descripción del vehículo (características, estado, etc.)" />
         </HBox>

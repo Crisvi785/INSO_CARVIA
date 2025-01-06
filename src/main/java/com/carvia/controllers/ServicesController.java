@@ -11,6 +11,6 @@ public class ServicesController {
     @FXML
     private void handleBackToMain() throws IOException {
         App.setRoot("mainpage");
-        }
+    }
     
 }

@@ -1,5 +1,10 @@
 package com.carvia.controllers;
 
+import java.io.IOException;
+
+import com.carvia.App;
+import com.carvia.models.UserSession;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -29,9 +34,12 @@ public class AccountController {
         // Agrega lógica adicional para validar y persistir los datos
     }
 
-    @FXML
-    private void handleLogout() {
-        System.out.println("Cerrar Sesión");
-        // Aquí puedes redirigir al usuario a la pantalla de login o cerrar la sesión
+     @FXML
+    private void handleLogout() throws IOException {
+        UserSession.logout();
+        System.out.println("Sesión cerrada correctamente");
+
+        // Redirigir a la pantalla de inicio de sesión
+        App.setRoot("login");
     }
 }

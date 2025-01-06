@@ -1,32 +1,26 @@
 package com.carvia.controllers;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.sql.DataSource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import com.carvia.App;
-import com.carvia.models.UserSession;
-import com.carvia.models.dao.VehicleDao;
-import com.carvia.models.vo.VehicleVo;
-import com.carvia.utils.AlertUtil;
-
+import com.carvia.models.dao.AnuncioDao;
+import com.carvia.models.vto.VehicleAdVto;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ComboBox;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.List;
+
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import com.carvia.App;
+import com.carvia.models.UserSession;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class MainPageController {
 
@@ -72,6 +66,12 @@ public class MainPageController {
     @FXML
     private Button mostrarResultadosButton;
 
+    private AnuncioDao anuncioDao;
+
+    public MainPageController() {
+        anuncioDao = new AnuncioDao();
+    }
+
     @FXML
     public void initialize() {
         // cargarOpcionesMarcaModelo();
@@ -81,8 +81,8 @@ public class MainPageController {
         // lblTitle.setText("Bienvenido a Carvia");
         // lblDescription.setText("Tu lugar ideal para comprar y vender coches de manera
         // segura y confiable.");
-        marcaModeloComboBox.setItems(FXCollections.observableArrayList("Ford", "Volkswagen", "BMW", "Mercedes-Benz", "Audi", "Toyota", "Honda", "Nissan", "Hyundai", "Kia", "Peugeot", "Renault", "Fiat", "Chevrolet", "Subaru", "Mazda", "Land Rover", "Jaguar", "Lexus", "Volvo", "Porsche", "Dodge", "Chrysler", "Mitsubishi", "Citroën", "Opel", "Seat", "Skoda", "Tesla", "Infiniti", "Acura", "Lincoln", "Buick", "GMC", "Alfa Romeo", "Aston Martin", "Bentley", "Bugatti", "Ferrari", "Lamborghini", "Maserati", "Rolls-Royce"));
-        provinciasComboBox.setItems(FXCollections.observableArrayList("Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "La Coruña", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
+        marcaModeloComboBox.setItems(FXCollections.observableArrayList("Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln", "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
+        provinciasComboBox.setItems(FXCollections.observableArrayList("Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
         precioComboBox.setItems(FXCollections.observableArrayList("Menos de 1.000 €", "1.000 € - 2.000 €", "2.000 € - 3.000 €", "3.000 € - 4.000 €", "4.000 € - 5.000 €", "5.000 € - 6.000 €", "6.000 € - 7.000 €", "7.000 € - 8.000 €", "8.000 € - 9.000 €", "9.000 € - 10.000 €", "10.000 € - 11.000 €", "11.000 € - 12.000 €", "12.000 € - 13.000 €", "13.000 € - 14.000 €", "14.000 € - 15.000 €", "15.000 € - 16.000 €", "16.000 € - 17.000 €", "17.000 € - 18.000 €", "18.000 € - 19.000 €", "19.000 € - 20.000 €", "20.000 € - 21.000 €", "21.000 € - 22.000 €", "22.000 € - 23.000 €", "23.000 € - 24.000 €", "24.000 € - 25.000 €", "25.000 € - 30.000 €", "30.000 € - 35.000 €", "35.000 € - 40.000 €", "40.000 € - 45.000 €", "45.000 € - 50.000 €", "50.000 € - 55.000 €", "55.000 € - 60.000 €", "60.000 € - 65.000 €", "65.000 € - 70.000 €", "Más de 70.000 €"));
 
         lblFooter.setText("© 2024 Carvia. Todos los derechos reservados.");
@@ -122,24 +122,25 @@ public class MainPageController {
 
     }
 
+    /*
     @FXML
     private void handleFiltrarCategoria() throws IOException{
 
-    String marcaSeleccionada = marcaModeloComboBox.getValue();
-    String provinciaSeleccionada = provinciasComboBox.getValue();
-    String precioSeleccionado = precioComboBox.getValue();
+        String marcaSeleccionada = marcaModeloComboBox.getValue();
+        String provinciaSeleccionada = provinciasComboBox.getValue();
+        String precioSeleccionado = precioComboBox.getValue();
 
-    VehicleDao vehicleDao = new VehicleDao();
+        VehicleDao vehicleDao = new VehicleDao();
 
-    // Filtrar los vehículos según las selecciones
-    List<VehicleVo> vehiculosFiltrados = vehicleDao.filtrarVehiculos(marcaSeleccionada, provinciaSeleccionada, precioSeleccionado);
+        // Filtrar los vehículos según las selecciones
+        List<VehicleVo> vehiculosFiltrados = vehicleDao.filtrarVehiculos(marcaSeleccionada, provinciaSeleccionada, precioSeleccionado);
 
-    // Procesar los resultados filtrados
-    for (VehicleVo vehiculo : vehiculosFiltrados) {
-        System.out.println("Vehículo encontrado: " + vehiculo.getMarca() + ", " + vehiculo.getModelo() + ", " + vehiculo.getColor() + ", " + vehiculo.getKilometraje());
+        // Procesar los resultados filtrados
+        for (VehicleVo vehiculo : vehiculosFiltrados) {
+            System.out.println("Vehículo encontrado: " + vehiculo.getMarca() + ", " + vehiculo.getModelo() + ", " + vehiculo.getColor() + ", " + vehiculo.getKilometraje());
+        }
     }
-}
-
+*/
     
 
 
@@ -177,34 +178,50 @@ public class MainPageController {
     }
 
     @FXML
-    private void handleMostrarResultados(){
-        String marcaSeleccionada = marcaModeloComboBox.getValue(); 
-        if(marcaSeleccionada == null || marcaSeleccionada.isEmpty()){
-            System.out.println("Por favor, selecciona una marca.");
-            return;
-        }
-
-        VehicleDao vehicleDao = new VehicleDao();
-        List<VehicleVo> vehiculosFiltrados = vehicleDao.filtrarVehiculos(marcaSeleccionada, null, null);
-
-        if (vehiculosFiltrados.isEmpty()) {
-            System.out.println("No se encontraron vehículos para la marca seleccionada: " + marcaSeleccionada);
-            //AlertUtil.showAlert("Error", "Usuario o contraseña incorrectos", VehicleVo.getmodel().getWindow());
-
-            return;
-        }
+    private void handleMostrarResultados() {
+        // TODOS LOS PROBLEMAS VIENEN DE AQUÍ, HAY QUE HACER QUE EL GETVALUE() DEVUELVA ALGO
+        // ENTENDIBLE POR EL DAO, Y EN CASO DE QUE NO HAYA NADA SELECCIONADO, QUE NO DEVUELVA NADA.
+        String marca = marcaModeloComboBox.getValue();
+        String provincia = provinciasComboBox.getValue();
+        String precio = precioComboBox.getValue();
 
         try {
-           
-            App.setRoot("results");
-
-            
-        } catch (IOException e) {
+            List<VehicleAdVto> anuncios = anuncioDao.filtrarAnuncios(marca, provincia, precio);
+            mostrarResultados(anuncios);
+        } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Error", "Error loading results", Alert.AlertType.ERROR);
         }
     }
 
-    
+    private void mostrarResultados(List<VehicleAdVto> anuncios) {
+        try {
+            // Load the FXML file for the results page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/carvia/views/results.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller for the results page
+            ResultsController controller = loader.getController();
+            controller.setAnuncios(anuncios);
+
+            // Show the results page
+            Stage stage = new Stage();
+            stage.setTitle("Resultados");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Error showing results", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     
       
     /*

@@ -1,74 +1,79 @@
 package com.carvia.controllers;
 
+import com.carvia.models.vto.VehicleAdVto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.List;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
-import com.carvia.models.vo.AnuncioVo;
+import com.carvia.App;
 import com.carvia.models.vo.VehicleVo;
-import com.carvia.models.vto.VehicleAdVto;
-import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
 
 public class ResultsController {
 
     @FXML
-    private ListView<VehicleVo> resultadosListView;
-    @FXML
     private BorderPane resultPane; // Panel donde se mostrarán los resultados
 
     @FXML
-    private TableView<VehicleAdVto> tablaVehiculos;
+    private TableView<VehicleAdVto> resultadosTable;
 
     @FXML
-    private TableColumn<VehicleAdVto, String> columnaMarca;
-    @FXML
-    private TableColumn<VehicleAdVto, String> columnaModelo;
-    @FXML
-    private TableColumn<VehicleAdVto, Integer> columnaAño;
-    @FXML
-    private TableColumn<VehicleAdVto, Double> columnaPrecio;
+    private TableColumn<VehicleAdVto, String> colMarca;
 
     @FXML
-    private TableColumn<VehicleAdVto, Void> columnaComprar;
+    private TableColumn<VehicleAdVto, String> colModelo;
 
-    private ObservableList<VehicleVo> listaVehiculos = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<VehicleAdVto, Integer> colAno;
+
+    @FXML
+    private TableColumn<VehicleAdVto, String> colProvincia;
+
+    @FXML
+    private TableColumn<VehicleAdVto, String> colDescripcion;
+
+    @FXML
+    private TableColumn<VehicleAdVto, Double> colPrecio;
+
+    @FXML
+    private TableColumn<VehicleAdVto, Button> colAccion;
 
     private final Connection connection;
+
 
     public ResultsController() {
         this.connection = BBDDController.getInstance().getConnection();
     }
 
     @FXML
-    public void initialize() {
-        columnaMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
-        columnaModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
-        columnaAño.setCellValueFactory(new PropertyValueFactory<>("anio"));
-        columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+    private void initialize() {
+        
+        colMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        colModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        colAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
+        colProvincia.setCellValueFactory(new PropertyValueFactory<>("provincia"));
+        colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        // colAccion.setCellValueFactory(new PropertyValueFactory<>("comprarButton"));
 
-        columnaComprar.setCellFactory(param -> new TableCell<>() {
+        
+        colAccion.setCellFactory(param -> new TableCell<>() {
             private final Button botonComprar = new Button("Comprar");
             private final PaymentController paymentController = new PaymentController(); // Instancia del controlador de pagos
 
@@ -90,7 +95,7 @@ public class ResultsController {
             }
 
             @Override
-            protected void updateItem(Void item, boolean empty) {
+            protected void updateItem(Button item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
@@ -99,10 +104,16 @@ public class ResultsController {
                 }
             }
         });
-
-        cargarDatos();
+        
+        // cargarDatos();
     }
 
+    public void setAnuncios(List<VehicleAdVto> anuncios) {
+        ObservableList<VehicleAdVto> anuncioObservableList = FXCollections.observableArrayList(anuncios);
+        resultadosTable.setItems(anuncioObservableList);
+    }
+
+    /*
     public void cargarDatos() {
         listaVehiculos.clear();
         String query = "SELECT v.make, v.model, v.year, a.price " +
@@ -133,7 +144,7 @@ public class ResultsController {
             e.printStackTrace();
         }
     }
-
+    */
   
 
     public void mostrarVehiculos(List<VehicleVo> vehiculos) {
@@ -189,6 +200,16 @@ public class ResultsController {
     // Método para vincular el contenedor resultPane
     public void setResultPane(VBox resultPane) {
         // this.resultPane = resultPane;
+    }
+
+    @FXML
+    private void handleBackToMain() throws IOException {
+        App.setRoot("mainpage");
+    }
+
+    @FXML
+    private void handleActualizar() {
+        // Reload the data (this method can be implemented as needed)
     }
 
 }
