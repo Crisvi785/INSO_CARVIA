@@ -14,6 +14,15 @@
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.LoginController"
             stylesheets="@CSS/login.css">
+    <top>
+        <HBox alignment="CENTER_LEFT">
+            <Button onAction="#handleBackToMain">
+                <ImageView>
+                    <Image url="@../resources/images/atras.png" />
+                </ImageView>
+            </Button>
+        </HBox>
+    </top>
     <left>
         <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER" prefWidth="400.0">
             
