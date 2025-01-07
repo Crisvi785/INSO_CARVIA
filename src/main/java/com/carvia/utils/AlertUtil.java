@@ -41,7 +41,7 @@ public class AlertUtil {
             alert.setContentText(message);
         }
 
-        alert.setResizable(false);
+        alert.setResizable(true);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
         alert.showAndWait();

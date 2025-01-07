@@ -139,29 +139,6 @@ public class MainPageController {
 
     }
 
-    /*
-    @FXML
-    private void handleFiltrarCategoria() throws IOException{
-
-        String marcaSeleccionada = marcaModeloComboBox.getValue();
-        String provinciaSeleccionada = provinciasComboBox.getValue();
-        String precioSeleccionado = precioComboBox.getValue();
-
-        VehicleDao vehicleDao = new VehicleDao();
-
-        // Filtrar los vehículos según las selecciones
-        List<VehicleVo> vehiculosFiltrados = vehicleDao.filtrarVehiculos(marcaSeleccionada, provinciaSeleccionada, precioSeleccionado);
-
-        // Procesar los resultados filtrados
-        for (VehicleVo vehiculo : vehiculosFiltrados) {
-            System.out.println("Vehículo encontrado: " + vehiculo.getMarca() + ", " + vehiculo.getModelo() + ", " + vehiculo.getColor() + ", " + vehiculo.getKilometraje());
-        }
-    }
-*/
-    
-
-
-
 
     @FXML
     private VBox segundaManoBox, nuevosBox, km0Box, rentingBox, certificadosBox, caravanasBox;
@@ -195,9 +172,9 @@ public class MainPageController {
     }
 
     @FXML
-    private void handleMostrarResultados() {
-        // TODOS LOS PROBLEMAS VIENEN DE AQUÍ, HAY QUE HACER QUE EL GETVALUE() DEVUELVA ALGO
-        // ENTENDIBLE POR EL DAO, Y EN CASO DE QUE NO HAYA NADA SELECCIONADO, QUE NO DEVUELVA NADA.
+    private void handleMostrarResultados() throws IOException {
+        // Van por aquí los tiros para que salga en la misma ventana y no en una aparte.
+        // App.setRoot("results");
         String marca = marcaModeloComboBox.getValue();
         String provincia = provinciasComboBox.getValue();
         double precioMin = precioRangeSlider.getLowValue();
