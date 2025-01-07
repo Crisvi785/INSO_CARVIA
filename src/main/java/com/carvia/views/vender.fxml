@@ -20,7 +20,7 @@
         <Label text="Datos del Coche" styleClass="section-label" />
         <HBox spacing="10">
             <Label text="Marca:" styleClass="field-label" />
-            <TextField fx:id="txtMarca" promptText="Ej: Toyota" styleClass="input-field" />
+            <ComboBox fx:id="cmbMarca" promptText="Ej: Toyota" styleClass="input-field" />
         </HBox>
         <HBox spacing="10">
             <Label text="Modelo:" styleClass="field-label" />
@@ -55,7 +55,7 @@
         </HBox>
         <HBox spacing="10">
             <Label text="Provincia:" styleClass="field-label" />
-            <TextField fx:id="txtProvincia" promptText="Ej: León" styleClass="input-field" />
+            <ComboBox fx:id="cmbProvincia" promptText="Ej: León" styleClass="input-field" />
         </HBox>
         <HBox spacing="10">
             <Label text="Descripción del Vehículo:" styleClass="field-label" />

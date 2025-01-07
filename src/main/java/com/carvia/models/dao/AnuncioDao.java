@@ -1,5 +1,6 @@
 package com.carvia.models.dao;
 
+import com.carvia.controllers.BBDDController;
 import com.carvia.controllers.PaymentController;
 import com.carvia.models.vto.VehicleAdVto;
 
@@ -18,21 +19,20 @@ public class AnuncioDao {
 
     public AnuncioDao() {
         // Initialize the connection
+        this.connection = BBDDController.getInstance().getConnection();
     }
 
-    public List<VehicleAdVto> filtrarAnuncios(String marca, String provincia, String precio) throws SQLException {
+    public List<VehicleAdVto> filtrarAnuncios(String marca, String provincia, Double precioMin, Double precioMax) throws SQLException {
         List<VehicleAdVto> anuncios = new ArrayList<>();
-        StringBuilder query = new StringBuilder("SELECT * FROM Anuncios INNER JOIN Vehiculos ON Anuncios.vehicleId = Vehiculos.id WHERE 1=1");
+        StringBuilder query = new StringBuilder("SELECT * FROM Advertisements INNER JOIN Vehicles ON Advertisements.idVe = Vehicles.idVe WHERE 1=1");
 
         if (marca != null && !marca.isEmpty()) {
-            query.append(" AND Vehiculos.marca = ?");
+            query.append(" AND Vehicles.marca = ?");
         }
         if (provincia != null && !provincia.isEmpty()) {
-            query.append(" AND Anuncios.provincia = ?");
+            query.append(" AND Advertisements.provincia = ?");
         }
-        if (precio != null && !precio.isEmpty()) {
-            query.append(" AND Anuncios.precio <= ?");
-        }
+        query.append(" AND Advertisements.price BETWEEN ? AND ?");
 
         try (PreparedStatement statement = connection.prepareStatement(query.toString())) {
             int paramIndex = 1;
@@ -43,18 +43,17 @@ public class AnuncioDao {
             if (provincia != null && !provincia.isEmpty()) {
                 statement.setString(paramIndex++, provincia);
             }
-            if (precio != null && !precio.isEmpty()) {
-                statement.setDouble(paramIndex++, Double.parseDouble(precio));
-            }
+            statement.setDouble(paramIndex++, precioMin);
+            statement.setDouble(paramIndex++, precioMax);
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String resultMarca = resultSet.getString("marca");
-                String modelo = resultSet.getString("modelo");
-                int ano = resultSet.getInt("ano");
+                String modelo = resultSet.getString("model");
+                int ano = resultSet.getInt("year");
                 String resultProvincia = resultSet.getString("provincia");
-                String descripcion = resultSet.getString("descripcion");
-                double resultPrecio = resultSet.getDouble("precio");
+                String descripcion = resultSet.getString("description");
+                double resultPrecio = resultSet.getDouble("price");
                 /*
                 Button comprarButton = new Button("Comprar");
                 // Add action to the button

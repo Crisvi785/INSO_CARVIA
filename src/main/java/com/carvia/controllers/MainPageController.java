@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import org.controlsfx.control.RangeSlider;
 
 import java.io.IOException;
 import java.util.List;
@@ -61,7 +62,13 @@ public class MainPageController {
     private ComboBox<String> provinciasComboBox;
 
     @FXML
-    private ComboBox<String> precioComboBox;
+    private RangeSlider precioRangeSlider;
+
+    @FXML
+    private Label minPriceLabel;
+
+    @FXML
+    private Label maxPriceLabel;
 
     @FXML
     private Button mostrarResultadosButton;
@@ -83,7 +90,17 @@ public class MainPageController {
         // segura y confiable.");
         marcaModeloComboBox.setItems(FXCollections.observableArrayList("Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln", "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
         provinciasComboBox.setItems(FXCollections.observableArrayList("Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
-        precioComboBox.setItems(FXCollections.observableArrayList("Menos de 1.000 €", "1.000 € - 2.000 €", "2.000 € - 3.000 €", "3.000 € - 4.000 €", "4.000 € - 5.000 €", "5.000 € - 6.000 €", "6.000 € - 7.000 €", "7.000 € - 8.000 €", "8.000 € - 9.000 €", "9.000 € - 10.000 €", "10.000 € - 11.000 €", "11.000 € - 12.000 €", "12.000 € - 13.000 €", "13.000 € - 14.000 €", "14.000 € - 15.000 €", "15.000 € - 16.000 €", "16.000 € - 17.000 €", "17.000 € - 18.000 €", "18.000 € - 19.000 €", "19.000 € - 20.000 €", "20.000 € - 21.000 €", "21.000 € - 22.000 €", "22.000 € - 23.000 €", "23.000 € - 24.000 €", "24.000 € - 25.000 €", "25.000 € - 30.000 €", "30.000 € - 35.000 €", "35.000 € - 40.000 €", "40.000 € - 45.000 €", "45.000 € - 50.000 €", "50.000 € - 55.000 €", "55.000 € - 60.000 €", "60.000 € - 65.000 €", "65.000 € - 70.000 €", "Más de 70.000 €"));
+        precioRangeSlider.setLowValue(0);
+        precioRangeSlider.setHighValue(70000);
+        // Add listeners to update the labels in real-time
+        precioRangeSlider.lowValueProperty().addListener((observable, oldValue, newValue) -> {
+            minPriceLabel.setText(String.format("%.0f", newValue));
+        });
+
+        precioRangeSlider.highValueProperty().addListener((observable, oldValue, newValue) -> {
+            maxPriceLabel.setText(String.format("%.0f", newValue));
+        });
+        // precioComboBox.setItems(FXCollections.observableArrayList("Menos de 1.000 €", "1.000 € - 2.000 €", "2.000 € - 3.000 €", "3.000 € - 4.000 €", "4.000 € - 5.000 €", "5.000 € - 6.000 €", "6.000 € - 7.000 €", "7.000 € - 8.000 €", "8.000 € - 9.000 €", "9.000 € - 10.000 €", "10.000 € - 11.000 €", "11.000 € - 12.000 €", "12.000 € - 13.000 €", "13.000 € - 14.000 €", "14.000 € - 15.000 €", "15.000 € - 16.000 €", "16.000 € - 17.000 €", "17.000 € - 18.000 €", "18.000 € - 19.000 €", "19.000 € - 20.000 €", "20.000 € - 21.000 €", "21.000 € - 22.000 €", "22.000 € - 23.000 €", "23.000 € - 24.000 €", "24.000 € - 25.000 €", "25.000 € - 30.000 €", "30.000 € - 35.000 €", "35.000 € - 40.000 €", "40.000 € - 45.000 €", "45.000 € - 50.000 €", "50.000 € - 55.000 €", "55.000 € - 60.000 €", "60.000 € - 65.000 €", "65.000 € - 70.000 €", "Más de 70.000 €"));
 
         lblFooter.setText("© 2024 Carvia. Todos los derechos reservados.");
 
@@ -183,10 +200,12 @@ public class MainPageController {
         // ENTENDIBLE POR EL DAO, Y EN CASO DE QUE NO HAYA NADA SELECCIONADO, QUE NO DEVUELVA NADA.
         String marca = marcaModeloComboBox.getValue();
         String provincia = provinciasComboBox.getValue();
-        String precio = precioComboBox.getValue();
+        double precioMin = precioRangeSlider.getLowValue();
+        double precioMax = precioRangeSlider.getHighValue();
+        //String precio = precioComboBox.getValue();
 
         try {
-            List<VehicleAdVto> anuncios = anuncioDao.filtrarAnuncios(marca, provincia, precio);
+            List<VehicleAdVto> anuncios = anuncioDao.filtrarAnuncios(marca, provincia, precioMin, precioMax);
             mostrarResultados(anuncios);
         } catch (Exception e) {
             e.printStackTrace();

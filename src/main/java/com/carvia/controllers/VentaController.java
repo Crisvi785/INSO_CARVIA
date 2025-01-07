@@ -2,25 +2,13 @@ package com.carvia.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.List;
 import java.io.IOException;
-import java.util.Date;
-
 import com.carvia.App;
 import com.carvia.models.UserSession;
 import com.carvia.models.dao.AnuncioDao;
@@ -35,7 +23,7 @@ import javafx.scene.control.ComboBox;
 public class VentaController {
 
     @FXML
-    private TextField txtMarca;
+    private ComboBox<String> cmbMarca;
 
     @FXML
     private TextField txtModelo;
@@ -56,7 +44,7 @@ public class VentaController {
     private TextField txtPrecio;
 
     @FXML
-    private TextField txtProvincia;
+    private ComboBox<String> cmbProvincia;
 
     @FXML
     private TextArea txtDescripcion;
@@ -69,6 +57,8 @@ public class VentaController {
         // Opciones para los ComboBox
         cmbGasolina.setItems(FXCollections.observableArrayList("Gasolina", "Diésel", "Eléctrico", "Híbrido"));
         cmbTransmision.setItems(FXCollections.observableArrayList("Manual", "Automático"));
+        cmbMarca.setItems(FXCollections.observableArrayList("Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln", "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
+        cmbProvincia.setItems(FXCollections.observableArrayList("Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
     }
 
     private List<File> selectedImages;
@@ -116,9 +106,9 @@ public class VentaController {
 private void handlePublishAd() {
     try {
         // Validar los datos del formulario
-        if (txtMarca.getText().isEmpty() || txtModelo.getText().isEmpty() || txtAnio.getText().isEmpty() ||
+        if (cmbMarca.getValue().isEmpty() || txtModelo.getText().isEmpty() || txtAnio.getText().isEmpty() ||
                 txtKms.getText().isEmpty() || cmbGasolina.getValue() == null || cmbTransmision.getValue() == null ||
-                txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty() ||
+                txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty() || cmbProvincia.getValue().isEmpty() || 
                 selectedImages == null || selectedImages.isEmpty()) {
             System.out.println("Por favor, completa todos los campos y sube al menos una imagen.");
             return;
@@ -126,7 +116,7 @@ private void handlePublishAd() {
 
         // Crear un objeto VehicleVo con los datos del formulario
         VehicleVo vehiculo = new VehicleVo();
-        vehiculo.setMarca(txtMarca.getText());
+        vehiculo.setMarca(cmbMarca.getValue());
         vehiculo.setModelo(txtModelo.getText());
         vehiculo.setAnio(Integer.parseInt(txtAnio.getText()));
         vehiculo.setKilometraje(Integer.parseInt(txtKms.getText()));
@@ -147,7 +137,7 @@ private void handlePublishAd() {
         AnuncioVo anuncio = new AnuncioVo();
         anuncio.setDescripcion(txtDescripcion.getText());
         anuncio.setPrecio(Double.parseDouble(txtPrecio.getText()));
-        anuncio.setProvincia(txtProvincia.getText());
+        anuncio.setProvincia(cmbProvincia.getValue());
         anuncio.setIdVehiculo(vehiculoId); // Asignar el ID del vehículo al anuncio
 
         // Instanciar el DAO para anuncios

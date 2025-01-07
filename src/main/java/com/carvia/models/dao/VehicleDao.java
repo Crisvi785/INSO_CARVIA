@@ -26,7 +26,7 @@ public class VehicleDao {
     }
 
     public int insertVehiculo(VehicleVo vehiculo) {
-        String query = "INSERT INTO Vehicles (make, model, year, kilometers, fuel_type, transmission) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Vehicles (marca, model, year, kilometers, fuel_type, transmission) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, vehiculo.getMarca());
             statement.setString(2, vehiculo.getModelo());
@@ -52,13 +52,14 @@ public class VehicleDao {
         UserVo user = new UserVo();
         VehicleVo vehiculo = new VehicleVo();
         // Modificamos la consulta para que 'fecha' tome el valor de CURRENT_DATE
-        String query = "INSERT INTO Advertisements (idVe, idUs, date, description, price, images) VALUES (?, ?, CURRENT_DATE, ?, ?, ?)";
+        String query = "INSERT INTO Advertisements (idVe, idUs, date, description, price, images, provincia) VALUES (?, ?, CURRENT_DATE, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(3, anuncio.getDescripcion());
             statement.setDouble(4, anuncio.getPrecio());
             statement.setString(5, anuncio.getUrlFoto());
             statement.setInt(1, anuncio.getIdVehiculo()); // Asignar el ID del vehículo (clave foránea)
             statement.setInt(2, anuncio.getIdUsuario());
+            statement.setString(6, anuncio.getProvincia());
             return statement.executeUpdate() > 0; // Retorna true si se insertó al menos un registro
         } catch (SQLException e) {
             e.printStackTrace();
