@@ -2,6 +2,8 @@ package com.carvia.controllers;
 
 import com.carvia.models.dao.AnuncioDao;
 import com.carvia.models.vto.VehicleAdVto;
+import com.carvia.utils.AlertUtil;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -179,14 +181,13 @@ public class MainPageController {
         String provincia = provinciasComboBox.getValue();
         double precioMin = precioRangeSlider.getLowValue();
         double precioMax = precioRangeSlider.getHighValue();
-        //String precio = precioComboBox.getValue();
 
         try {
             List<VehicleAdVto> anuncios = anuncioDao.filtrarAnuncios(marca, provincia, precioMin, precioMax);
             mostrarResultados(anuncios);
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error", "Error loading results", Alert.AlertType.ERROR);
+            AlertUtil.showAlert("Error", "Error loading results", Alert.AlertType.ERROR);
         }
     }
 
@@ -195,6 +196,7 @@ public class MainPageController {
             // Load the FXML file for the results page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/carvia/views/results.fxml"));
             Parent root = loader.load();
+            
 
             // Get the controller for the results page
             ResultsController controller = loader.getController();
@@ -205,21 +207,14 @@ public class MainPageController {
             stage.setTitle("Resultados");
             stage.setScene(new Scene(root));
             stage.show();
+            // No se muestra en la misma ventana
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Error showing results", Alert.AlertType.ERROR);
+            AlertUtil.showAlert("Error", "Error showing results", Alert.AlertType.ERROR);
         }
     }
 
-    private void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
     
-      
     /*
     
     private void filtrarVehiculosPorCategoria(String categoria) {

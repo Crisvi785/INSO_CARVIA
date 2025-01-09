@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -44,7 +45,7 @@ public class LoginController {
 
         if (isInputSuspicious(username) || isInputSuspicious(password)) {
             logger.warn("Entrada sospechosa detectada");
-            AlertUtil.showAlert("Advertencia", "Entrada inválida detectada", usernameField.getScene().getWindow());
+            AlertUtil.showAlert("Advertencia", "Entrada inválida detectada", Alert.AlertType.WARNING);
             return;
         }
 
@@ -63,7 +64,7 @@ public class LoginController {
             
         } else {
             logger.warn("Inicio de sesión fallido: Usuario o contraseña incorrectos");
-            AlertUtil.showAlert("Error", "Usuario o contraseña incorrectos", usernameField.getScene().getWindow());
+            AlertUtil.showAlert("Error", "Usuario o contraseña incorrectos", Alert.AlertType.ERROR);
         }
 
         
@@ -74,9 +75,5 @@ public class LoginController {
         return input.matches(suspiciousPattern);
     }
 
-    @FXML
-    private void handleBackToMain() throws IOException {
-        App.setRoot("mainpage");
-    }
 
 }

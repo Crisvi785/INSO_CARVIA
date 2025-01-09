@@ -70,8 +70,11 @@ public class AnuncioDao {
                 String resultProvincia = resultSet.getString("provincia");
                 String descripcion = resultSet.getString("description");
                 double resultPrecio = resultSet.getDouble("price");
+                int idAnuncio = resultSet.getInt("idAd");
+                int idVehiculo = resultSet.getInt("idVe");
+                int idUsuario = resultSet.getInt("idUs");
                 
-                anuncios.add(new VehicleAdVto(resultMarca, modelo, ano, resultProvincia, descripcion, resultPrecio));
+                anuncios.add(new VehicleAdVto(resultMarca, modelo, ano, resultProvincia, descripcion, resultPrecio, idAnuncio, idVehiculo, idUsuario));
             }
         }
 

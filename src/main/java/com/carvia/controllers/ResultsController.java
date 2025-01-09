@@ -1,15 +1,20 @@
 package com.carvia.controllers;
 
 import com.carvia.models.vto.VehicleAdVto;
+import com.carvia.utils.AlertUtil;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
+import java.awt.Desktop;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
@@ -19,10 +24,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URI;
 import java.sql.Connection;
 import com.carvia.App;
+import com.carvia.models.dao.UserDao;
+import com.carvia.models.vo.UserVo;
 import com.carvia.models.vo.VehicleVo;
 
 public class ResultsController {
@@ -54,6 +63,9 @@ public class ResultsController {
     @FXML
     private TableColumn<VehicleAdVto, Button> colAccion;
 
+    @FXML
+    private TableColumn<VehicleAdVto, Button> colContacto;
+
     private final Connection connection;
 
 
@@ -70,7 +82,6 @@ public class ResultsController {
         colProvincia.setCellValueFactory(new PropertyValueFactory<>("provincia"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        // colAccion.setCellValueFactory(new PropertyValueFactory<>("comprarButton"));
 
         
         colAccion.setCellFactory(param -> new TableCell<>() {
@@ -104,8 +115,32 @@ public class ResultsController {
                 }
             }
         });
+
+        colContacto.setCellFactory(param -> new TableCell<>() {
+            private final Button botonContactar = new Button("Contactar");
+
+            {
+                // Acción al hacer clic en el botón
+                botonContactar.setOnAction(event -> {
+                    VehicleAdVto anuncio = getTableView().getItems().get(getIndex());
+                    if (anuncio != null) {
+                        abrirGMail(anuncio);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(botonContactar);
+                }
+            }
+
+        });
         
-        // cargarDatos();
     }
 
     public void setAnuncios(List<VehicleAdVto> anuncios) {
@@ -113,98 +148,37 @@ public class ResultsController {
         resultadosTable.setItems(anuncioObservableList);
     }
 
-    /*
-    public void cargarDatos() {
-        listaVehiculos.clear();
-        String query = "SELECT v.make, v.model, v.year, a.price " +
-                "FROM Vehicles v " +
-                "INNER JOIN Advertisements a ON v.idVE = a.idVE";
+    private void abrirGMail(VehicleAdVto anuncio) {
+        try {
+            // Obtener el correo del vendedor (esto depende de cómo tengas estructurado tu modelo)
+            String correoVendedor = obtenerCorreoVendedor(anuncio);
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet resultSet = statement.executeQuery();
+            // Crear la URL de GMail con el correo del vendedor
+            String gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=" + correoVendedor;
 
-            ObservableList<VehicleAdVto> listaVehiculos = FXCollections.observableArrayList();
-
-            while (resultSet.next()) {
-                String marca = resultSet.getString("make");
-                String modelo = resultSet.getString("model");
-                int anio = resultSet.getInt("year");
-                double precio = resultSet.getDouble("price");
-
-                VehicleVo vehiculo = new VehicleVo(marca, modelo, anio);
-                AnuncioVo anuncio = new AnuncioVo(precio);
-                VehicleAdVto vehicleAnuncio = new VehicleAdVto(vehiculo, anuncio);
-
-                listaVehiculos.add(vehicleAnuncio);
+            // Abrir la URL en el navegador predeterminado
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI(gmailUrl));
+            } else {
+                System.out.println("Navegador no soportado. Abre la siguiente URL manualmente: " + gmailUrl);
             }
-
-            tablaVehiculos.setItems(listaVehiculos);
-
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-    */
-  
-
-    public void mostrarVehiculos(List<VehicleVo> vehiculos) {
-        resultPane.getChildren().clear(); // Limpia los resultados anteriores
-
-        for (VehicleVo vehiculo : vehiculos) {
-            // Contenedor para cada vehículo
-            HBox vehiculoBox = new HBox(10); // Espaciado de 10 píxeles entre elementos
-            vehiculoBox.setPadding(new Insets(10)); // Espaciado interno
-            vehiculoBox.setStyle("-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 5px;");
-
-            // Imagen del vehículo
-            ImageView vehiculoImage = new ImageView();
-            vehiculoImage.setFitWidth(100);
-            vehiculoImage.setFitHeight(75);
-            /*
-             * ç
-             * 
-             * 
-             * // Si tienes una URL para la imagen del vehículo
-             * if (vehiculo.getImagenUrl() != null && !vehiculo.getImagenUrl().isEmpty()) {
-             * vehiculoImage.setImage(new Image(vehiculo.getImagenUrl()));
-             * } else {
-             * vehiculoImage.setImage(new Image("default-image-url.jpg")); // Imagen por
-             * defecto
-             * }
-             * 
-             */
-
-            // Información del vehículo
-            VBox vehiculoInfo = new VBox(5); // Espaciado entre elementos de la columna
-            Label marcaModelo = new Label(vehiculo.getMarca() + " " + vehiculo.getModelo());
-            marcaModelo.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
-
-            Label anio = new Label("Año: " + vehiculo.getAnio());
-            Label precio = new Label("Precio: " + vehiculo.getKilometraje() + " €");
-
-            vehiculoInfo.getChildren().addAll(marcaModelo, anio, precio);
-
-            // Agregar imagen e información al contenedor principal del vehículo
-            vehiculoBox.getChildren().addAll(vehiculoImage, vehiculoInfo);
-
-            // Agregar el contenedor del vehículo al panel de resultados
-            resultPane.getChildren().add(vehiculoBox);
+            AlertUtil.showAlert("Error", "No se pudo abrir GMail", null);
         }
     }
 
-    public void mostrarResultados(List<String> vehicles, ListView<String> resultadosListView) {
-        resultadosListView.getItems().clear();
-        resultadosListView.getItems().addAll(vehicles); // Si tienes elementos String o similares
-    }
-
-    // Método para vincular el contenedor resultPane
-    public void setResultPane(VBox resultPane) {
-        // this.resultPane = resultPane;
+    private String obtenerCorreoVendedor(VehicleAdVto anuncio) {
+        UserDao userDao = new UserDao();
+        UserVo vendedor = userDao.getUserById(anuncio.getIdUsuario());
+        return vendedor.getEmail();
     }
 
     @FXML
-    private void handleBackToMain() throws IOException {
-        App.setRoot("mainpage");
+    private void handleBackToMain(ActionEvent event) throws IOException {
+        // Get the current stage (window) and close it
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @FXML

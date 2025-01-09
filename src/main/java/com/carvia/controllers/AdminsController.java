@@ -2,6 +2,8 @@ package com.carvia.controllers;
 
 import com.carvia.models.dao.UserDao;
 import com.carvia.models.vo.UserVo;
+import com.carvia.utils.AlertUtil;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,7 +50,7 @@ public class AdminsController {
             userTable.setItems(userObservableList);
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error", "Error loading user data", Alert.AlertType.ERROR);
+            AlertUtil.showAlert("Error", "Error loading user data", Alert.AlertType.ERROR);
         }
     }
 
@@ -58,27 +60,20 @@ public class AdminsController {
         if (selectedUser != null) {
             try {
                 if (selectedUser.getId() == 1) {
-                    showAlert("Error", "Cannot delete admin user", Alert.AlertType.ERROR);
+                    AlertUtil.showAlert("Error", "Cannot delete admin user", Alert.AlertType.ERROR);
                 } else {
                     userDao.eliminarUsuario(selectedUser);
                     userTable.getItems().remove(selectedUser);
-                    showAlert("Success", "User deleted successfully", Alert.AlertType.INFORMATION);
+                    AlertUtil.showAlert("Success", "User deleted successfully", Alert.AlertType.INFORMATION);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                showAlert("Error", "Error deleting user", Alert.AlertType.ERROR);
+                AlertUtil.showAlert("Error", "Error deleting user", Alert.AlertType.ERROR);
             }
         } else {
-            showAlert("Warning", "Please select a user to delete", Alert.AlertType.WARNING);
+            AlertUtil.showAlert("Warning", "Please select a user to delete", Alert.AlertType.WARNING);
         }
     }
 
-    private void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }
 

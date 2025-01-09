@@ -50,4 +50,9 @@ public class App extends Application {
         logger.info("Starting Carvia instance");
         launch(args);
     }
+
+    public static Object getController() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getController'");
+    }
 }

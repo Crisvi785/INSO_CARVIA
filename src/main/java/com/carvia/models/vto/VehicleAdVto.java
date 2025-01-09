@@ -13,9 +13,13 @@ public class VehicleAdVto {
     }
 
     public VehicleAdVto(String resultMarca, String modelo, int ano, String resultProvincia, String descripcion,
-            double resultPrecio) {
+            double resultPrecio, int idAnuncio, int idVehiculo, int idUsuario) {
                 this.vehicle = new VehicleVo(resultMarca, modelo, ano);
+                this.vehicle.setId(idVehiculo);
                 this.anuncio = new AnuncioVo(resultProvincia, descripcion, resultPrecio);
+                this.anuncio.setId(idAnuncio);
+                this.anuncio.setIdVehiculo(idVehiculo);
+                this.anuncio.setIdUsuario(idUsuario);
     }
 
     // Métodos para acceder a VehicleVo
@@ -27,6 +31,7 @@ public class VehicleAdVto {
     public double getPrecio() { return anuncio.getPrecio(); }
     public String getDescripcion() { return anuncio.getDescripcion(); }
     public String getProvincia() { return anuncio.getProvincia(); }
+    public int getIdUsuario() { return anuncio.getIdUsuario(); }
     //public String getImagen() { return anuncio.getImagen(); }
 
 }

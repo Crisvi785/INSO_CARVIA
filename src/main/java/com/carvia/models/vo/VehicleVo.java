@@ -3,6 +3,7 @@ package com.carvia.models.vo;
 import javafx.scene.image.Image;
 
 public class VehicleVo {
+    private int id;
     private String marca;
     private String modelo;
     private int anio;
@@ -22,6 +23,14 @@ public class VehicleVo {
     }
 
     // Getters y Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getMarca() {
         return marca;
     }

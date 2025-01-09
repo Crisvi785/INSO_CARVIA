@@ -121,6 +121,32 @@ import org.apache.logging.log4j.LogManager;
             throw new Exception("Error deleting user", e);
         }
     }
+
+    public UserVo getUserById(int idUsuario) {
+        String query = "SELECT * FROM Users WHERE idUs = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idUsuario);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    UserVo user = new UserVo();
+                    user.setId(resultSet.getInt("idUs"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setEmail(resultSet.getString("email"));
+                    // Set other fields as needed
+                    return user;
+                } else {
+                    logger.warn("No user found with id " + idUsuario);
+                    System.out.println("No user found with id " + idUsuario);
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error retrieving user with id " + idUsuario);
+            System.out.println("Error retrieving user with id " + idUsuario);
+            e.printStackTrace();
+            throw new RuntimeException("Error retrieving user", e);
+        }
+    }
     
  }
 

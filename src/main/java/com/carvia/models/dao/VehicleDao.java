@@ -5,15 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.carvia.controllers.BBDDController;
-import com.carvia.models.vo.AnuncioVo;
-import com.carvia.models.vo.UserVo;
 import com.carvia.models.vo.VehicleVo;
 
 public class VehicleDao {

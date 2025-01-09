@@ -1,12 +1,14 @@
 package com.carvia.utils;
 
-import com.stripe.model.billing.Alert;
+//import com.stripe.model.billing.Alert;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import javafx.stage.Window;
+
+import javafx.scene.control.Alert;
 
 public class AlertUtil {
 
@@ -23,6 +25,15 @@ public class AlertUtil {
     
     */
 
+    public static void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /*
     public static void showAlert(String title, String message, Window owner) {
         Dialog<String> alert = new Dialog<>();
         alert.setTitle(title);
@@ -46,5 +57,5 @@ public class AlertUtil {
         alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
         alert.showAndWait();
     }
-
+    */
 }

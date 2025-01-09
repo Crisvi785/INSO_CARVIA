@@ -10,7 +10,6 @@ public class AnuncioVo {
     public double precio;
     public String provincia;
     public String urlFoto;
-    // public Button comprarButton;
     private int idVehiculo; // ID del vehículo (clave foránea)
     private int idUsuario;
 

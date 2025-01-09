@@ -1,11 +1,14 @@
 package com.carvia.controllers;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
@@ -45,13 +48,17 @@ public class RegisterController {
         String password = passwordField.getText();
         String fullname = fullnameField.getText();
         String email = emailField.getText();
-    
-        Window actualWindow = usernameField.getScene().getWindow();
+
         logger.info("Username: " + username + " trying to register");
     
         if (username.isEmpty() || password.isEmpty() || fullname.isEmpty() || email.isEmpty()) {
-            AlertUtil.showAlert("Error", "Por favor, complete todos los campos", actualWindow);
+            AlertUtil.showAlert("Error", "Por favor, complete todos los campos", Alert.AlertType.ERROR);
             logger.warn("Some fields are empty");
+            return;
+        }
+        
+        if (!isValidEmail(email)) {
+            AlertUtil.showAlert("Error", "Debe introducir un email válido", Alert.AlertType.ERROR);
             return;
         }
     
@@ -59,7 +66,7 @@ public class RegisterController {
             AlertUtil.showAlert(
                 "Error",
                 "Contraseña (mínimo): 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
-                actualWindow
+                Alert.AlertType.ERROR
             );
             logger.warn("Invalid password format");
             return;
@@ -68,13 +75,20 @@ public class RegisterController {
         UserVo newUser = new UserVo(username, fullname, email, password);
     
         if (userDAO.insertUser(newUser)) {
-            AlertUtil.showAlert("Éxito", "Usuario registrado correctamente", actualWindow);
+            AlertUtil.showAlert("Éxito", "Usuario registrado correctamente", Alert.AlertType.CONFIRMATION);
             logger.info(newUser.toString() + " registered");
             App.setRoot("login");
         } else {
-            AlertUtil.showAlert("Error", "No se pudo registrar el usuario", actualWindow);
+            AlertUtil.showAlert("Error", "No se pudo registrar el usuario", Alert.AlertType.ERROR);
             logger.error("Error registering user " + username);
         }
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
     
 }

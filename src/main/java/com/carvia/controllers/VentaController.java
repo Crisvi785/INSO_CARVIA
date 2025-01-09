@@ -102,64 +102,64 @@ public class VentaController {
         System.out.println("Imágenes subidas exitosamente.");
     }
 
-@FXML
-private void handlePublishAd() {
-    try {
-        // Validar los datos del formulario
-        if (cmbMarca.getValue().isEmpty() || txtModelo.getText().isEmpty() || txtAnio.getText().isEmpty() ||
-                txtKms.getText().isEmpty() || cmbGasolina.getValue() == null || cmbTransmision.getValue() == null ||
-                txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty() || cmbProvincia.getValue().isEmpty() || 
-                selectedImages == null || selectedImages.isEmpty()) {
-            System.out.println("Por favor, completa todos los campos y sube al menos una imagen.");
-            return;
+    @FXML
+    private void handlePublishAd() {
+        try {
+            // Validar los datos del formulario
+            if (cmbMarca.getValue().isEmpty() || txtModelo.getText().isEmpty() || txtAnio.getText().isEmpty() ||
+                    txtKms.getText().isEmpty() || cmbGasolina.getValue() == null || cmbTransmision.getValue() == null ||
+                    txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty() || cmbProvincia.getValue().isEmpty() || 
+                    selectedImages == null || selectedImages.isEmpty()) {
+                System.out.println("Por favor, completa todos los campos y sube al menos una imagen.");
+                return;
+            }
+
+            // Crear un objeto VehicleVo con los datos del formulario
+            VehicleVo vehiculo = new VehicleVo();
+            vehiculo.setMarca(cmbMarca.getValue());
+            vehiculo.setModelo(txtModelo.getText());
+            vehiculo.setAnio(Integer.parseInt(txtAnio.getText()));
+            vehiculo.setKilometraje(Integer.parseInt(txtKms.getText()));
+            vehiculo.setTipoCombustible(cmbGasolina.getValue());
+            vehiculo.setTransmision(cmbTransmision.getValue());
+
+            // Instanciar el DAO para vehículos
+            VehicleDao vehiculoDAO = new VehicleDao();
+
+            // Insertar el vehículo y obtener el ID generado
+            int vehiculoId = vehiculoDAO.insertVehiculo(vehiculo);
+            if (vehiculoId <= 0) {
+                System.out.println("Hubo un error al guardar el vehículo en la base de datos.");
+                return;
+            }
+
+            // Crear un objeto AnuncioVo con los datos del formulario
+            AnuncioVo anuncio = new AnuncioVo();
+            anuncio.setDescripcion(txtDescripcion.getText());
+            anuncio.setPrecio(Double.parseDouble(txtPrecio.getText()));
+            anuncio.setProvincia(cmbProvincia.getValue());
+            anuncio.setIdVehiculo(vehiculoId); // Asignar el ID del vehículo al anuncio
+
+            // Instanciar el DAO para anuncios
+            AnuncioDao anuncioDAO = new AnuncioDao();
+
+            // Asignar el ID del usuario autenticado al anuncio
+            int idUsuario = getAuthenticatedUserId(); 
+            anuncio.setIdUsuario(idUsuario);
+
+            // Insertar el anuncio en la base de datos
+            if (anuncioDAO.insertAnuncio(anuncio)) {
+                System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
+            } else {
+                System.out.println("Hubo un error al guardar el anuncio en la base de datos.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).");
+        } catch (Exception e) {
+            System.out.println("Error al publicar el anuncio: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        // Crear un objeto VehicleVo con los datos del formulario
-        VehicleVo vehiculo = new VehicleVo();
-        vehiculo.setMarca(cmbMarca.getValue());
-        vehiculo.setModelo(txtModelo.getText());
-        vehiculo.setAnio(Integer.parseInt(txtAnio.getText()));
-        vehiculo.setKilometraje(Integer.parseInt(txtKms.getText()));
-        vehiculo.setTipoCombustible(cmbGasolina.getValue());
-        vehiculo.setTransmision(cmbTransmision.getValue());
-
-        // Instanciar el DAO para vehículos
-        VehicleDao vehiculoDAO = new VehicleDao();
-
-        // Insertar el vehículo y obtener el ID generado
-        int vehiculoId = vehiculoDAO.insertVehiculo(vehiculo);
-        if (vehiculoId <= 0) {
-            System.out.println("Hubo un error al guardar el vehículo en la base de datos.");
-            return;
-        }
-
-        // Crear un objeto AnuncioVo con los datos del formulario
-        AnuncioVo anuncio = new AnuncioVo();
-        anuncio.setDescripcion(txtDescripcion.getText());
-        anuncio.setPrecio(Double.parseDouble(txtPrecio.getText()));
-        anuncio.setProvincia(cmbProvincia.getValue());
-        anuncio.setIdVehiculo(vehiculoId); // Asignar el ID del vehículo al anuncio
-
-        // Instanciar el DAO para anuncios
-        AnuncioDao anuncioDAO = new AnuncioDao();
-
-         // Asignar el ID del usuario autenticado al anuncio
-         int idUsuario = getAuthenticatedUserId(); 
-         anuncio.setIdUsuario(idUsuario);
-
-        // Insertar el anuncio en la base de datos
-        if (anuncioDAO.insertAnuncio(anuncio)) {
-            System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
-        } else {
-            System.out.println("Hubo un error al guardar el anuncio en la base de datos.");
-        }
-    } catch (NumberFormatException e) {
-        System.out.println("Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).");
-    } catch (Exception e) {
-        System.out.println("Error al publicar el anuncio: " + e.getMessage());
-        e.printStackTrace();
     }
-}
 
 
     @FXML
@@ -168,26 +168,26 @@ private void handlePublishAd() {
     }
 
     private int getAuthenticatedUserId() {
-    if (!UserSession.isLoggedIn()) {
-        System.out.println("No hay un usuario autenticado.");
-        return -1; // Maneja el caso donde no hay usuario autenticado
+        if (!UserSession.isLoggedIn()) {
+            System.out.println("No hay un usuario autenticado.");
+            return -1; // Maneja el caso donde no hay usuario autenticado
+        }
+
+        // Obtén el nombre de usuario logueado
+        String username = UserSession.getLoggedInUser().orElseThrow(() -> 
+            new IllegalStateException("Usuario no encontrado en la sesión"));
+
+        // Usa UserDao para buscar el ID del usuario
+        UserDao userDao = new UserDao();
+        UserVo user = userDao.getUserByUsername(username);
+
+        if (user == null) {
+            System.out.println("Usuario no encontrado en la base de datos.");
+            return -1; // Maneja el caso donde el usuario no existe
+        }
+
+        return user.getId(); // Devuelve el ID del usuario autenticado
     }
-
-    // Obtén el nombre de usuario logueado
-    String username = UserSession.getLoggedInUser().orElseThrow(() -> 
-        new IllegalStateException("Usuario no encontrado en la sesión"));
-
-    // Usa UserDao para buscar el ID del usuario
-    UserDao userDao = new UserDao();
-    UserVo user = userDao.getUserByUsername(username);
-
-    if (user == null) {
-        System.out.println("Usuario no encontrado en la base de datos.");
-        return -1; // Maneja el caso donde el usuario no existe
-    }
-
-    return user.getId(); // Devuelve el ID del usuario autenticado
-}
 
 
 }
