@@ -17,7 +17,9 @@ import com.carvia.models.dao.VehicleDao;
 import com.carvia.models.vo.AnuncioVo;
 import com.carvia.models.vo.UserVo;
 import com.carvia.models.vo.VehicleVo;
+import com.carvia.utils.AlertUtil;
 
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 
 public class VentaController {
@@ -103,7 +105,7 @@ public class VentaController {
     }
 
     @FXML
-    private void handlePublishAd() {
+    private void handlePublishAd() throws IOException {
         try {
             // Validar los datos del formulario
             if (cmbMarca.getValue().isEmpty() || txtModelo.getText().isEmpty() || txtAnio.getText().isEmpty() ||
@@ -111,6 +113,7 @@ public class VentaController {
                     txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty() || cmbProvincia.getValue().isEmpty() || 
                     selectedImages == null || selectedImages.isEmpty()) {
                 System.out.println("Por favor, completa todos los campos y sube al menos una imagen.");
+                AlertUtil.showAlert("Error", "Por favor, completa todos los campos y sube al menos una imagen.", AlertType.ERROR);
                 return;
             }
 
@@ -150,11 +153,15 @@ public class VentaController {
             // Insertar el anuncio en la base de datos
             if (anuncioDAO.insertAnuncio(anuncio)) {
                 System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
+                AlertUtil.showAlert("Éxito", "El anuncio del vehículo ha sido publicado correctamente.", AlertType.CONFIRMATION);
+                App.setRoot("mainpage");
             } else {
                 System.out.println("Hubo un error al guardar el anuncio en la base de datos.");
+                AlertUtil.showAlert("Error", "Hubo un error al guardar el anuncio en la base de datos.", AlertType.ERROR);
             }
         } catch (NumberFormatException e) {
             System.out.println("Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).");
+            AlertUtil.showAlert("Error", "Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).", AlertType.ERROR);
         } catch (Exception e) {
             System.out.println("Error al publicar el anuncio: " + e.getMessage());
             e.printStackTrace();

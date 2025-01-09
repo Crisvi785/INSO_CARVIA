@@ -24,7 +24,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URI;
@@ -82,7 +84,51 @@ public class ResultsController {
         colProvincia.setCellValueFactory(new PropertyValueFactory<>("provincia"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        // colAccion.setCellValueFactory(new PropertyValueFactory<>("comprar"));
+        // colContacto.setCellValueFactory(new PropertyValueFactory<>("contacto"));
+        
+        // Set curstom format for colPrecio
+        colPrecio.setCellFactory(new Callback<TableColumn<VehicleAdVto, Double>, TableCell<VehicleAdVto, Double>>() {
+            @Override
+            public TableCell<VehicleAdVto, Double> call(TableColumn<VehicleAdVto, Double> param) {
+                return new TableCell<VehicleAdVto, Double>() {
+                    private final Text text = new Text();
+        
+                    @Override
+                    protected void updateItem(Double item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            text.setText(String.format("%.2f", item)); // Formatea el precio con dos decimales
+                            setGraphic(text);
+                        } else {
+                            setGraphic(null);
+                        }
+                    }
+                };
+            }
+        });
 
+        // Set custom cell factory for colDescripcion
+        colDescripcion.setCellFactory(new Callback<TableColumn<VehicleAdVto, String>, TableCell<VehicleAdVto, String>>() {
+            @Override
+            public TableCell<VehicleAdVto, String> call(TableColumn<VehicleAdVto, String> param) {
+                return new TableCell<VehicleAdVto, String>() {
+                    private final Text text = new Text();
+
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            text.setText(item);
+                            text.wrappingWidthProperty().bind(colDescripcion.widthProperty());
+                            setGraphic(text);
+                        } else {
+                            setGraphic(null);
+                        }
+                    }
+                };
+            }
+        });
         
         colAccion.setCellFactory(param -> new TableCell<>() {
             private final Button botonComprar = new Button("Comprar");

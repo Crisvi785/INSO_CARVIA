@@ -1,7 +1,6 @@
 package com.carvia.models.dao;
 
 import com.carvia.controllers.BBDDController;
-import com.carvia.controllers.PaymentController;
 import com.carvia.models.vo.AnuncioVo;
 import com.carvia.models.vto.VehicleAdVto;
 
@@ -42,10 +41,10 @@ public class AnuncioDao {
         List<VehicleAdVto> anuncios = new ArrayList<>();
         StringBuilder query = new StringBuilder("SELECT * FROM Advertisements INNER JOIN Vehicles ON Advertisements.idVe = Vehicles.idVe WHERE 1=1");
 
-        if (marca != null && !marca.isEmpty()) {
+        if (marca != null && !marca.isEmpty() && !marca.equals("-")) {
             query.append(" AND Vehicles.marca = ?");
         }
-        if (provincia != null && !provincia.isEmpty()) {
+        if (provincia != null && !provincia.isEmpty() && !provincia.equals("-")) {
             query.append(" AND Advertisements.provincia = ?");
         }
         query.append(" AND Advertisements.price BETWEEN ? AND ?");
@@ -53,10 +52,10 @@ public class AnuncioDao {
         try (PreparedStatement statement = connection.prepareStatement(query.toString())) {
             int paramIndex = 1;
 
-            if (marca != null && !marca.isEmpty()) {
+            if (marca != null && !marca.isEmpty() && !marca.equals("-")) {
                 statement.setString(paramIndex++, marca);
             }
-            if (provincia != null && !provincia.isEmpty()) {
+            if (provincia != null && !provincia.isEmpty() && !provincia.equals("-")) {
                 statement.setString(paramIndex++, provincia);
             }
             statement.setDouble(paramIndex++, precioMin);

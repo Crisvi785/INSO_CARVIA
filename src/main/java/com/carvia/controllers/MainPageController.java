@@ -90,8 +90,8 @@ public class MainPageController {
         // lblTitle.setText("Bienvenido a Carvia");
         // lblDescription.setText("Tu lugar ideal para comprar y vender coches de manera
         // segura y confiable.");
-        marcaModeloComboBox.setItems(FXCollections.observableArrayList("Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln", "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
-        provinciasComboBox.setItems(FXCollections.observableArrayList("Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
+        marcaModeloComboBox.setItems(FXCollections.observableArrayList("-", "Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln", "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
+        provinciasComboBox.setItems(FXCollections.observableArrayList("-", "Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
         precioRangeSlider.setLowValue(0);
         precioRangeSlider.setHighValue(70000);
         // Add listeners to update the labels in real-time
@@ -102,7 +102,6 @@ public class MainPageController {
         precioRangeSlider.highValueProperty().addListener((observable, oldValue, newValue) -> {
             maxPriceLabel.setText(String.format("%.0f", newValue));
         });
-        // precioComboBox.setItems(FXCollections.observableArrayList("Menos de 1.000 €", "1.000 € - 2.000 €", "2.000 € - 3.000 €", "3.000 € - 4.000 €", "4.000 € - 5.000 €", "5.000 € - 6.000 €", "6.000 € - 7.000 €", "7.000 € - 8.000 €", "8.000 € - 9.000 €", "9.000 € - 10.000 €", "10.000 € - 11.000 €", "11.000 € - 12.000 €", "12.000 € - 13.000 €", "13.000 € - 14.000 €", "14.000 € - 15.000 €", "15.000 € - 16.000 €", "16.000 € - 17.000 €", "17.000 € - 18.000 €", "18.000 € - 19.000 €", "19.000 € - 20.000 €", "20.000 € - 21.000 €", "21.000 € - 22.000 €", "22.000 € - 23.000 €", "23.000 € - 24.000 €", "24.000 € - 25.000 €", "25.000 € - 30.000 €", "30.000 € - 35.000 €", "35.000 € - 40.000 €", "40.000 € - 45.000 €", "45.000 € - 50.000 €", "50.000 € - 55.000 €", "55.000 € - 60.000 €", "60.000 € - 65.000 €", "65.000 € - 70.000 €", "Más de 70.000 €"));
 
         lblFooter.setText("© 2024 Carvia. Todos los derechos reservados.");
 

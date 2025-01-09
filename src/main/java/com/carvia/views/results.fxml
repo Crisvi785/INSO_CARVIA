@@ -12,13 +12,13 @@
         <Label text="Catálogo de Vehículos" style="-fx-font-size: 24px; -fx-padding: 10px;" />
     </top>
     <center>
-        <TableView fx:id="resultadosTable" prefHeight="400.0" prefWidth="700.0">
+        <TableView fx:id="resultadosTable" prefHeight="400.0" prefWidth="740.0">
             <columns>
                 <TableColumn text="Marca" fx:id="colMarca" />
                 <TableColumn text="Modelo" fx:id="colModelo" />
                 <TableColumn text="Año" fx:id="colAno" />
                 <TableColumn text="Provincia" fx:id="colProvincia" />
-                <TableColumn text="Descripción" fx:id="colDescripcion" />
+                <TableColumn text="Descripción" fx:id="colDescripcion" prefWidth="200" />
                 <TableColumn text="Precio" fx:id="colPrecio" />
                 <TableColumn text="Acción" fx:id="colAccion" />
                 <TableColumn text="Contacto" fx:id="colContacto" />
