@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.carvia.controllers.PaymentWindowController" spacing="10" alignment="CENTER" style="-fx-padding: 20;">
+    <Label text="Detalles del Pago" style="-fx-font-size: 20px;" />
+    <Label fx:id="vehiclePriceLabel" text="" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <TextField fx:id="cardNumberField" promptText="Número de Tarjeta" />
+    <TextField fx:id="cardExpirationField" promptText="Fecha de Caducidad (MM/YY)" />
+    <TextField fx:id="cardCvcField" promptText="CVC" />
+    <Button text="Pagar" onAction="#handlePayment" />
+</VBox>

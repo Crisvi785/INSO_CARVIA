@@ -2,6 +2,9 @@ package com.carvia.models;
 
 import java.util.Optional;
 
+import com.carvia.models.dao.UserDao;
+import com.carvia.models.vo.UserVo;
+
 public class UserSession {
     private static Optional<String> loggedInUser = Optional.empty();
 
@@ -25,5 +28,16 @@ public class UserSession {
         return loggedInUser;
     }
 
+    //Devuelve el ID del usuario logueado (si existe)
+    public static int getLoggedInUserId(){
+        if(loggedInUser.isPresent()){
+            UserDao userDao = new UserDao();
+            UserVo user = userDao.getUserByUsername(loggedInUser.get());
+            if (user != null) {
+                return user.getId();
+            }
+        }
+        return -1; //-1 si no hay usuario logueado o no se encuentra en la bbdd
+    }
     
 }

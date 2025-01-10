@@ -44,7 +44,10 @@ CREATE TABLE IF NOT EXISTS Advertisements (
 CREATE TABLE IF NOT EXISTS Payments (
     idPay INT PRIMARY KEY AUTO_INCREMENT,
     type VARCHAR(50) NOT NULL,
-    amount DOUBLE NOT NULL
+    amount DOUBLE NOT NULL,
+    card_number VARCHAR(100),
+    card_expiration VARCHAR(7),
+    card_cvc VARCHAR(5)
 );
 
 CREATE TABLE IF NOT EXISTS Shopping (

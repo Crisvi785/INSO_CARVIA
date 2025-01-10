@@ -26,6 +26,7 @@ public class VehicleAdVto {
     public String getMarca() { return vehicle.getMarca(); }
     public String getModelo() { return vehicle.getModelo(); }
     public int getAno() { return vehicle.getAnio(); }
+    public int getId() { return vehicle.getId(); }
 
     // Métodos para acceder a AnuncioVo
     public double getPrecio() { return anuncio.getPrecio(); }
