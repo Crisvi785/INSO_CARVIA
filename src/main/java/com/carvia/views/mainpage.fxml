@@ -19,7 +19,14 @@
                 <Button text="Mi Cuenta" onMouseClicked="#handleAccountEvent" />
                 <Button text="Acceder" onMouseClicked="#handleAccountEvent" />
                 <Button text="Vender" onMouseClicked="#handleVenderClick" />
+                <Label fx:id="userGreetingLabel" text="" StackPane.alignment="TOP_RIGHT" />
             </HBox>
+
+            <!-- Espaciador flexible para separar los elementos -->
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- Sección derecha: Saludo -->
+            <Label fx:id="userGreetingLabel" text="" alignment="CENTER_RIGHT" />
         </HBox>
     </top>
 

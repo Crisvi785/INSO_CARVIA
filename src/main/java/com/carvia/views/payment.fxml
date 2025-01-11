@@ -9,5 +9,5 @@
     <TextField fx:id="cardNumberField" promptText="Número de Tarjeta" />
     <TextField fx:id="cardExpirationField" promptText="Fecha de Caducidad (MM/YY)" />
     <TextField fx:id="cardCvcField" promptText="CVC" />
-    <Button text="Pagar" onAction="#handlePayment" />
+    <Button fx:id="payButton" text="Pagar" onAction="#handlePayment" />
 </VBox>

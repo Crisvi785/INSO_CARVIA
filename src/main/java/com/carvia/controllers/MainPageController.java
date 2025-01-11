@@ -75,6 +75,9 @@ public class MainPageController {
     @FXML
     private Button mostrarResultadosButton;
 
+    @FXML
+    private Label userGreetingLabel;
+
     private AnuncioDao anuncioDao;
 
     public MainPageController() {
@@ -105,6 +108,14 @@ public class MainPageController {
 
         lblFooter.setText("© 2024 Carvia. Todos los derechos reservados.");
 
+         // Obtener el usuario logueado desde la sesión
+        String username = UserSession.getUsername();
+        if (username != null) {
+            userGreetingLabel.setText("¡Bienvenido " + username + " !  ");
+        } 
+        else {
+            userGreetingLabel.setText(""); 
+        }
     }
 
     @FXML
