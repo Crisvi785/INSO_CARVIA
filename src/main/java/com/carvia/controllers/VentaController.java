@@ -19,6 +19,12 @@ import com.carvia.models.vo.UserVo;
 import com.carvia.models.vo.VehicleVo;
 import com.carvia.utils.AlertUtil;
 
+import com.cloudinary.*;
+import com.cloudinary.utils.ObjectUtils;
+import io.github.cdimascio.dotenv.Dotenv;
+
+import java.util.Map;
+
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 
@@ -59,11 +65,26 @@ public class VentaController {
         // Opciones para los ComboBox
         cmbGasolina.setItems(FXCollections.observableArrayList("Gasolina", "Diésel", "Eléctrico", "Híbrido"));
         cmbTransmision.setItems(FXCollections.observableArrayList("Manual", "Automático"));
-        cmbMarca.setItems(FXCollections.observableArrayList("Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln", "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
-        cmbProvincia.setItems(FXCollections.observableArrayList("Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
+        cmbMarca.setItems(FXCollections.observableArrayList("Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley",
+                "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford",
+                "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln",
+                "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault",
+                "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
+        cmbProvincia.setItems(FXCollections.observableArrayList("Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres",
+                "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva",
+                "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga",
+                "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife",
+                "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya",
+                "Zamora", "Zaragoza"));
     }
 
     private List<File> selectedImages;
+    private final Cloudinary cloudinary;
+
+    // Constructor que recibe una instancia de CloudinaryController
+    public VentaController(CloudinaryController cloudinaryController) {
+        this.cloudinary = cloudinaryController.getCloudinary();
+    }
 
     @FXML
     private void handleUploadImages() {
@@ -93,14 +114,37 @@ public class VentaController {
         }
     }
 
-    private void uploadImagesToCloud(List<File> images) {
+    public void uploadImagesToCloud(List<File> images) {
         System.out.println("Subiendo imágenes a la nube...");
+
         for (File image : images) {
-            // Aquí puedes integrar tu API de almacenamiento en la nube (e.g., AWS S3,
-            // Google Cloud Storage, Firebase Storage)
-            // Por ejemplo: cloudStorageService.upload(image);
-            System.out.println("Subida simulada de: " + image.getName());
+            try {
+                // Configuración de los parámetros para la subida
+                Map<String, Object> params = ObjectUtils.asMap(
+                        "use_filename", true,
+                        "unique_filename", false,
+                        "overwrite", true);
+
+                // Subir la imagen a Cloudinary
+                Map uploadResult = cloudinary.uploader().upload(image, params);
+
+                // Obtener el nombre público del recurso subido
+                String publicId = (String) uploadResult.get("public_id");
+
+                // Imprimir resultado de la subida
+                System.out.println("Imagen subida: " + uploadResult.get("url"));
+
+                // Obtener detalles adicionales del recurso
+                Map<String, Object> resourceParams = ObjectUtils.asMap(
+                        "quality_analysis", true);
+                Map resourceDetails = cloudinary.api().resource(publicId, resourceParams);
+                System.out.println("Detalles del recurso: " + resourceDetails);
+
+            } catch (Exception e) {
+                System.err.println("Error subiendo la imagen " + image.getName() + ": " + e.getMessage());
+            }
         }
+
         System.out.println("Imágenes subidas exitosamente.");
     }
 
@@ -110,10 +154,12 @@ public class VentaController {
             // Validar los datos del formulario
             if (cmbMarca.getValue().isEmpty() || txtModelo.getText().isEmpty() || txtAnio.getText().isEmpty() ||
                     txtKms.getText().isEmpty() || cmbGasolina.getValue() == null || cmbTransmision.getValue() == null ||
-                    txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty() || cmbProvincia.getValue().isEmpty() || 
+                    txtDescripcion.getText().isEmpty() || txtPrecio.getText().isEmpty()
+                    || cmbProvincia.getValue().isEmpty() ||
                     selectedImages == null || selectedImages.isEmpty()) {
                 System.out.println("Por favor, completa todos los campos y sube al menos una imagen.");
-                AlertUtil.showAlert("Error", "Por favor, completa todos los campos y sube al menos una imagen.", AlertType.ERROR);
+                AlertUtil.showAlert("Error", "Por favor, completa todos los campos y sube al menos una imagen.",
+                        AlertType.ERROR);
                 return;
             }
 
@@ -147,27 +193,30 @@ public class VentaController {
             AnuncioDao anuncioDAO = new AnuncioDao();
 
             // Asignar el ID del usuario autenticado al anuncio
-            int idUsuario = getAuthenticatedUserId(); 
+            int idUsuario = getAuthenticatedUserId();
             anuncio.setIdUsuario(idUsuario);
 
             // Insertar el anuncio en la base de datos
             if (anuncioDAO.insertAnuncio(anuncio)) {
                 System.out.println("El anuncio del vehículo ha sido publicado correctamente.");
-                AlertUtil.showAlert("Éxito", "El anuncio del vehículo ha sido publicado correctamente.", AlertType.CONFIRMATION);
+                AlertUtil.showAlert("Éxito", "El anuncio del vehículo ha sido publicado correctamente.",
+                        AlertType.CONFIRMATION);
                 App.setRoot("mainpage");
             } else {
                 System.out.println("Hubo un error al guardar el anuncio en la base de datos.");
-                AlertUtil.showAlert("Error", "Hubo un error al guardar el anuncio en la base de datos.", AlertType.ERROR);
+                AlertUtil.showAlert("Error", "Hubo un error al guardar el anuncio en la base de datos.",
+                        AlertType.ERROR);
             }
         } catch (NumberFormatException e) {
             System.out.println("Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).");
-            AlertUtil.showAlert("Error", "Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).", AlertType.ERROR);
+            AlertUtil.showAlert("Error",
+                    "Por favor, ingresa datos válidos para los campos numéricos (Año, Kilómetros, Precio).",
+                    AlertType.ERROR);
         } catch (Exception e) {
             System.out.println("Error al publicar el anuncio: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void handleCancel() throws IOException {
@@ -181,8 +230,8 @@ public class VentaController {
         }
 
         // Obtén el nombre de usuario logueado
-        String username = UserSession.getLoggedInUser().orElseThrow(() -> 
-            new IllegalStateException("Usuario no encontrado en la sesión"));
+        String username = UserSession.getLoggedInUser()
+                .orElseThrow(() -> new IllegalStateException("Usuario no encontrado en la sesión"));
 
         // Usa UserDao para buscar el ID del usuario
         UserDao userDao = new UserDao();
@@ -195,6 +244,5 @@ public class VentaController {
 
         return user.getId(); // Devuelve el ID del usuario autenticado
     }
-
 
 }
