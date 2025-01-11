@@ -13,6 +13,10 @@ public class CloudinaryController {
     private final Cloudinary cloudinary;
 
     // Constructor: Inicializa Cloudinary con la URL desde variables de entorno
+    public Cloudinary getCloudinary() {
+        return cloudinary;
+    }
+    
     public CloudinaryController() {
         Dotenv dotenv = Dotenv.load();
         String cloudinaryUrl = dotenv.get("CLOUDINARY_URL");
