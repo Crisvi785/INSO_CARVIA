@@ -79,4 +79,15 @@ public class AnuncioDao {
 
         return anuncios;
     }
+
+    public boolean deleteAnuncio(int idVe){
+        String query = "DELETE FROM Advertisements WHERE idVe = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idVe);
+            return statement.executeUpdate() > 0; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

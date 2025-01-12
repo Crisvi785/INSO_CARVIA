@@ -2,12 +2,30 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.carvia.controllers.PaymentWindowController" spacing="10" alignment="CENTER" style="-fx-padding: 20;">
     <Label text="Detalles del Pago" style="-fx-font-size: 20px;" />
     <Label fx:id="vehiclePriceLabel" text="" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-    <TextField fx:id="cardNumberField" promptText="Número de Tarjeta" />
-    <TextField fx:id="cardExpirationField" promptText="Fecha de Caducidad (MM/YY)" />
-    <TextField fx:id="cardCvcField" promptText="CVC" />
+    
+    <!-- Campo para el número de tarjeta con asterisco -->
+    <HBox spacing="5" alignment="CENTER_LEFT">
+        <TextField fx:id="cardNumberField" promptText="Número de Tarjeta" />
+        <Label text="*" style="-fx-text-fill: red;" />
+    </HBox>
+    
+    <!-- Campo para la fecha de caducidad con asterisco -->
+    <HBox spacing="5" alignment="CENTER_LEFT">
+        <TextField fx:id="cardExpirationField" promptText="Fecha de Caducidad (MM/YY)" />
+        <Label text="*" style="-fx-text-fill: red;" />
+    </HBox>
+    
+    <!-- Campo para el CVC con asterisco -->
+    <HBox spacing="5" alignment="CENTER_LEFT">
+        <TextField fx:id="cardCvcField" promptText="CVC" />
+        <Label text="*" style="-fx-text-fill: red;" />
+    </HBox>
+    
+    <!-- Botón de pago -->
     <Button fx:id="payButton" text="Pagar" onAction="#handlePayment" />
 </VBox>

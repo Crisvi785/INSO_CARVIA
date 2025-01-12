@@ -1,5 +1,6 @@
 package com.carvia.controllers;
 
+import com.carvia.models.dao.AnuncioDao;
 import com.carvia.models.dao.PaymentDao;
 import com.carvia.models.vto.VehicleAdVto;
 import javafx.fxml.FXML;
@@ -70,6 +71,15 @@ public class PaymentWindowController {
             alert.setHeaderText(null);
             alert.setContentText("El pago se realizó correctamente");
             alert.showAndWait();
+
+            //Eliminar el anuncio de la bbdd
+            AnuncioDao anuncioDao = new AnuncioDao();
+            boolean deleted = anuncioDao.deleteAnuncio(selectedVehicle.getId());
+            if (deleted) {
+                System.out.println("El anuncio fue eliminado exitosamente.");
+            } else {
+                System.out.println("No se pudo eliminar el anuncio.");
+            }
 
             //Se cierra la ventana de pago
             Stage stage = (Stage) payButton.getScene().getWindow();

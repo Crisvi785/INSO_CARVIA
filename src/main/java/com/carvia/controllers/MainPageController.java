@@ -111,7 +111,7 @@ public class MainPageController {
          // Obtener el usuario logueado desde la sesión
         String username = UserSession.getUsername();
         if (username != null) {
-            userGreetingLabel.setText("¡Bienvenido " + username + " !  ");
+            userGreetingLabel.setText("¡Bienvenido " + username + "!  ");
         } 
         else {
             userGreetingLabel.setText(""); 
