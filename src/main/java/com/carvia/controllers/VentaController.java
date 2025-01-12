@@ -79,12 +79,6 @@ public class VentaController {
     }
 
     private List<File> selectedImages;
-    private final Cloudinary cloudinary;
-
-    // Constructor que recibe una instancia de CloudinaryController
-    public VentaController(CloudinaryController cloudinaryController) {
-        this.cloudinary = cloudinaryController.getCloudinary();
-    }
 
     @FXML
     private void handleUploadImages() {
@@ -114,34 +108,24 @@ public class VentaController {
         }
     }
 
-    public void uploadImagesToCloud(List<File> images) {
+    private void uploadImagesToCloud(List<File> images) {
         System.out.println("Subiendo imágenes a la nube...");
+
+        // Instanciar el controlador de Cloudinary
+        CloudinaryController cloudinaryController = new CloudinaryController();
 
         for (File image : images) {
             try {
-                // Configuración de los parámetros para la subida
-                Map<String, Object> params = ObjectUtils.asMap(
-                        "use_filename", true,
-                        "unique_filename", false,
-                        "overwrite", true);
+                // Subir la imagen y obtener su URL
+                String imageUrl = cloudinaryController.uploadImage(image);
 
-                // Subir la imagen a Cloudinary
-                Map uploadResult = cloudinary.uploader().upload(image, params);
-
-                // Obtener el nombre público del recurso subido
-                String publicId = (String) uploadResult.get("public_id");
-
-                // Imprimir resultado de la subida
-                System.out.println("Imagen subida: " + uploadResult.get("url"));
-
-                // Obtener detalles adicionales del recurso
-                Map<String, Object> resourceParams = ObjectUtils.asMap(
-                        "quality_analysis", true);
-                Map resourceDetails = cloudinary.api().resource(publicId, resourceParams);
-                System.out.println("Detalles del recurso: " + resourceDetails);
-
+                if (imageUrl != null) {
+                    System.out.println("Imagen subida: " + imageUrl);
+                } else {
+                    System.err.println("Fallo al subir la imagen: " + image.getName());
+                }
             } catch (Exception e) {
-                System.err.println("Error subiendo la imagen " + image.getName() + ": " + e.getMessage());
+                System.err.println("Error al procesar la imagen " + image.getName() + ": " + e.getMessage());
             }
         }
 
@@ -182,12 +166,22 @@ public class VentaController {
                 return;
             }
 
+            CloudinaryController cloudinaryController = new CloudinaryController();
+            String imageUrl = cloudinaryController.uploadImage(selectedImages.get(0));
+
+            if (imageUrl == null) {
+                System.out.println("Error al subir la imagen.");
+                return;
+            }
+
             // Crear un objeto AnuncioVo con los datos del formulario
             AnuncioVo anuncio = new AnuncioVo();
             anuncio.setDescripcion(txtDescripcion.getText());
             anuncio.setPrecio(Double.parseDouble(txtPrecio.getText()));
             anuncio.setProvincia(cmbProvincia.getValue());
             anuncio.setIdVehiculo(vehiculoId); // Asignar el ID del vehículo al anuncio
+            anuncio.setUrl(imageUrl); // Asignar la URL de la imagen
+
 
             // Instanciar el DAO para anuncios
             AnuncioDao anuncioDAO = new AnuncioDao();
