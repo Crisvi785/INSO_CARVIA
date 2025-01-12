@@ -34,11 +34,15 @@ public class PaymentDao {
                 throw new SQLException("No se encontró un anuncio con el ID de vehículo proporcionado.");
             }
 
+            //Enmascarar datos sensibles antes de guardarlos
+            String maskedCardNumber = maskCardNumber(cardNumber);
+            String maskedCvc = maskCvc(cardCvc);
+
             paymentStmt.setString(1, "Tarjeta de Crédito");
             paymentStmt.setDouble(2, price); 
-            paymentStmt.setString(3, cardNumber);
+            paymentStmt.setString(3, maskedCardNumber);
             paymentStmt.setString(4, cardExpiration);
-            paymentStmt.setString(5, cardCvc);
+            paymentStmt.setString(5, maskedCvc);
             paymentStmt.executeUpdate();
 
             shoppingStmt.setInt(1, vehicleId);
@@ -49,5 +53,16 @@ public class PaymentDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    private String maskCardNumber(String cardNumber){
+        int visibleDigits = 4;
+        int maskedLength = cardNumber.length() - visibleDigits;
+        String mask = "*".repeat(maskedLength);
+        return mask + cardNumber.substring(maskedLength);
+    }
+
+    private String maskCvc(String cardCvc){
+        return "***";
     }
 }
