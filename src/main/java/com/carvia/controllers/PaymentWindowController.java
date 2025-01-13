@@ -1,5 +1,7 @@
 package com.carvia.controllers;
 
+import java.time.LocalDate;
+
 import com.carvia.models.dao.AnuncioDao;
 import com.carvia.models.dao.PaymentDao;
 import com.carvia.models.vto.VehicleAdVto;
@@ -52,7 +54,11 @@ public class PaymentWindowController {
 
         //Cambiar para que salga una ventana a mayores
         if (cardNumber.isEmpty() || cardExpiration.isEmpty() || cardCvc.isEmpty()) {
-            System.out.println("Por favor, completa todos los campos.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Campos incompletos");
+            alert.setHeaderText("Faltan datos requeridos");
+            alert.setContentText("Por favor, completa todos los campos antes de continuar.");
+            alert.showAndWait();
             return;
         }
 
@@ -103,7 +109,7 @@ public class PaymentWindowController {
         }
 
         //Fecha de caducidad -> Formato MM/YY
-        else if(!cardExpiration.matches("\\d{2}/\\d{2}")){
+        if(!cardExpiration.matches("\\d{2}/\\d{2}")){
             showAlert("Error en la fecha de expiración", "La fecha de expiración debe tener el formato MM/YY.");
             return false;
         }
@@ -112,18 +118,18 @@ public class PaymentWindowController {
         String[] parts = cardExpiration.split("/");
         int month = Integer.parseInt(parts[0]);
         int year = Integer.parseInt(parts[1]);
+        int currentYear = LocalDate.now().getYear() % 100;
         if(month < 1 || month > 12){
             showAlert("Error en la fecha de expiración", "El mes debe estar entre 01 y 12.");
             return false;
         }
-
-        else if (cardCvc.length() != 3 || !cardCvc.matches("\\d+")) {
-            showAlert("Error en el CVC", "El CVC debe contener 3 dígitos numéricos.");
+        else if(year < currentYear){
+            showAlert("Error en la fecha de expiración", "El año de expiración no puede ser menor al año actual.");
             return false;
         }
 
         //Validar q el CVC tenga 3 dígitos y estos sean numeros
-        else if (cardCvc.length() != 3 || !cardCvc.matches("\\d+")) {
+        if (cardCvc.length() != 3 || !cardCvc.matches("\\d+")) {
             showAlert("Error en el CVC", "El CVC debe contener 3 dígitos numéricos.");
             return false;
         }
