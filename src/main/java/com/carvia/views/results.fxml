@@ -23,9 +23,11 @@
                 <TableColumn text="Provincia" fx:id="colProvincia" />
                 <TableColumn text="Descripción" fx:id="colDescripcion" prefWidth="200" />
                 <TableColumn text="Precio (€)" fx:id="colPrecio" />
-                <TableColumn text="Acción" fx:id="colAccion" />
-                <TableColumn text="Contacto" fx:id="colContacto" />
                 <TableColumn text="Ver Imagen" fx:id="colImagen" />
+                <TableColumn text="Contacto" fx:id="colContacto" />
+                <TableColumn text="Acción" fx:id="colAccion" />
+
+                
             </columns>
         </TableView>
     </center>
