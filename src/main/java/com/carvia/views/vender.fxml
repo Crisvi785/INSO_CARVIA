@@ -69,7 +69,7 @@
 
 
     <!-- Botones -->
-    <HBox spacing="20" alignment="CENTER">
+    <HBox spacing="20" alignment="CENTER" styleClass="section-buttons">
         <Button text="Publicar Anuncio" styleClass="publish-button" onMouseClicked="#handlePublishAd" />
         <Button text="Cancelar" styleClass="cancel-button" onMouseClicked="#handleCancel" />
     </HBox>

@@ -28,33 +28,6 @@ import javafx.scene.layout.VBox;
 public class MainPageController {
 
     @FXML
-    private Button btnComprar;
-
-    @FXML
-    private Button btnVender;
-
-    @FXML
-    private Button btnVerMisAnuncios;
-
-    @FXML
-    private Button btnMensajes;
-
-    @FXML
-    private Button btnConfiguracion;
-
-    //@FXML
-    //private Label lblHeader;
-
-    @FXML
-    private ImageView imgCentral;
-
-    @FXML
-    private Label lblTitle;
-
-    @FXML
-    private Label lblDescription;
-
-    @FXML
     private Label lblFooter;
 
     @FXML
@@ -144,35 +117,8 @@ public class MainPageController {
 
     }
 
-
-    @FXML
-    private VBox segundaManoBox, nuevosBox, km0Box, rentingBox, certificadosBox, caravanasBox;
-
     @FXML
     private VBox resultPane; // Panel donde se mostrarán los resultados
-
-    @FXML
-    public void handleCategoriaClick(MouseEvent event) {
-        // Determina qué categoría fue seleccionada
-        VBox clickedBox = (VBox) event.getSource();
-        String categoria;
-
-        if (clickedBox == segundaManoBox) {
-            categoria = "Segunda Mano";
-        } else if (clickedBox == nuevosBox) {
-            categoria = "Nuevos";
-        } else if (clickedBox == km0Box) {
-            categoria = "Km 0";
-        } else if (clickedBox == rentingBox) {
-            categoria = "Renting";
-        } else if (clickedBox == certificadosBox) {
-            categoria = "Certificados";
-        } else if (clickedBox == caravanasBox) {
-            categoria = "Caravanas";
-        } else {
-            return; // No se reconoce la categoría
-        }
-    }
 
     @FXML
     private void handleMostrarResultados() throws IOException {

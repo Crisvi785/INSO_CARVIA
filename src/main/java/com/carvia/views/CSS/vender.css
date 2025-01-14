@@ -38,6 +38,10 @@
 }
 
 /* Botones */
+.section-buttons {
+    -fx-padding: 10;
+}
+
 .upload-button, .publish-button, .cancel-button {
     -fx-font-size: 16px;
     -fx-padding: 10 20;
@@ -55,11 +59,13 @@
 .publish-button {
     -fx-background-color: #27ae60; /* Verde */
     -fx-text-fill: white;
+    -fx-padding: 10 40;
 }
 
 .cancel-button {
     -fx-background-color: #e74c3c; /* Rojo */
     -fx-text-fill: white;
+    -fx-padding: 10 40;
 }
 
 .upload-button:hover, .publish-button:hover, .cancel-button:hover {

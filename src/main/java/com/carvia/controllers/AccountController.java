@@ -140,13 +140,6 @@ public class AccountController {
         txtPassword.setText("");
     }
 
-    private void setFieldsEmpty() {
-        txtUsername.setText("");
-        txtFullName.setText("");
-        txtEmail.setText("");
-        txtPassword.setText("");
-    }
-
     @FXML
     private void handleLogout() throws IOException {
         UserSession.logout();
