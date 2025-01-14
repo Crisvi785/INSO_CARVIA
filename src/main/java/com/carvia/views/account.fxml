@@ -36,6 +36,12 @@
             <PasswordField fx:id="txtPassword" promptText="Nueva contraseña" styleClass="input-field" prefWidth="300" />
         </HBox>
         <Button text="Guardar Cambios" styleClass="save-button" onMouseClicked="#handleSaveChanges" />
+         <Button fx:id="myAdsButton"
+            text="Ver mis anuncios"
+            onAction="#handleMyAdsButton"
+            layoutX="150"
+            layoutY="200"
+            styleClass="save-button"/>
     </VBox>
 
     <!-- Logout Section -->

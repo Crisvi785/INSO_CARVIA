@@ -106,4 +106,42 @@ public class AnuncioDao {
             return false;
         }
     }
+
+    public List<AnuncioVo> getAdsByUserId(int userId) {
+        List<AnuncioVo> ads = new ArrayList<>();
+        String query = "SELECT * FROM Advertisements WHERE idUs = ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                AnuncioVo ad = new AnuncioVo();
+                ad.setId(resultSet.getInt("idAd"));
+                ad.setIdVehiculo(resultSet.getInt("idVe"));
+                ad.setIdUsuario(resultSet.getInt("idUs"));
+                ad.setDescripcion(resultSet.getString("description"));
+                ad.setPrecio(resultSet.getDouble("price"));
+                ad.setProvincia(resultSet.getString("provincia"));
+                ad.setUrl(resultSet.getString("images"));
+
+                ads.add(ad);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ads;
+    }
+
+    public boolean deleteAd(int adId) {
+        String query = "DELETE FROM Advertisements WHERE idVe = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, adId);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

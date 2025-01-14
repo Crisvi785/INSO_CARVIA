@@ -86,18 +86,11 @@ public class MainPageController {
 
     @FXML
     public void initialize() {
-        // cargarOpcionesMarcaModelo();
-        // cargarOpcionesProvincias();
-        // cargarOpcionesPrecios();
         lblHeader.setText("Carvia - Venta de Coches");
-        // lblTitle.setText("Bienvenido a Carvia");
-        // lblDescription.setText("Tu lugar ideal para comprar y vender coches de manera
-        // segura y confiable.");
         marcaModeloComboBox.setItems(FXCollections.observableArrayList("-", "Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln", "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
         provinciasComboBox.setItems(FXCollections.observableArrayList("-", "Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
         precioRangeSlider.setLowValue(0);
         precioRangeSlider.setHighValue(70000);
-        // Add listeners to update the labels in real-time
         precioRangeSlider.lowValueProperty().addListener((observable, oldValue, newValue) -> {
             minPriceLabel.setText(String.format("%.0f", newValue));
         });
@@ -179,14 +172,10 @@ public class MainPageController {
         } else {
             return; // No se reconoce la categoría
         }
-        // Filtra los coches según la categoría seleccionada
-        // filtrarVehiculosPorCategoria(categoria);
     }
 
     @FXML
     private void handleMostrarResultados() throws IOException {
-        // Van por aquí los tiros para que salga en la misma ventana y no en una aparte.
-        // App.setRoot("results");
         String marca = marcaModeloComboBox.getValue();
         String provincia = provinciasComboBox.getValue();
         double precioMin = precioRangeSlider.getLowValue();
@@ -223,33 +212,6 @@ public class MainPageController {
             AlertUtil.showAlert("Error", "Error showing results", Alert.AlertType.ERROR);
         }
     }
-
-    
-    /*
-    
-    private void filtrarVehiculosPorCategoria(String categoria) {
-        List<VehicleVo> vehiculos = DataSource.getVehicleById();
-    
-        if (vehiculos == null || vehiculos.isEmpty()) {
-            System.out.println("No hay vehículos disponibles en el DataSource.");
-            return;
-        }
-    
-        List<VehicleVo> vehiculosFiltrados = vehiculos.stream()
-            .filter(vehiculo -> vehiculo.getVehiclesByCategory() != null &&
-                    vehiculo.getVehiclesByCategory().equalsIgnoreCase(categoria))
-            .collect(Collectors.toList());
-    
-        if (vehiculosFiltrados.isEmpty()) {
-            System.out.println("No se encontraron vehículos para la categoría: " + categoria);
-        } else {
-            mostrarVehiculos(vehiculosFiltrados);
-        }
-    }
-    
-    */ 
-    
- 
-    
+     
 
 }

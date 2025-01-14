@@ -42,6 +42,30 @@ public class VehicleDao {
         }
         return -1; // Indica un error si no se pudo insertar
     }
+
+    public VehicleVo getVehicleById(int vehicleId) {
+        String query = "SELECT * FROM Vehicles WHERE idVe = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, vehicleId);
+            ResultSet resultSet = statement.executeQuery();
+    
+            if (resultSet.next()) {
+                VehicleVo vehicle = new VehicleVo();
+                vehicle.setId(resultSet.getInt("idVe"));
+                vehicle.setMarca(resultSet.getString("marca")); // Marca del vehículo
+                vehicle.setModelo(resultSet.getString("model"));
+                vehicle.setAnio(resultSet.getInt("year"));
+                vehicle.setKilometraje(resultSet.getInt("kilometers"));
+                vehicle.setTipoCombustible(resultSet.getString("fuel_type"));
+                vehicle.setTransmision(resultSet.getString("transmission"));
+                return vehicle;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Retorna null si no se encuentra el vehículo
+    }
+    
     
 }
 

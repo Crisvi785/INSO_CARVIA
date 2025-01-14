@@ -13,6 +13,7 @@ public class AnuncioVo {
     private int idVehiculo; // ID del vehículo (clave foránea)
     private int idUsuario;
 
+
     public AnuncioVo(){
 
     }

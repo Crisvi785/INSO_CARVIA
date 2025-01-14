@@ -10,10 +10,16 @@ import com.carvia.utils.AlertUtil;
 import com.carvia.utils.EmailValidator;
 import com.carvia.utils.PasswordValidator;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class AccountController {
 
@@ -28,6 +34,9 @@ public class AccountController {
 
     @FXML
     private PasswordField txtPassword;
+
+    @FXML
+    private Button myAdsButton; 
 
     private UserDao userDao;
 
@@ -151,5 +160,20 @@ public class AccountController {
     private void handleBackToMain() throws IOException {
         // Regresar a la pantalla de inicio
         App.setRoot("mainpage");
+    }
+
+    @FXML
+    private void handleMyAdsButton(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/carvia/views/my_ads.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Mis Anuncios");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

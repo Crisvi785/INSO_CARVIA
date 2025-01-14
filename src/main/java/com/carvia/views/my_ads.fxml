@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.carvia.controllers.MyAdsController"
+            prefWidth="1000" prefHeight="600">
+    <TableView fx:id="adsTable" layoutX="20" layoutY="20" prefWidth="960" prefHeight="500">
+        <columns>
+            <TableColumn fx:id="colBrand" text="Marca" prefWidth="100" />
+            <TableColumn fx:id="colModel" text="Modelo" prefWidth="150" />
+            <TableColumn fx:id="colYear" text="Año" prefWidth="80" />
+            <TableColumn fx:id="colKilometers" text="Kilometraje" prefWidth="100" />
+            <TableColumn fx:id="colFuelType" text="Combustible" prefWidth="100" />
+            <TableColumn fx:id="colTransmission" text="Transmisión" prefWidth="100" />
+            <TableColumn fx:id="colDescription" text="Descripción" prefWidth="200" />
+            <TableColumn fx:id="colPrice" text="Precio" prefWidth="100" />
+        </columns>
+    </TableView>
+    <Button text="Eliminar anuncio" layoutX="20" layoutY="530" prefWidth="150" onAction="#handleDeleteAd"/>
+</AnchorPane>
+
+
