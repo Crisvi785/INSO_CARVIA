@@ -22,6 +22,7 @@ import java.awt.Desktop;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -39,6 +40,9 @@ import com.carvia.models.UserSession;
 import com.carvia.models.dao.UserDao;
 import com.carvia.models.vo.UserVo;
 import com.carvia.models.vo.VehicleVo;
+
+import java.awt.Desktop;
+import java.net.URI;
 
 public class ResultsController {
 
@@ -58,6 +62,15 @@ public class ResultsController {
     private TableColumn<VehicleAdVto, Integer> colAno;
 
     @FXML
+    private TableColumn<VehicleAdVto, Integer> colKilometraje;
+
+    @FXML
+    private TableColumn<VehicleAdVto, Integer> colCombustible;
+
+    @FXML
+    private TableColumn<VehicleAdVto, Integer> colTransmision;
+
+    @FXML
     private TableColumn<VehicleAdVto, String> colProvincia;
 
     @FXML
@@ -72,6 +85,9 @@ public class ResultsController {
     @FXML
     private TableColumn<VehicleAdVto, Button> colContacto;
 
+    @FXML
+    private TableColumn<VehicleAdVto, Button> colImagen;
+
     private final Connection connection;
 
 
@@ -85,6 +101,9 @@ public class ResultsController {
         colMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
         colModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
         colAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
+        colKilometraje.setCellValueFactory(new PropertyValueFactory<>("kilometraje"));
+        colCombustible.setCellValueFactory(new PropertyValueFactory<>("combustible"));
+        colTransmision.setCellValueFactory(new PropertyValueFactory<>("transmision"));
         colProvincia.setCellValueFactory(new PropertyValueFactory<>("provincia"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
@@ -221,6 +240,31 @@ public class ResultsController {
             }
 
         });
+
+        colImagen.setCellFactory(param -> new TableCell<>() {
+            private final Button botonImagen = new Button("Ver Imagen");
+
+            {
+                // Acción al hacer clic en el botón
+                botonImagen.setOnAction(event -> {
+                    VehicleAdVto anuncio = getTableView().getItems().get(getIndex());
+                    if (anuncio != null) {
+                        abrirImagen(anuncio);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(botonImagen);
+                }
+            }
+
+        });
         
     }
 
@@ -245,7 +289,7 @@ public class ResultsController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            AlertUtil.showAlert("Error", "No se pudo abrir GMail", null);
+            AlertUtil.showAlert("Error", "No se pudo abrir Gmail", null);
         }
     }
 
@@ -255,16 +299,43 @@ public class ResultsController {
         return vendedor.getEmail();
     }
 
+    private void abrirImagen(VehicleAdVto anuncio) {
+        Stage stage = new Stage();
+        BorderPane root = new BorderPane();
+
+        // Crear ImageView y cargar la imagen desde la URL
+        ImageView imageView = new ImageView();
+        Image image = new Image(anuncio.getImagen());
+        imageView.setImage(image);
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(600); // Ajusta el ancho según sea necesario
+
+        // Añadir ImageView al centro del BorderPane
+        root.setCenter(imageView);
+
+        // Crear botón "Cerrar"
+        Button closeButton = new Button("Cerrar");
+        closeButton.setOnAction(event -> stage.close());
+
+        // Añadir botón "Cerrar" al fondo del BorderPane
+        VBox bottomBox = new VBox(closeButton);
+        bottomBox.setPadding(new Insets(10));
+        bottomBox.setSpacing(10);
+        bottomBox.setAlignment(javafx.geometry.Pos.CENTER);
+        root.setBottom(bottomBox);
+
+        // Crear escena y mostrar la ventana
+        Scene scene = new Scene(root, 600, 480); // Ajusta el tamaño según sea necesario
+        stage.setScene(scene);
+        stage.setTitle("Imagen del Anuncio");
+        stage.show();
+    }
+
     @FXML
     private void handleBackToMain(ActionEvent event) throws IOException {
         // Get the current stage (window) and close it
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
-    }
-
-    @FXML
-    private void handleActualizar() {
-        // Reload the data (this method can be implemented as needed)
     }
 
 }

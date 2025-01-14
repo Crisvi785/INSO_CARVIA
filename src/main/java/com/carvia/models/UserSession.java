@@ -47,5 +47,11 @@ public class UserSession {
      public static String getUsername() {
         return username;
     }
+
+    public static Object getEmail() {
+        UserDao userDao = new UserDao();
+        UserVo actualUser = userDao.getUserByUsername(UserSession.getUsername());
+        return actualUser.getEmail();
+    }
     
 }

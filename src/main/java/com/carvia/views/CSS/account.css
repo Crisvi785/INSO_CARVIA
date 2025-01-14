@@ -67,3 +67,18 @@
 .logout-button:hover {
     -fx-background-color: #c0392b;
 }
+
+.back-button {
+    -fx-font-size: 16px;
+    -fx-background-color: #979797; /* Gris */
+    -fx-text-fill: white;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+.back-button:hover {
+    -fx-background-color: #a1a1a1;
+}

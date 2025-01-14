@@ -72,8 +72,12 @@ public class AnuncioDao {
                 int idAnuncio = resultSet.getInt("idAd");
                 int idVehiculo = resultSet.getInt("idVe");
                 int idUsuario = resultSet.getInt("idUs");
+                String imagesUrl = resultSet.getString("images");
+                int kilometraje = resultSet.getInt("kilometers");
+                String tipoCombustible = resultSet.getString("fuel_type");
+                String transmision = resultSet.getString("transmission");
                 
-                anuncios.add(new VehicleAdVto(resultMarca, modelo, ano, resultProvincia, descripcion, resultPrecio, idAnuncio, idVehiculo, idUsuario));
+                anuncios.add(new VehicleAdVto(resultMarca, modelo, ano, resultProvincia, descripcion, resultPrecio, idAnuncio, idVehiculo, idUsuario, imagesUrl, kilometraje, tipoCombustible, transmision));
             }
         }
 
@@ -84,6 +88,18 @@ public class AnuncioDao {
         String query = "DELETE FROM Advertisements WHERE idVe = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, idVe);
+            return statement.executeUpdate() > 0; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean eliminarAnunciosPorUsuario(int idUsuario) {
+        String query = "DELETE FROM Advertisements WHERE idUs = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idUsuario);
             return statement.executeUpdate() > 0; 
         } catch (SQLException e) {
             e.printStackTrace();

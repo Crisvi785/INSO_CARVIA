@@ -12,22 +12,25 @@
         <Label text="Catálogo de Vehículos" style="-fx-font-size: 24px; -fx-padding: 10px;" />
     </top>
     <center>
-        <TableView fx:id="resultadosTable" prefHeight="400.0" prefWidth="740.0">
+        <TableView fx:id="resultadosTable" prefHeight="400.0" prefWidth="1020.0">
             <columns>
                 <TableColumn text="Marca" fx:id="colMarca" />
                 <TableColumn text="Modelo" fx:id="colModelo" />
                 <TableColumn text="Año" fx:id="colAno" />
+                <TableColumn text="Kilometraje" fx:id="colKilometraje" />
+                <TableColumn text="Combustible" fx:id="colCombustible" />
+                <TableColumn text="Transmisión" fx:id="colTransmision" />
                 <TableColumn text="Provincia" fx:id="colProvincia" />
                 <TableColumn text="Descripción" fx:id="colDescripcion" prefWidth="200" />
                 <TableColumn text="Precio (€)" fx:id="colPrecio" />
                 <TableColumn text="Acción" fx:id="colAccion" />
                 <TableColumn text="Contacto" fx:id="colContacto" />
+                <TableColumn text="Ver Imagen" fx:id="colImagen" />
             </columns>
         </TableView>
     </center>
     <bottom>
         <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10px;">
-            <Button text="Actualizar" onAction="#handleActualizar" />
             <Button text="Cerrar" onAction="#handleBackToMain" />
         </HBox>
     </bottom>

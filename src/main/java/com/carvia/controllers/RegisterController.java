@@ -1,6 +1,7 @@
 package com.carvia.controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,7 @@ import com.carvia.App;
 import com.carvia.models.dao.UserDao;
 import com.carvia.models.vo.UserVo;
 import com.carvia.utils.AlertUtil;
+import com.carvia.utils.EmailValidator;
 import com.carvia.utils.PasswordValidator;
 
 public class RegisterController {
@@ -56,9 +58,19 @@ public class RegisterController {
             logger.warn("Some fields are empty");
             return;
         }
+
+        if (userDAO.usernameAlreadyExists(username)) {
+            logger.warn("Username already exists");
+            return;
+        }
         
-        if (!isValidEmail(email)) {
+        if (!EmailValidator.isValid(email)) {
             AlertUtil.showAlert("Error", "Debe introducir un email válido", Alert.AlertType.ERROR);
+            return;
+        }
+
+        if(userDAO.emailAlreadyExists(email)) {
+            logger.warn("Email already exists");
             return;
         }
     
@@ -82,13 +94,6 @@ public class RegisterController {
             AlertUtil.showAlert("Error", "No se pudo registrar el usuario", Alert.AlertType.ERROR);
             logger.error("Error registering user " + username);
         }
-    }
-
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
     }
     
 }

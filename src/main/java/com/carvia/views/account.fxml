@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
@@ -16,25 +17,31 @@
 
     <!-- Información del Perfil -->
     <VBox spacing="10" alignment="CENTER" styleClass="profile-section">
-        <Label text="Información del Perfil" styleClass="section-label" />
+        <Label text="¡Actualiza la información de tu perfil!" styleClass="section-label" />
+        <Label text="(Si dejas algún campo vacío, este no se actualizará y permanecerá tal y como está)" styleClass="section-label" />
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Nombre:" styleClass="field-label" />
-            <TextField fx:id="txtName" promptText="Nombre completo" styleClass="input-field" />
+            <Label text="Nombre de Usuario:" styleClass="field-label" />
+            <TextField fx:id="txtUsername" promptText="Username" styleClass="input-field" prefWidth="300" />
         </HBox>
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Email:" styleClass="field-label" />
-            <TextField fx:id="txtEmail" promptText="Correo electrónico" styleClass="input-field" />
+            <Label text="Nombre Completo:" styleClass="field-label" />
+            <TextField fx:id="txtFullName" promptText="Full Name" styleClass="input-field" prefWidth="300" />
         </HBox>
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Teléfono:" styleClass="field-label" />
-            <TextField fx:id="txtPhone" promptText="Número de teléfono" styleClass="input-field" />
+            <Label text="Correo Electrónico:" styleClass="field-label" />
+            <TextField fx:id="txtEmail" promptText="Email" styleClass="input-field" prefWidth="300" />
+        </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Contraseña:" styleClass="field-label" />
+            <PasswordField fx:id="txtPassword" promptText="Nueva contraseña" styleClass="input-field" prefWidth="300" />
         </HBox>
         <Button text="Guardar Cambios" styleClass="save-button" onMouseClicked="#handleSaveChanges" />
     </VBox>
 
     <!-- Logout Section -->
     <VBox spacing="10" alignment="CENTER" styleClass="logout-section">
-        <Label text="¿Deseas salir de tu cuenta?" styleClass="section-label" />
+        <Label text="¿Deseas salir?" styleClass="section-label" />
         <Button text="Cerrar Sesión" styleClass="logout-button" onMouseClicked="#handleLogout" />
+        <Button text="Atrás" styleClass="back-button" onMouseClicked="#handleBackToMain" />
     </VBox>
 </VBox>

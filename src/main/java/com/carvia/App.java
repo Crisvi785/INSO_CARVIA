@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,8 +23,11 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        setRoot("mainpage");
+        setRoot("login");
         primaryStage.setTitle("Carvia");
+
+        primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("./resources/images/icon.png")));
+        
 
         primaryStage.setResizable(false);
         primaryStage.setWidth(SMALL_WIDTH);
