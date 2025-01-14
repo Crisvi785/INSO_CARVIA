@@ -42,8 +42,8 @@ public class MainPageController {
     @FXML
     private Button btnConfiguracion;
 
-    @FXML
-    private Label lblHeader;
+    //@FXML
+    //private Label lblHeader;
 
     @FXML
     private ImageView imgCentral;
@@ -86,7 +86,7 @@ public class MainPageController {
 
     @FXML
     public void initialize() {
-        lblHeader.setText("Carvia - Venta de Coches");
+        // lblHeader.setText("Carvia - Venta de Coches");
         marcaModeloComboBox.setItems(FXCollections.observableArrayList("-", "Acura", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Buick", "Chevrolet", "Chrysler", "Citroën", "Dodge", "Ferrari", "Fiat", "Ford", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Kia", "Lamborghini", "Land Rover", "Lexus", "Lincoln", "Maserati", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"));
         provinciasComboBox.setItems(FXCollections.observableArrayList("-", "Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"));
         precioRangeSlider.setLowValue(0);

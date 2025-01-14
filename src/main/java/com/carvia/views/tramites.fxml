@@ -6,25 +6,26 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.ServicesController"
-      alignment="CENTER" spacing="20" styleClass="services-container" stylesheets="@CSS/services.css">
+       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carvia.controllers.ServicesController"
+       alignment="CENTER" spacing="20" styleClass="services-container" stylesheets="@CSS/services.css">
 
-    <!-- Título de la página -->
-    <Label text="Servicios y Trámites" styleClass="title-label" />
+       <!-- Título de la página -->
+       <Label text="Servicios y Trámites" styleClass="title-label" />
 
-    <!-- Descripción de los servicios -->
-    <Label text="Ofrecemos una amplia gama de servicios para facilitar la compra, venta y mantenimiento de tu coche."
-           styleClass="message-label" wrapText="true" />
+       <!-- Descripción de los servicios -->
+       <Label text="Ofrecemos una amplia gama de servicios para facilitar la compra, venta y mantenimiento de tu coche." styleClass="message-label" wrapText="true" />
 
-    <!-- Detalle de los trámites -->
-    <Label text="Trámites disponibles:" styleClass="important-label" />
-    <Label text="• Transferencias de titularidad.\n• Revisión y certificación de vehículos.\n• Gestión de financiamiento.\n• Seguro para automóviles."
-           styleClass="message-label" wrapText="true" />
+       <!-- Detalle de los trámites -->
+       <Label text="Trámites disponibles:" styleClass="important-label" />
+       <Label text="• Transferencias de titularidad." styleClass="message-label" wrapText="true" />
+       <Label text="• Revisión y certificación de vehículos." styleClass="message-label" wrapText="true" />
+       <Label text="• Gestión de financiamiento." styleClass="message-label" wrapText="true" />
+       <Label text="• Seguro para automóviles." styleClass="message-label" wrapText="true" />
 
-    <!-- Nota importante -->
-    <Label text="Nota: Algunos trámites pueden estar sujetos a costos adicionales y tiempos de procesamiento específicos."
-           styleClass="important-label" wrapText="true" />
 
-    <!-- Botón para volver -->
-    <Button text="Volver a la Página Principal" styleClass="back-button" onMouseClicked="#handleBackToMain" />
+       <!-- Nota importante -->
+       <Label text="Nota: Algunos trámites pueden estar sujetos a costos adicionales y tiempos de procesamiento específicos." styleClass="important-label" wrapText="true" />
+
+       <!-- Botón para volver -->
+       <Button text="Volver a la Página Principal" styleClass="back-button" onMouseClicked="#handleBackToMain" />
 </VBox>
