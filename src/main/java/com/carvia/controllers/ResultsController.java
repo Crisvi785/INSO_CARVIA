@@ -90,14 +90,13 @@ public class ResultsController {
 
     private final Connection connection;
 
-
     public ResultsController() {
         this.connection = BBDDController.getInstance().getConnection();
     }
 
     @FXML
     private void initialize() {
-        
+
         colMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
         colModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
         colAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
@@ -109,14 +108,14 @@ public class ResultsController {
         colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         // colAccion.setCellValueFactory(new PropertyValueFactory<>("comprar"));
         // colContacto.setCellValueFactory(new PropertyValueFactory<>("contacto"));
-        
+
         // Set curstom format for colPrecio
         colPrecio.setCellFactory(new Callback<TableColumn<VehicleAdVto, Double>, TableCell<VehicleAdVto, Double>>() {
             @Override
             public TableCell<VehicleAdVto, Double> call(TableColumn<VehicleAdVto, Double> param) {
                 return new TableCell<VehicleAdVto, Double>() {
                     private final Text text = new Text();
-        
+
                     @Override
                     protected void updateItem(Double item, boolean empty) {
                         super.updateItem(item, empty);
@@ -132,53 +131,57 @@ public class ResultsController {
         });
 
         // Set custom cell factory for colDescripcion
-        colDescripcion.setCellFactory(new Callback<TableColumn<VehicleAdVto, String>, TableCell<VehicleAdVto, String>>() {
-            @Override
-            public TableCell<VehicleAdVto, String> call(TableColumn<VehicleAdVto, String> param) {
-                return new TableCell<VehicleAdVto, String>() {
-                    private final Text text = new Text();
-
+        colDescripcion
+                .setCellFactory(new Callback<TableColumn<VehicleAdVto, String>, TableCell<VehicleAdVto, String>>() {
                     @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null) {
-                            text.setText(item);
-                            text.wrappingWidthProperty().bind(colDescripcion.widthProperty());
-                            setGraphic(text);
-                        } else {
-                            setGraphic(null);
-                        }
+                    public TableCell<VehicleAdVto, String> call(TableColumn<VehicleAdVto, String> param) {
+                        return new TableCell<VehicleAdVto, String>() {
+                            private final Text text = new Text();
+
+                            @Override
+                            protected void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item != null) {
+                                    text.setText(item);
+                                    text.wrappingWidthProperty().bind(colDescripcion.widthProperty());
+                                    setGraphic(text);
+                                } else {
+                                    setGraphic(null);
+                                }
+                            }
+                        };
                     }
-                };
-            }
-        });
-        
-        colAccion.setCellFactory(param -> new TableCell<>() {
-            /*  CÓDIGO PARA PASARELA WEB
-            private final Button botonComprar = new Button("Comprar");
-            private final PaymentController paymentController = new PaymentController(); // Instancia del controlador de pagos
-
-
-            {
-                // Acción al hacer clic en el botón
-                botonComprar.setOnAction(event -> {
-                    // Obtener el vehículo seleccionado
-                    VehicleAdVto vehiculo =  getTableView().getItems().get(getIndex());
-                    
-                    if (vehiculo != null) {
-                        System.out.println("Vehículo seleccionado para compra: " + vehiculo.getMarca() + " "
-                                + vehiculo.getModelo());
-
-                        // Llamar a un método para realizar la compra
-                        paymentController.realizarCompra(vehiculo);
-                    }
-            
-
-
-
                 });
-            }
-            */
+
+        colAccion.setCellFactory(param -> new TableCell<>() {
+            /*
+             * CÓDIGO PARA PASARELA WEB
+             * private final Button botonComprar = new Button("Comprar");
+             * private final PaymentController paymentController = new PaymentController();
+             * // Instancia del controlador de pagos
+             * 
+             * 
+             * {
+             * // Acción al hacer clic en el botón
+             * botonComprar.setOnAction(event -> {
+             * // Obtener el vehículo seleccionado
+             * VehicleAdVto vehiculo = getTableView().getItems().get(getIndex());
+             * 
+             * if (vehiculo != null) {
+             * System.out.println("Vehículo seleccionado para compra: " +
+             * vehiculo.getMarca() + " "
+             * + vehiculo.getModelo());
+             * 
+             * // Llamar a un método para realizar la compra
+             * paymentController.realizarCompra(vehiculo);
+             * }
+             * 
+             * 
+             * 
+             * 
+             * });
+             * }
+             */
 
             private final Button botonComprar = new Button("Comprar");
             private final PaymentWindowController paymentWindowController = new PaymentWindowController();
@@ -194,16 +197,17 @@ public class ResultsController {
                             PaymentWindowController paymentWindowController = loader.getController();
                             paymentWindowController.setVehicleAndUser(vehiculo, userId);
                             Stage stage = new Stage();
-                            stage.setScene(new Scene(root));
+                            Scene scene = new Scene(root, 300, 350); // Ancho: 800px, Alto: 600px
+                            stage.setScene(scene);
+                            stage.setResizable(false); // Evita que el usuario cambie el tamaño
                             stage.show();
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
                 });
             }
-
-
 
             @Override
             protected void updateItem(Button item, boolean empty) {
@@ -265,7 +269,7 @@ public class ResultsController {
             }
 
         });
-        
+
     }
 
     public void setAnuncios(List<VehicleAdVto> anuncios) {
@@ -275,7 +279,8 @@ public class ResultsController {
 
     private void abrirGMail(VehicleAdVto anuncio) {
         try {
-            // Obtener el correo del vendedor (esto depende de cómo tengas estructurado tu modelo)
+            // Obtener el correo del vendedor (esto depende de cómo tengas estructurado tu
+            // modelo)
             String correoVendedor = obtenerCorreoVendedor(anuncio);
 
             // Crear la URL de GMail con el correo del vendedor
